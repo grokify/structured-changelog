@@ -62,6 +62,23 @@ The generated `CHANGELOG.md` conforms to Keep a Changelog 1.1.0 formatting conve
 
 ## Installation
 
+### Homebrew (macOS/Linux)
+
+```bash
+brew tap grokify/tap
+brew install structured-changelog
+```
+
+This installs the `sclog` CLI (also available as `structured-changelog`).
+
+### Go Install
+
+```bash
+go install github.com/grokify/structured-changelog/cmd/sclog@latest
+```
+
+### Go Library
+
 ```bash
 go get github.com/grokify/structured-changelog
 ```
@@ -113,12 +130,6 @@ func main() {
 ```
 
 ### CLI Usage
-
-Install the CLI:
-
-```bash
-go install github.com/grokify/structured-changelog/cmd/sclog@latest
-```
 
 Validate a changelog:
 

@@ -4,6 +4,16 @@
   "repository": "https://github.com/grokify/structured-changelog",
   "releases": [
     {
+      "version": "0.3.0",
+      "date": "2026-01-04",
+      "added": [
+        { "description": "GoReleaser configuration for multi-platform binary releases (Linux, macOS, Windows × amd64, arm64)" },
+        { "description": "GitHub Actions release workflow triggered by version tags" },
+        { "description": "Homebrew tap distribution via `brew install structured-changelog`" },
+        { "description": "Binary symlink: both `sclog` and `structured-changelog` commands available" }
+      ]
+    },
+    {
       "version": "0.2.0",
       "date": "2026-01-03",
       "added": [
