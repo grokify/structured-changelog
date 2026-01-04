@@ -64,8 +64,13 @@ func renderRelease(sb *strings.Builder, r *changelog.Release, opts Options) {
 }
 
 func renderReleaseContent(sb *strings.Builder, r *changelog.Release, opts Options) {
-	// Render categories in standard order
-	for _, cat := range r.Categories() {
+	// Render categories in canonical order, filtered by tier
+	maxTier := opts.MaxTier
+	if maxTier == "" {
+		maxTier = changelog.TierOptional
+	}
+
+	for _, cat := range r.CategoriesFiltered(maxTier) {
 		fmt.Fprintf(sb, "\n### %s\n\n", cat.Name)
 		for _, entry := range cat.Entries {
 			renderEntry(sb, &entry, opts, cat.Name == "Security")

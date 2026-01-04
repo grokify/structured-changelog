@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Highlights",
+    "description": "Top-level summary of key changes; helps readers quickly understand the release significance.",
+    "subtitle": "for release summaries and key takeaways.",
+    "tier": "standard"
+  },
+  {
+    "name": "Breaking",
+    "description": "Often placed first to avoid surprises and align with SemVer MAJOR bumps.",
+    "subtitle": "for backward-incompatible changes that require consumer action.",
+    "tier": "standard"
+  },
+  {
+    "name": "Upgrade Guide",
+    "description": "Migration steps and instructions for consumers to adapt to breaking changes.",
+    "subtitle": "for migration instructions and upgrade paths.",
+    "tier": "standard"
+  },
+  {
+    "name": "Security",
+    "description": "High-priority visibility; frequently audited and machine-consumed.",
+    "subtitle": "for vulnerabilities, CVE fixes, and security-impacting changes.",
+    "tier": "core"
+  },
+  {
+    "name": "Added",
+    "description": "Canonical Keep a Changelog section; primary value creation signal.",
+    "subtitle": "for new features or capabilities.",
+    "tier": "core"
+  },
+  {
+    "name": "Changed",
+    "description": "Includes behavior changes, API adjustments, and improvements.",
+    "subtitle": "for modifications to existing functionality that are not breaking.",
+    "tier": "core"
+  },
+  {
+    "name": "Deprecated",
+    "description": "Forward-looking warning; important for long-term consumers.",
+    "subtitle": "for features that will be removed in a future release.",
+    "tier": "core"
+  },
+  {
+    "name": "Removed",
+    "description": "Often follows a prior deprecation cycle.",
+    "subtitle": "for features that have been fully removed.",
+    "tier": "core"
+  },
+  {
+    "name": "Fixed",
+    "description": "One of the most frequently scanned sections; signals correctness improvements.",
+    "subtitle": "for bug fixes and correctness improvements.",
+    "tier": "core"
+  },
+  {
+    "name": "Performance",
+    "description": "Highlights latency, throughput, memory, or efficiency improvements.",
+    "subtitle": "for non-functional performance improvements.",
+    "tier": "standard"
+  },
+  {
+    "name": "Dependencies",
+    "description": "Covers added, upgraded, downgraded, or removed dependencies; important for supply-chain security and automation.",
+    "subtitle": "for introduced, upgraded, downgraded, or removed dependencies.",
+    "tier": "standard"
+  },
+  {
+    "name": "Documentation",
+    "description": "Updates to README, API docs, guides, and examples.",
+    "subtitle": "for changes to documentation and user guidance.",
+    "tier": "extended"
+  },
+  {
+    "name": "Build",
+    "description": "Changes to CI/CD, build system, compiler, or packaging processes.",
+    "subtitle": "for build tooling and pipeline updates.",
+    "tier": "extended"
+  },
+  {
+    "name": "Tests",
+    "description": "New or improved tests that increase coverage, reliability, or serve as usage examples.",
+    "subtitle": "for test additions, improvements, and coverage changes.",
+    "tier": "extended"
+  },
+  {
+    "name": "Infrastructure",
+    "description": "Changes to deployment, hosting, cloud, runtime, and platform.",
+    "subtitle": "for infrastructure-related changes.",
+    "tier": "optional"
+  },
+  {
+    "name": "Observability",
+    "description": "Logging, metrics, tracing, profiling, and monitoring changes.",
+    "subtitle": "for improvements to observability and telemetry.",
+    "tier": "optional"
+  },
+  {
+    "name": "Compliance",
+    "description": "Changes related to regulatory, legal, or policy requirements.",
+    "subtitle": "for compliance-related updates.",
+    "tier": "optional"
+  },
+  {
+    "name": "Internal",
+    "description": "Refactors or changes with no user-visible impact.",
+    "subtitle": "for internal maintenance, refactoring, and technical debt work.",
+    "tier": "optional"
+  },
+  {
+    "name": "Known Issues",
+    "description": "Documents known problems, limitations, or bugs in the release for transparency.",
+    "subtitle": "for known problems and limitations in this release.",
+    "tier": "extended"
+  },
+  {
+    "name": "Contributors",
+    "description": "Acknowledges individuals who contributed to the release; common in open source projects.",
+    "subtitle": "for acknowledging contributors to this release.",
+    "tier": "extended"
+  }
+]

@@ -14,6 +14,7 @@ var (
 	generateOutput  string
 	generateMinimal bool
 	generateFull    bool
+	generateMaxTier string
 )
 
 var generateCmd = &cobra.Command{
@@ -25,13 +26,21 @@ Structured Changelog JSON file.
 The output is deterministic: the same input always produces identical output.
 
 Output options:
-  --minimal   Exclude references and security metadata
-  --full      Include all metadata including commit SHAs
+  --minimal      Exclude references and security metadata (implies --max-tier core)
+  --full         Include all metadata including commit SHAs
+  --max-tier     Filter change types by tier (core, standard, extended, optional)
+
+Tiers:
+  core       KACL standard types (Security, Added, Changed, Deprecated, Removed, Fixed)
+  standard   Commonly used types (core + Highlights, Breaking, Upgrade Guide, Performance, Dependencies)
+  extended   Extended types (standard + Documentation, Build, Known Issues, Contributors)
+  optional   All types (extended + Infrastructure, Observability, Compliance, Internal)
 
 Examples:
   sclog generate CHANGELOG.json
   sclog generate CHANGELOG.json -o CHANGELOG.md
   sclog generate CHANGELOG.json --minimal
+  sclog generate CHANGELOG.json --max-tier standard
   sclog generate CHANGELOG.json --full -o docs/CHANGELOG.md`,
 	Args: cobra.ExactArgs(1),
 	RunE: runGenerate,
@@ -39,8 +48,9 @@ Examples:
 
 func init() {
 	generateCmd.Flags().StringVarP(&generateOutput, "output", "o", "", "Output file (default: stdout)")
-	generateCmd.Flags().BoolVar(&generateMinimal, "minimal", false, "Use minimal output (no references/metadata)")
+	generateCmd.Flags().BoolVar(&generateMinimal, "minimal", false, "Use minimal output (no references/metadata, core tier only)")
 	generateCmd.Flags().BoolVar(&generateFull, "full", false, "Use full output (include commits)")
+	generateCmd.Flags().StringVar(&generateMaxTier, "max-tier", "", "Maximum tier to include (core, standard, extended, optional)")
 	rootCmd.AddCommand(generateCmd)
 }
 
@@ -63,12 +73,20 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("validation failed with %d error(s)", len(result.Errors))
 	}
 
-	// Select options
-	opts := renderer.DefaultOptions()
+	// Select options using library function
+	preset := "default"
 	if generateMinimal {
-		opts = renderer.MinimalOptions()
+		preset = "minimal"
 	} else if generateFull {
-		opts = renderer.FullOptions()
+		preset = "full"
+	}
+
+	opts, err := renderer.OptionsFromConfig(renderer.Config{
+		Preset:  preset,
+		MaxTier: generateMaxTier,
+	})
+	if err != nil {
+		return fmt.Errorf("invalid options: %w", err)
 	}
 
 	// Render

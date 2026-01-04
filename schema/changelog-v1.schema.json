@@ -62,46 +62,171 @@
           "format": "uri",
           "description": "URL to compare this release with the previous one"
         },
-        "added": {
-          "$ref": "#/definitions/entryList"
+        "highlights": {
+          "$ref": "#/definitions/entryList",
+          "description": "Release summaries and key takeaways (standard tier)"
         },
-        "changed": {
-          "$ref": "#/definitions/entryList"
+        "breaking": {
+          "$ref": "#/definitions/entryList",
+          "description": "Backward-incompatible changes (standard tier)"
         },
-        "deprecated": {
-          "$ref": "#/definitions/entryList"
-        },
-        "removed": {
-          "$ref": "#/definitions/entryList"
-        },
-        "fixed": {
-          "$ref": "#/definitions/entryList"
+        "upgrade_guide": {
+          "$ref": "#/definitions/entryList",
+          "description": "Migration instructions and upgrade paths (standard tier)"
         },
         "security": {
-          "$ref": "#/definitions/securityEntryList"
+          "$ref": "#/definitions/securityEntryList",
+          "description": "Vulnerabilities, CVE fixes, security changes (core tier)"
+        },
+        "added": {
+          "$ref": "#/definitions/entryList",
+          "description": "New features or capabilities (core tier)"
+        },
+        "changed": {
+          "$ref": "#/definitions/entryList",
+          "description": "Modifications to existing functionality (core tier)"
+        },
+        "deprecated": {
+          "$ref": "#/definitions/entryList",
+          "description": "Features that will be removed in future (core tier)"
+        },
+        "removed": {
+          "$ref": "#/definitions/entryList",
+          "description": "Features that have been removed (core tier)"
+        },
+        "fixed": {
+          "$ref": "#/definitions/entryList",
+          "description": "Bug fixes and correctness improvements (core tier)"
+        },
+        "performance": {
+          "$ref": "#/definitions/entryList",
+          "description": "Speed and efficiency improvements (standard tier)"
+        },
+        "dependencies": {
+          "$ref": "#/definitions/entryList",
+          "description": "Dependency updates (standard tier)"
+        },
+        "documentation": {
+          "$ref": "#/definitions/entryList",
+          "description": "Documentation changes (extended tier)"
+        },
+        "build": {
+          "$ref": "#/definitions/entryList",
+          "description": "CI/CD and build tooling changes (extended tier)"
+        },
+        "tests": {
+          "$ref": "#/definitions/entryList",
+          "description": "Test additions, improvements, and coverage changes (extended tier)"
+        },
+        "infrastructure": {
+          "$ref": "#/definitions/entryList",
+          "description": "Deployment and hosting changes (optional tier)"
+        },
+        "observability": {
+          "$ref": "#/definitions/entryList",
+          "description": "Logging, metrics, tracing changes (optional tier)"
+        },
+        "compliance": {
+          "$ref": "#/definitions/entryList",
+          "description": "Regulatory and policy updates (optional tier)"
+        },
+        "internal": {
+          "$ref": "#/definitions/entryList",
+          "description": "Refactors and internal changes (optional tier)"
+        },
+        "known_issues": {
+          "$ref": "#/definitions/entryList",
+          "description": "Known problems and limitations (extended tier)"
+        },
+        "contributors": {
+          "$ref": "#/definitions/entryList",
+          "description": "Contributor acknowledgments (extended tier)"
         }
       }
     },
     "releaseContent": {
       "type": "object",
+      "description": "Content categories for a release, organized by tier",
       "properties": {
-        "added": {
-          "$ref": "#/definitions/entryList"
+        "highlights": {
+          "$ref": "#/definitions/entryList",
+          "description": "Release summaries and key takeaways (standard tier)"
         },
-        "changed": {
-          "$ref": "#/definitions/entryList"
+        "breaking": {
+          "$ref": "#/definitions/entryList",
+          "description": "Backward-incompatible changes (standard tier)"
         },
-        "deprecated": {
-          "$ref": "#/definitions/entryList"
-        },
-        "removed": {
-          "$ref": "#/definitions/entryList"
-        },
-        "fixed": {
-          "$ref": "#/definitions/entryList"
+        "upgrade_guide": {
+          "$ref": "#/definitions/entryList",
+          "description": "Migration instructions and upgrade paths (standard tier)"
         },
         "security": {
-          "$ref": "#/definitions/securityEntryList"
+          "$ref": "#/definitions/securityEntryList",
+          "description": "Vulnerabilities, CVE fixes, security changes (core tier)"
+        },
+        "added": {
+          "$ref": "#/definitions/entryList",
+          "description": "New features or capabilities (core tier)"
+        },
+        "changed": {
+          "$ref": "#/definitions/entryList",
+          "description": "Modifications to existing functionality (core tier)"
+        },
+        "deprecated": {
+          "$ref": "#/definitions/entryList",
+          "description": "Features that will be removed in future (core tier)"
+        },
+        "removed": {
+          "$ref": "#/definitions/entryList",
+          "description": "Features that have been removed (core tier)"
+        },
+        "fixed": {
+          "$ref": "#/definitions/entryList",
+          "description": "Bug fixes and correctness improvements (core tier)"
+        },
+        "performance": {
+          "$ref": "#/definitions/entryList",
+          "description": "Speed and efficiency improvements (standard tier)"
+        },
+        "dependencies": {
+          "$ref": "#/definitions/entryList",
+          "description": "Dependency updates (standard tier)"
+        },
+        "documentation": {
+          "$ref": "#/definitions/entryList",
+          "description": "Documentation changes (extended tier)"
+        },
+        "build": {
+          "$ref": "#/definitions/entryList",
+          "description": "CI/CD and build tooling changes (extended tier)"
+        },
+        "tests": {
+          "$ref": "#/definitions/entryList",
+          "description": "Test additions, improvements, and coverage changes (extended tier)"
+        },
+        "infrastructure": {
+          "$ref": "#/definitions/entryList",
+          "description": "Deployment and hosting changes (optional tier)"
+        },
+        "observability": {
+          "$ref": "#/definitions/entryList",
+          "description": "Logging, metrics, tracing changes (optional tier)"
+        },
+        "compliance": {
+          "$ref": "#/definitions/entryList",
+          "description": "Regulatory and policy updates (optional tier)"
+        },
+        "internal": {
+          "$ref": "#/definitions/entryList",
+          "description": "Refactors and internal changes (optional tier)"
+        },
+        "known_issues": {
+          "$ref": "#/definitions/entryList",
+          "description": "Known problems and limitations (extended tier)"
+        },
+        "contributors": {
+          "$ref": "#/definitions/entryList",
+          "description": "Contributor acknowledgments (extended tier)"
         }
       }
     },

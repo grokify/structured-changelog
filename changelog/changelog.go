@@ -88,3 +88,44 @@ func (c *Changelog) PromoteUnreleased(version, date string) error {
 	c.Unreleased = nil
 	return nil
 }
+
+// Summary contains a summary of a changelog's contents.
+type Summary struct {
+	Project              string
+	IRVersion            string
+	ReleaseCount         int
+	HasUnreleased        bool
+	UnreleasedCategories []string
+	LatestVersion        string
+	LatestDate           string
+	LatestCategories     []string
+}
+
+// Summary returns a summary of the changelog's contents.
+func (c *Changelog) Summary() Summary {
+	s := Summary{
+		Project:      c.Project,
+		IRVersion:    c.IRVersion,
+		ReleaseCount: len(c.Releases),
+	}
+
+	// Check unreleased section
+	if c.Unreleased != nil && !c.Unreleased.IsEmpty() {
+		s.HasUnreleased = true
+		for _, cat := range c.Unreleased.Categories() {
+			s.UnreleasedCategories = append(s.UnreleasedCategories, cat.Name)
+		}
+	}
+
+	// Get latest release info
+	if len(c.Releases) > 0 {
+		latest := c.Releases[0]
+		s.LatestVersion = latest.Version
+		s.LatestDate = latest.Date
+		for _, cat := range latest.Categories() {
+			s.LatestCategories = append(s.LatestCategories, cat.Name)
+		}
+	}
+
+	return s
+}

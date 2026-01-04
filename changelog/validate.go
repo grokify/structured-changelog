@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 // Validation errors.
@@ -112,13 +113,39 @@ func (c *Changelog) validateRelease(r *Release, field string, result *Validation
 		}
 	}
 
-	// Validate all entries
+	// Validate all entries in canonical order
+	// Overview & Critical
+	c.validateEntries(r.Highlights, field+".highlights", result)
+	c.validateEntries(r.Breaking, field+".breaking", result)
+	c.validateEntries(r.UpgradeGuide, field+".upgrade_guide", result)
+	c.validateSecurityEntries(r.Security, field+".security", result)
+
+	// Core KACL
 	c.validateEntries(r.Added, field+".added", result)
 	c.validateEntries(r.Changed, field+".changed", result)
 	c.validateEntries(r.Deprecated, field+".deprecated", result)
 	c.validateEntries(r.Removed, field+".removed", result)
 	c.validateEntries(r.Fixed, field+".fixed", result)
-	c.validateSecurityEntries(r.Security, field+".security", result)
+
+	// Quality
+	c.validateEntries(r.Performance, field+".performance", result)
+	c.validateEntries(r.Dependencies, field+".dependencies", result)
+
+	// Development
+	c.validateEntries(r.Documentation, field+".documentation", result)
+	c.validateEntries(r.Build, field+".build", result)
+
+	// Operations
+	c.validateEntries(r.Infrastructure, field+".infrastructure", result)
+	c.validateEntries(r.Observability, field+".observability", result)
+	c.validateEntries(r.Compliance, field+".compliance", result)
+
+	// Internal
+	c.validateEntries(r.Internal, field+".internal", result)
+
+	// End Matter
+	c.validateEntries(r.KnownIssues, field+".known_issues", result)
+	c.validateEntries(r.Contributors, field+".contributors", result)
 }
 
 func (c *Changelog) validateEntries(entries []Entry, field string, result *ValidationResult) {
@@ -163,4 +190,39 @@ func (r *ValidationResult) addError(field, message string, err error) {
 		Message: message,
 		Err:     err,
 	})
+}
+
+// ErrNoEntriesAtTier is returned when no entries exist at or above the required tier.
+var ErrNoEntriesAtTier = errors.New("no entries at or above required tier")
+
+// ErrInvalidTier is returned when an invalid tier string is provided.
+var ErrInvalidTier = errors.New("invalid tier")
+
+// ValidateMinTier checks that the changelog has at least one entry at or above
+// the specified minimum tier in the latest release.
+func (c *Changelog) ValidateMinTier(minTier Tier) error {
+	if !minTier.IsValid() {
+		return fmt.Errorf("%w: %q (must be one of core, standard, extended, optional)", ErrInvalidTier, minTier)
+	}
+
+	if len(c.Releases) == 0 {
+		return nil // No releases to validate
+	}
+
+	latest := c.Releases[0]
+	cats := latest.CategoriesFiltered(minTier)
+	if len(cats) == 0 {
+		return fmt.Errorf("%w %q in release %s", ErrNoEntriesAtTier, minTier, latest.Version)
+	}
+
+	return nil
+}
+
+// ParseTier parses a tier string (case-insensitive) and returns the Tier.
+func ParseTier(s string) (Tier, error) {
+	tier := Tier(strings.ToLower(s))
+	if !tier.IsValid() {
+		return "", fmt.Errorf("%w: %q (must be one of core, standard, extended, optional)", ErrInvalidTier, s)
+	}
+	return tier, nil
 }
