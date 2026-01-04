@@ -4,6 +4,25 @@
   "repository": "https://github.com/grokify/structured-changelog",
   "releases": [
     {
+      "version": "0.4.0",
+      "date": "2026-01-04",
+      "added": [
+        { "description": "Tier-based change type system with 4 levels: **core** (KACL standard), **standard** (common extensions), **extended** (docs/build/acknowledgments), **optional** (operations/internal)" },
+        { "description": "19 change types in canonical order (see `CHANGE_TYPES.json`)" },
+        { "description": "New change types beyond Keep a Changelog: Highlights, Breaking, Upgrade Guide, Performance, Dependencies, Documentation, Build, Infrastructure, Observability, Compliance, Internal, Known Issues, Contributors" },
+        { "description": "CLI flags: `--max-tier` for generate, `--min-tier` for validate" },
+        { "description": "Library functions: `Summary()`, `ValidateMinTier()`, `ParseTier()`, `OptionsFromConfig()`" },
+        { "description": "Canonical ordering documentation in README.md" }
+      ],
+      "changed": [
+        { "description": "Change types now support tier-based filtering for validation and generation" },
+        { "description": "CLI refactored to use library functions for better testability" }
+      ],
+      "tests": [
+        { "description": "Comprehensive unit tests achieving 98%+ library coverage (changelog: 98.2%, renderer: 98.9%)" }
+      ]
+    },
+    {
       "version": "0.3.0",
       "date": "2026-01-04",
       "added": [

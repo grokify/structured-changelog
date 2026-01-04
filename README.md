@@ -2,6 +2,7 @@
 
 [![Build Status][build-status-svg]][build-status-url]
 [![Lint Status][lint-status-svg]][lint-status-url]
+[![Coverage][coverage-svg]][coverage-url]
 [![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
 [![Visualization][viz-svg]][viz-url]
@@ -161,16 +162,71 @@ sclog version
 
 ## JSON IR Schema
 
-The JSON IR supports all [Keep a Changelog](https://keepachangelog.com/) categories:
+### Change Types
 
-| Category     | Description                                      |
-|--------------|--------------------------------------------------|
-| `added`      | New features                                     |
-| `changed`    | Changes in existing functionality                |
-| `deprecated` | Features that will be removed in future releases |
-| `removed`    | Features removed in this release                 |
-| `fixed`      | Bug fixes                                        |
-| `security`   | Security vulnerability fixes                     |
+Structured Changelog supports 20 change types organized into 4 tiers. The **core** tier contains the standard [Keep a Changelog](https://keepachangelog.com/) categories, while higher tiers provide extended functionality.
+
+#### Tiers
+
+| Tier | Description |
+|------|-------------|
+| **core** | Standard types defined by Keep a Changelog (KACL) |
+| **standard** | Commonly used by major providers and popular open source projects |
+| **extended** | Change metadata for documentation, build, and acknowledgments |
+| **optional** | For deployment teams and internal operational visibility |
+
+#### Canonical Ordering
+
+The following table shows all change types in canonical order, grouped by purpose:
+
+```
+┌─ OVERVIEW & CRITICAL ─────────────────────────────────────────┐
+│  1. Highlights      standard   Release summaries/key takeaways│
+│  2. Breaking        standard   Backward-incompatible changes  │
+│  3. Upgrade Guide   standard   Migration instructions         │
+│  4. Security        core       Vulnerabilities/CVE fixes      │
+├─ CORE KACL ───────────────────────────────────────────────────┤
+│  5. Added           core       New features                   │
+│  6. Changed         core       Modified functionality         │
+│  7. Deprecated      core       Future removal warnings        │
+│  8. Removed         core       Removed features               │
+│  9. Fixed           core       Bug fixes                      │
+├─ QUALITY ─────────────────────────────────────────────────────┤
+│ 10. Performance     standard   Speed/efficiency improvements  │
+│ 11. Dependencies    standard   Dependency updates             │
+├─ DEVELOPMENT ─────────────────────────────────────────────────┤
+│ 12. Documentation   extended   Docs updates                   │
+│ 13. Build           extended   CI/CD and tooling              │
+│ 14. Tests           extended   Test additions and coverage    │
+├─ OPERATIONS ──────────────────────────────────────────────────┤
+│ 15. Infrastructure  optional   Deployment/hosting changes     │
+│ 16. Observability   optional   Logging/metrics/tracing        │
+│ 17. Compliance      optional   Regulatory updates             │
+├─ INTERNAL ────────────────────────────────────────────────────┤
+│ 18. Internal        optional   Refactors only (not tests)     │
+├─ END MATTER ──────────────────────────────────────────────────┤
+│ 19. Known Issues    extended   Caveats and limitations        │
+│ 20. Contributors    extended   Acknowledgments                │
+└───────────────────────────────────────────────────────────────┘
+```
+
+#### Tier-Based Filtering
+
+Use tiers to control which change types to include:
+
+```bash
+# Validate: ensure changelog covers at least core types
+sclog validate --min-tier core
+
+# Validate: require core + standard coverage
+sclog validate --min-tier standard
+
+# Generate: output only core types (KACL-compliant)
+sclog generate --max-tier core
+
+# Generate: include everything up to extended
+sclog generate --max-tier extended
+```
 
 ### Optional Security Metadata
 
@@ -311,6 +367,8 @@ MIT License - see [LICENSE](LICENSE) for details.
  [build-status-url]: https://github.com/grokify/structured-changelog/actions/workflows/ci.yaml
  [lint-status-svg]: https://github.com/grokify/structured-changelog/actions/workflows/lint.yaml/badge.svg?branch=main
  [lint-status-url]: https://github.com/grokify/structured-changelog/actions/workflows/lint.yaml
+ [coverage-svg]: https://img.shields.io/badge/coverage-98.1%25-brightgreen
+ [coverage-url]: https://github.com/grokify/structured-changelog
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/structured-changelog
  [goreport-url]: https://goreportcard.com/report/github.com/grokify/structured-changelog
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/structured-changelog
