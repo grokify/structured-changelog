@@ -25,6 +25,37 @@ Structured Changelog provides a machine-readable JSON Intermediate Representatio
 5. **Extensible metadata** — Optional security (CVE/GHSA/SARIF) and SBOM fields
 6. **Spec + tooling together** — Single source of truth for humans and machines
 
+### Relationship to Keep a Changelog
+
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) is the de-facto standard for human-readable changelogs. Structured Changelog builds on that foundation:
+
+> **Keep a Changelog is the human spec; Structured Changelog is the structured implementation.**
+
+| Concern | Keep a Changelog | Structured Changelog |
+|---------|------------------|----------------------|
+| Human-friendly text | ✓ | ✓ (via Markdown renderer) |
+| Machine-readable format | ✗ | ✓ (JSON IR) |
+| Deterministic rendering | ✗ | ✓ |
+| Security metadata | ✗ | ✓ (CVE/GHSA/SARIF) |
+| SBOM metadata | ✗ | ✓ |
+| Tooling / APIs | ✗ | ✓ (Go packages + CLI) |
+
+**What Keep a Changelog defines:**
+
+- Section structure (`## [Unreleased]`, `## [1.0.0] - YYYY-MM-DD`)
+- Categories (Added, Changed, Deprecated, Removed, Fixed, Security)
+- Semantic versioning and date formatting
+
+**What Structured Changelog adds:**
+
+- JSON schema for machine parsing
+- Deterministic ordering rules
+- Security fields (CVE, GHSA, severity, CVSS, CWE, SARIF)
+- SBOM fields (component, version, license)
+- CLI and Go library for automation
+
+The generated `CHANGELOG.md` conforms to Keep a Changelog 1.1.0 formatting conventions.
+
 ## Installation
 
 ```bash
@@ -166,6 +197,44 @@ Structured Changelog addresses `CHANGELOG.md` specifically. Understanding the di
 | **Examples** | Brief or none | Code samples, migration guides |
 | **Structure** | Standardized (Keep a Changelog) | Flexible, project-specific |
 
+### Content Placement Guidelines
+
+| Content Type | CHANGELOG.json | RELEASE_NOTES |
+|--------------|----------------|---------------|
+| Breaking change flag | ✓ `"breaking": true` | Detailed explanation |
+| Migration guide | ✗ | ✓ With code examples |
+| Code examples | ✗ | ✓ Before/after blocks |
+| API changes | Brief description | Full context + examples |
+| Dependency updates | Version numbers | Implications + upgrade steps |
+
+**Example: Breaking change workflow**
+
+In `CHANGELOG.json` — flag it concisely:
+
+```json
+{
+  "changed": [
+    { "description": "Module renamed to go-opik", "breaking": true }
+  ]
+}
+```
+
+In `RELEASE_NOTES_v0.5.0.md` — provide migration details:
+
+```markdown
+## Migration
+
+Update all imports:
+
+​```go
+// Before
+import opik "github.com/example/old-name"
+
+// After
+import opik "github.com/example/go-opik"
+​```
+```
+
 ### When to Use Each
 
 **CHANGELOG.md:**
@@ -180,6 +249,8 @@ Structured Changelog addresses `CHANGELOG.md` specifically. Understanding the di
 - Detailed feature explanations with usage examples
 - Dependency change implications
 - File-level change lists for major releases
+
+See [docs/release-notes-guide.md](docs/release-notes-guide.md) for recommended release notes structure.
 
 ## Project Structure
 

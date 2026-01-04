@@ -78,6 +78,52 @@ Entries may include SBOM (Software Bill of Materials) fields:
 | `component_version` | string | Component version |
 | `license` | string | SPDX license identifier |
 
+## Breaking Changes
+
+The `breaking` field marks entries that introduce breaking changes. When rendered with `MarkBreakingChanges: true`, these entries are prefixed with `**BREAKING:**`.
+
+### Usage
+
+Use `"breaking": true` on entries in the `changed` or `removed` categories:
+
+```json
+{
+  "changed": [
+    { "description": "Rename DoThing() to DoThingV2()", "breaking": true },
+    { "description": "Improve performance of DoOther()" }
+  ],
+  "removed": [
+    { "description": "Remove deprecated LegacyAPI", "breaking": true }
+  ]
+}
+```
+
+### Rendered Output
+
+```markdown
+### Changed
+
+- **BREAKING:** Rename DoThing() to DoThingV2()
+- Improve performance of DoOther()
+
+### Removed
+
+- **BREAKING:** Remove deprecated LegacyAPI
+```
+
+### Migration Guides
+
+Breaking changes in CHANGELOG.json should be concise. Detailed migration guides with code examples belong in `RELEASE_NOTES_vX.Y.Z.md`.
+
+| Content | CHANGELOG.json | RELEASE_NOTES |
+|---------|---------------|---------------|
+| Breaking flag | ✓ `"breaking": true` | Reference only |
+| What changed | ✓ Brief description | ✓ Full context |
+| Code examples | ✗ Never | ✓ Before/after |
+| Migration steps | ✗ Never | ✓ Step-by-step |
+
+See [release-notes-guide.md](release-notes-guide.md) for recommended release notes structure.
+
 ## Category Order
 
 Categories MUST be rendered in this order:
