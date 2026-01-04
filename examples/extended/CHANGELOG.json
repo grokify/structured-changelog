@@ -1,0 +1,88 @@
+{
+  "ir_version": "1.0",
+  "project": "extended-example",
+  "repository": "https://github.com/example/extended-example",
+  "releases": [
+    {
+      "version": "2.0.0",
+      "date": "2026-01-04",
+      "highlights": [
+        { "description": "Major release with breaking API changes and significant performance improvements" },
+        { "description": "New plugin architecture enables third-party extensions" }
+      ],
+      "breaking": [
+        { "description": "Renamed `Config.timeout` to `Config.requestTimeout` for clarity", "breaking": true },
+        { "description": "Removed deprecated `v1` API endpoints", "breaking": true }
+      ],
+      "upgrade_guide": [
+        { "description": "Update config files to use `requestTimeout` instead of `timeout`" },
+        { "description": "Migrate API calls from `/v1/*` to `/v2/*` endpoints" }
+      ],
+      "security": [
+        {
+          "description": "Fixed authentication bypass vulnerability",
+          "cve": "CVE-2026-12345",
+          "severity": "high"
+        }
+      ],
+      "added": [
+        { "description": "Plugin architecture for third-party extensions", "pr": "#456" },
+        { "description": "New `/v2/batch` endpoint for bulk operations", "pr": "#457" }
+      ],
+      "changed": [
+        { "description": "Improved error messages with actionable suggestions", "pr": "#458" }
+      ],
+      "deprecated": [
+        { "description": "Legacy authentication method will be removed in v3.0" }
+      ],
+      "removed": [
+        { "description": "Removed `/v1/*` API endpoints (deprecated since v1.5)" }
+      ],
+      "fixed": [
+        { "description": "Fixed memory leak in connection pool", "issue": "#123" },
+        { "description": "Fixed race condition in concurrent requests", "issue": "#124" }
+      ],
+      "performance": [
+        { "description": "Reduced API response latency by 40% through caching" },
+        { "description": "Optimized database queries for large datasets" }
+      ],
+      "dependencies": [
+        { "description": "Upgraded Go from 1.21 to 1.22", "component": "go", "component_version": "1.22" },
+        { "description": "Updated redis client to v9.0.0", "component": "redis/go-redis", "component_version": "9.0.0" }
+      ],
+      "documentation": [
+        { "description": "Added migration guide for v1 to v2 upgrade" },
+        { "description": "Updated API reference with new endpoints" }
+      ],
+      "build": [
+        { "description": "Added multi-platform Docker builds (amd64, arm64)" },
+        { "description": "Migrated CI from CircleCI to GitHub Actions" }
+      ],
+      "known_issues": [
+        { "description": "Batch endpoint limited to 1000 items per request" },
+        { "description": "ARM64 builds not yet tested on Windows" }
+      ],
+      "contributors": [
+        { "description": "@alice - Plugin architecture design and implementation" },
+        { "description": "@bob - Performance optimization work" },
+        { "description": "@charlie - Documentation updates" }
+      ]
+    },
+    {
+      "version": "1.5.0",
+      "date": "2025-12-01",
+      "added": [
+        { "description": "Initial v2 API preview (experimental)", "pr": "#400" }
+      ],
+      "deprecated": [
+        { "description": "v1 API endpoints deprecated, will be removed in v2.0" }
+      ],
+      "fixed": [
+        { "description": "Fixed timeout handling in long-running requests", "issue": "#100" }
+      ],
+      "performance": [
+        { "description": "Improved startup time by lazy-loading configuration" }
+      ]
+    }
+  ]
+}
