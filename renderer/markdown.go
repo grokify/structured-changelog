@@ -3,10 +3,14 @@ package renderer
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/grokify/structured-changelog/changelog"
 )
+
+// githubRepoPattern matches GitHub repository URLs and extracts owner/repo.
+var githubRepoPattern = regexp.MustCompile(`^https?://github\.com/([^/]+)/([^/]+?)(?:\.git)?/?$`)
 
 // RenderMarkdown renders a changelog to Keep a Changelog formatted Markdown.
 // The output is deterministic: same input always produces identical output.
@@ -35,6 +39,14 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 	for _, release := range cl.Releases {
 		sb.WriteString("\n")
 		renderRelease(&sb, &release, opts)
+	}
+
+	// Reference links at bottom (for GitHub repositories)
+	if opts.IncludeCompareLinks && cl.Repository != "" {
+		if links := renderReferenceLinks(cl); links != "" {
+			sb.WriteString("\n")
+			sb.WriteString(links)
+		}
 	}
 
 	return sb.String()
@@ -116,4 +128,39 @@ func formatRef(refType, value string) string {
 		return value
 	}
 	return fmt.Sprintf("#%s", value)
+}
+
+// renderReferenceLinks generates Keep a Changelog style reference links.
+// For GitHub repositories, it creates:
+// - Compare links for subsequent releases: /compare/v0.1.0...v0.2.0
+// - Tag links for the first release: /releases/tag/v0.1.0
+// - Compare to HEAD for unreleased: /compare/v0.2.0...HEAD
+func renderReferenceLinks(cl *changelog.Changelog) string {
+	matches := githubRepoPattern.FindStringSubmatch(cl.Repository)
+	if matches == nil {
+		return ""
+	}
+
+	baseURL := fmt.Sprintf("https://github.com/%s/%s", matches[1], matches[2])
+	var sb strings.Builder
+
+	// Unreleased link (if there are releases to compare against)
+	if cl.Unreleased != nil && len(cl.Releases) > 0 {
+		latestVersion := cl.Releases[0].Version
+		fmt.Fprintf(&sb, "[unreleased]: %s/compare/v%s...HEAD\n", baseURL, latestVersion)
+	}
+
+	// Release links
+	for i, release := range cl.Releases {
+		if i == len(cl.Releases)-1 {
+			// First/oldest release - link to tag
+			fmt.Fprintf(&sb, "[%s]: %s/releases/tag/v%s\n", release.Version, baseURL, release.Version)
+		} else {
+			// Subsequent releases - link to compare with previous
+			prevVersion := cl.Releases[i+1].Version
+			fmt.Fprintf(&sb, "[%s]: %s/compare/v%s...v%s\n", release.Version, baseURL, prevVersion, release.Version)
+		}
+	}
+
+	return sb.String()
 }

@@ -4,6 +4,17 @@
   "repository": "https://github.com/grokify/structured-changelog",
   "releases": [
     {
+      "version": "0.1.2",
+      "date": "2026-01-03",
+      "added": [
+        { "description": "GitHub version reference links at bottom of rendered Markdown" },
+        { "description": "Auto-detect GitHub repository from `repository` field" },
+        { "description": "First release links to `/releases/tag/vX.Y.Z`" },
+        { "description": "Subsequent releases link to `/compare/vA...vB`" },
+        { "description": "Unreleased section links to `/compare/vLatest...HEAD`" }
+      ]
+    },
+    {
       "version": "0.1.1",
       "date": "2026-01-03",
       "changed": [
