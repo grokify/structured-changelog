@@ -24,7 +24,7 @@ Structured Changelog provides a machine-readable JSON Intermediate Representatio
 
 1. **JSON IR is canonical** — Markdown is derived, not the source of truth
 2. **Deterministic rendering** — Same input always produces identical output
-3. **Keep a Changelog format** — Compatible with [keepachangelog.com](https://keepachangelog.com/)
+3. **Keep a Changelog format** — Compatible with [keepachangelog.com](https://keepachangelog.com/) - [`github.com/olivierlacan/keep-a-changelog`](https://github.com/olivierlacan/keep-a-changelog)
 4. **Semantic Versioning** — Follows [semver.org](https://semver.org/) conventions
 5. **Extensible metadata** — Optional security (CVE/GHSA/SARIF) and SBOM fields
 6. **Spec + tooling together** — Single source of truth for humans and machines
