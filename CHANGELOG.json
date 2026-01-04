@@ -11,7 +11,8 @@
         { "description": "Auto-detect GitHub repository from `repository` field" },
         { "description": "First release links to `/releases/tag/vX.Y.Z`" },
         { "description": "Subsequent releases link to `/compare/vA...vB`" },
-        { "description": "Unreleased section links to `/compare/vLatest...HEAD`" }
+        { "description": "Unreleased section links to `/compare/vLatest...HEAD`" },
+        { "description": "Dependabot configuration for Go modules and GitHub Actions" }
       ],
       "changed": [
         { "description": "Add Structured Changelog attribution to rendered Markdown header" }
