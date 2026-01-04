@@ -7,9 +7,6 @@
 [![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/grokify/structured-changelog.svg)](https://pkg.go.dev/github.com/grokify/structured-changelog)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
 **A canonical, deterministic changelog framework with JSON IR and Markdown rendering.**
 
 Structured Changelog provides a machine-readable JSON Intermediate Representation (IR) as the source of truth for your changelog, with deterministic Markdown generation for human readability. It supports optional security metadata (CVE, GHSA, SARIF) and SBOM information.
