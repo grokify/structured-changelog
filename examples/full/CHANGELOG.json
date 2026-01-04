@@ -1,0 +1,70 @@
+{
+  "ir_version": "1.0",
+  "project": "omniobserve",
+  "repository": "https://github.com/agentplexus/omniobserve",
+  "generated_at": "2026-01-03T21:42:00Z",
+  "unreleased": {
+    "added": [
+      { "description": "Prometheus metrics exporter" }
+    ]
+  },
+  "releases": [
+    {
+      "version": "0.5.0",
+      "date": "2026-01-03",
+      "added": [
+        {
+          "description": "`AnnotationManager` interface for span/trace annotations",
+          "pr": "#42"
+        },
+        {
+          "description": "`DatasetManager` new methods: `GetDatasetByID`, `DeleteDataset`",
+          "pr": "#43"
+        },
+        {
+          "description": "Prompt model/provider options: `WithPromptModel`, `WithPromptProvider`"
+        },
+        {
+          "description": "OmniLLM hook auto-creates traces when none exists in context"
+        },
+        {
+          "description": "Trace context helpers (`contextWithTrace`, `traceFromContext`)"
+        },
+        {
+          "description": "`llmops/metrics` package with evaluation metrics",
+          "pr": "#45"
+        }
+      ],
+      "changed": [
+        {
+          "description": "Provider adapters moved to standalone SDKs",
+          "breaking": true
+        }
+      ],
+      "removed": [
+        {
+          "description": "`llmops/opik` adapter (moved to go-opik)",
+          "breaking": true
+        },
+        {
+          "description": "`llmops/phoenix` adapter (moved to go-phoenix)",
+          "breaking": true
+        },
+        {
+          "description": "`sdk/phoenix` package (use go-phoenix directly)",
+          "breaking": true
+        }
+      ]
+    },
+    {
+      "version": "0.4.0",
+      "date": "2025-12-01",
+      "added": [
+        { "description": "Initial provider abstraction layer" },
+        { "description": "Opik integration" },
+        { "description": "Phoenix integration" },
+        { "description": "Langfuse integration" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "ir_version": "1.0",
+  "project": "structured-changelog",
+  "repository": "https://github.com/grokify/structured-changelog",
+  "releases": [
+    {
+      "version": "0.1.0",
+      "date": "2026-01-03",
+      "added": [
+        { "description": "JSON IR schema for structured changelogs (v1.0)" },
+        { "description": "`changelog` package with IR types, parsing, and validation" },
+        { "description": "`renderer` package with deterministic Markdown generation" },
+        { "description": "`sclog` CLI with `validate` and `generate` subcommands" },
+        { "description": "Support for Keep a Changelog categories: added, changed, deprecated, removed, fixed, security" },
+        { "description": "Optional security metadata: CVE, GHSA, severity, CVSS, CWE" },
+        { "description": "Optional SBOM metadata: component, version, license" },
+        { "description": "JSON Schema for IR validation" },
+        { "description": "Example changelogs: basic, security, full" },
+        { "description": "Documentation: spec, security guide, SBOM guide" }
+      ]
+    }
+  ]
+}

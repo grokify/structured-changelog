@@ -1,0 +1,35 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+- New user profile page
+
+## [1.1.0] - 2026-01-03
+
+### Added
+
+- Dark mode support
+- Export to PDF functionality
+
+### Changed
+
+- Improved loading performance by 40%
+
+### Fixed
+
+- Fixed crash on startup with empty config
+
+## [1.0.0] - 2025-12-01
+
+### Added
+
+- Initial release with core features
+- User authentication
+- Dashboard with analytics

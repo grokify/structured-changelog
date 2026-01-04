@@ -1,0 +1,49 @@
+{
+  "ir_version": "1.0",
+  "project": "secure-app",
+  "repository": "https://github.com/example/secure-app",
+  "releases": [
+    {
+      "version": "2.1.1",
+      "date": "2026-01-03",
+      "security": [
+        {
+          "description": "Fix SQL injection vulnerability in user search",
+          "cve": "CVE-2026-12345",
+          "ghsa": "GHSA-abcd-efgh-ijkl",
+          "severity": "high",
+          "cvss_score": 8.5,
+          "cwe": "CWE-89",
+          "affected_versions": "<2.1.1",
+          "patched_versions": ">=2.1.1"
+        },
+        {
+          "description": "Fix XSS vulnerability in comment rendering",
+          "cve": "CVE-2026-12346",
+          "severity": "medium",
+          "cvss_score": 6.1,
+          "cwe": "CWE-79"
+        }
+      ],
+      "fixed": [
+        { "description": "Improved input validation across all forms" }
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "2025-12-15",
+      "added": [
+        { "description": "Two-factor authentication support" },
+        { "description": "Audit logging for sensitive operations" }
+      ],
+      "security": [
+        {
+          "description": "Upgrade bcrypt to address timing attack",
+          "severity": "low",
+          "component": "golang.org/x/crypto",
+          "component_version": "0.18.0"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/grokify/structured-changelog/schema/changelog-v1.schema.json",
+  "title": "Structured Changelog IR",
+  "description": "JSON Intermediate Representation for changelogs following Keep a Changelog format",
+  "type": "object",
+  "required": ["ir_version", "project"],
+  "properties": {
+    "ir_version": {
+      "type": "string",
+      "description": "Version of the IR schema",
+      "enum": ["1.0"]
+    },
+    "project": {
+      "type": "string",
+      "description": "Name of the project"
+    },
+    "repository": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the project repository"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when this IR was generated"
+    },
+    "unreleased": {
+      "$ref": "#/definitions/releaseContent",
+      "description": "Changes not yet released"
+    },
+    "releases": {
+      "type": "array",
+      "description": "List of releases in reverse chronological order",
+      "items": {
+        "$ref": "#/definitions/release"
+      }
+    }
+  },
+  "definitions": {
+    "release": {
+      "type": "object",
+      "required": ["version", "date"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Semantic version string",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Release date in YYYY-MM-DD format"
+        },
+        "yanked": {
+          "type": "boolean",
+          "description": "Whether this release has been yanked/retracted",
+          "default": false
+        },
+        "compare_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to compare this release with the previous one"
+        },
+        "added": {
+          "$ref": "#/definitions/entryList"
+        },
+        "changed": {
+          "$ref": "#/definitions/entryList"
+        },
+        "deprecated": {
+          "$ref": "#/definitions/entryList"
+        },
+        "removed": {
+          "$ref": "#/definitions/entryList"
+        },
+        "fixed": {
+          "$ref": "#/definitions/entryList"
+        },
+        "security": {
+          "$ref": "#/definitions/securityEntryList"
+        }
+      }
+    },
+    "releaseContent": {
+      "type": "object",
+      "properties": {
+        "added": {
+          "$ref": "#/definitions/entryList"
+        },
+        "changed": {
+          "$ref": "#/definitions/entryList"
+        },
+        "deprecated": {
+          "$ref": "#/definitions/entryList"
+        },
+        "removed": {
+          "$ref": "#/definitions/entryList"
+        },
+        "fixed": {
+          "$ref": "#/definitions/entryList"
+        },
+        "security": {
+          "$ref": "#/definitions/securityEntryList"
+        }
+      }
+    },
+    "entryList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/entry"
+      }
+    },
+    "securityEntryList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/securityEntry"
+      }
+    },
+    "entry": {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the change"
+        },
+        "issue": {
+          "type": "string",
+          "description": "Issue number or URL"
+        },
+        "pr": {
+          "type": "string",
+          "description": "Pull request number or URL"
+        },
+        "commit": {
+          "type": "string",
+          "description": "Commit SHA"
+        },
+        "author": {
+          "type": "string",
+          "description": "Author of the change"
+        },
+        "breaking": {
+          "type": "boolean",
+          "description": "Whether this is a breaking change",
+          "default": false
+        },
+        "component": {
+          "type": "string",
+          "description": "SBOM: Component name affected"
+        },
+        "component_version": {
+          "type": "string",
+          "description": "SBOM: Component version"
+        },
+        "license": {
+          "type": "string",
+          "description": "SBOM: License identifier (SPDX)"
+        }
+      }
+    },
+    "securityEntry": {
+      "allOf": [
+        { "$ref": "#/definitions/entry" },
+        {
+          "type": "object",
+          "properties": {
+            "cve": {
+              "type": "string",
+              "description": "CVE identifier",
+              "pattern": "^CVE-\\d{4}-\\d{4,}$"
+            },
+            "ghsa": {
+              "type": "string",
+              "description": "GitHub Security Advisory identifier",
+              "pattern": "^GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}$"
+            },
+            "severity": {
+              "type": "string",
+              "description": "Severity level",
+              "enum": ["critical", "high", "medium", "low", "informational"]
+            },
+            "cvss_score": {
+              "type": "number",
+              "description": "CVSS score (0.0-10.0)",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "cvss_vector": {
+              "type": "string",
+              "description": "CVSS vector string"
+            },
+            "cwe": {
+              "type": "string",
+              "description": "CWE identifier",
+              "pattern": "^CWE-\\d+$"
+            },
+            "affected_versions": {
+              "type": "string",
+              "description": "Version range affected (e.g., '<1.2.3')"
+            },
+            "patched_versions": {
+              "type": "string",
+              "description": "Version range with fix (e.g., '>=1.2.3')"
+            },
+            "sarif_rule_id": {
+              "type": "string",
+              "description": "SARIF rule ID for linking to static analysis results"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
