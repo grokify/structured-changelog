@@ -1,4 +1,4 @@
-.PHONY: all build test lint coverage clean sync-check help
+.PHONY: all build test lint coverage clean sync-check docs docs-serve help
 
 # Default target
 all: sync-check lint test build
@@ -47,6 +47,14 @@ examples:
 	./bin/sclog generate examples/full/CHANGELOG.json -o examples/full/CHANGELOG.md
 	./bin/sclog generate examples/extended/CHANGELOG.json -o examples/extended/CHANGELOG.md
 
+# Build documentation (MkDocs)
+docs:
+	mkdocs build
+
+# Serve documentation locally
+docs-serve:
+	mkdocs serve
+
 # Help
 help:
 	@echo "Available targets:"
@@ -59,4 +67,6 @@ help:
 	@echo "  sync-check  - Verify CHANGE_TYPES.json files are in sync"
 	@echo "  sync        - Copy CHANGE_TYPES.json to changelog/change_types.json"
 	@echo "  examples    - Generate example markdown files"
+	@echo "  docs        - Build documentation (MkDocs)"
+	@echo "  docs-serve  - Serve documentation locally"
 	@echo "  help        - Show this help message"
