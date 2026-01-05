@@ -165,7 +165,7 @@ sclog version
 The CLI includes tools optimized for AI-assisted changelog generation, reducing token usage by ~5x:
 
 ```bash
-sclog parse-commits --since=v0.3.0    # Structured git history
+sclog parse-commits --since=v0.3.0     # Structured git history
 sclog suggest-category "feat: ..."     # Category suggestions
 sclog validate --json CHANGELOG.json   # Rich error output
 ```
