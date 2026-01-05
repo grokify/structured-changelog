@@ -122,7 +122,7 @@ Breaking changes in CHANGELOG.json should be concise. Detailed migration guides 
 | Code examples | ✗ Never | ✓ Before/after |
 | Migration steps | ✗ Never | ✓ Step-by-step |
 
-See [release-notes-guide.md](release-notes-guide.md) for recommended release notes structure.
+See the [Release Notes Guide](../guides/release-notes-guide.md) for recommended release notes structure.
 
 ## Category Order
 

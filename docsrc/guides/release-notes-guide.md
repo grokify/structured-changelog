@@ -192,7 +192,7 @@ Planned for v2.1.0:
 
 ## Template
 
-A complete template is available at [templates/RELEASE_NOTES_TEMPLATE.md](../templates/RELEASE_NOTES_TEMPLATE.md).
+Use the structure above as a template, or see the examples below.
 
 ## Naming Convention
 
@@ -238,5 +238,5 @@ Then expand with migration guides, code examples, and context.
 
 See real-world examples:
 
-- [RELEASE_NOTES_v0.1.0.md](../RELEASE_NOTES_v0.1.0.md) — This project's initial release
-- [examples/full/](../examples/full/) — Example with breaking changes
+- [v0.1.0 Release Notes](../releases/v0.1.0.md) — This project's initial release
+- [v0.4.0 Release Notes](../releases/v0.4.0.md) — Tier-based change types
