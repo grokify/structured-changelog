@@ -160,6 +160,18 @@ Show version:
 sclog version
 ```
 
+### LLM-Assisted Generation
+
+The CLI includes tools optimized for AI-assisted changelog generation, reducing token usage by ~5x:
+
+```bash
+sclog parse-commits --since=v0.3.0    # Structured git history
+sclog suggest-category "feat: ..."     # Category suggestions
+sclog validate --json CHANGELOG.json   # Rich error output
+```
+
+See the [LLM Guide](https://grokify.github.io/structured-changelog/guides/llm-guide/) for prompts and workflows.
+
 ## JSON IR Schema
 
 ### Change Types
@@ -321,7 +333,7 @@ import opik "github.com/example/go-opik"
 - Dependency change implications
 - File-level change lists for major releases
 
-See [docs/release-notes-guide.md](docs/release-notes-guide.md) for recommended release notes structure.
+See [docsrc/guides/release-notes-guide.md](docsrc/guides/release-notes-guide.md) for recommended release notes structure.
 
 ## Project Structure
 
@@ -335,6 +347,11 @@ structured-changelog/
 │   ├── entry.go
 │   ├── release.go
 │   └── validate.go
+├── gitlog/             # Git log parsing for LLM workflows
+│   ├── commit.go
+│   ├── conventional.go
+│   ├── category.go
+│   └── parser.go
 ├── renderer/           # Deterministic Markdown renderer
 │   ├── markdown.go
 │   └── options.go
@@ -342,13 +359,18 @@ structured-changelog/
 │   ├── main.go
 │   ├── root.go
 │   ├── validate.go
-│   └── generate.go
+│   ├── generate.go
+│   ├── parse_commits.go
+│   └── suggest_category.go
 ├── schema/             # JSON Schema definitions
 │   └── changelog-v1.schema.json
-├── docs/               # Specification documentation
-│   ├── spec.md
-│   ├── security.md
-│   └── sbom.md
+├── docsrc/             # Documentation source (MkDocs)
+│   ├── index.md
+│   ├── specification/
+│   ├── guides/
+│   ├── prd/
+│   └── releases/
+├── docs/               # Generated documentation (GitHub Pages)
 └── examples/           # Example changelogs
     ├── basic/
     ├── security/

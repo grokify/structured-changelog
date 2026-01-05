@@ -1,0 +1,66 @@
+site_name: Structured Changelog
+site_description: A canonical, deterministic changelog framework with JSON IR and Markdown rendering
+site_url: https://grokify.github.io/structured-changelog/
+repo_url: https://github.com/grokify/structured-changelog
+repo_name: grokify/structured-changelog
+
+docs_dir: docsrc
+site_dir: docs
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Changelog: changelog.md
+  - Specification:
+      - JSON IR Spec: specification/spec.md
+      - Security Metadata: specification/security.md
+      - SBOM Metadata: specification/sbom.md
+  - Guides:
+      - LLM-Assisted Generation: guides/llm-guide.md
+      - Release Notes Guide: guides/release-notes-guide.md
+  - PRDs:
+      - Tools Integration: prd/tools.md
+      - Localization: prd/localization.md
+      - Rendering: prd/rendering.md
+  - Releases:
+      - v0.4.0: releases/v0.4.0.md
+      - v0.3.0: releases/v0.3.0.md
+      - v0.2.0: releases/v0.2.0.md
+      - v0.1.0: releases/v0.1.0.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/grokify/structured-changelog
