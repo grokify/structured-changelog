@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -14,6 +15,7 @@ var (
 	validateStrict   bool
 	validateWarnings bool
 	validateMinTier  string
+	validateJSON     bool
 )
 
 var validateCmd = &cobra.Command{
@@ -50,6 +52,7 @@ func init() {
 	validateCmd.Flags().BoolVar(&validateStrict, "strict", false, "Enable strict validation (treat warnings as errors)")
 	validateCmd.Flags().BoolVar(&validateWarnings, "warnings", true, "Show warnings")
 	validateCmd.Flags().StringVar(&validateMinTier, "min-tier", "", "Minimum tier to require coverage for (core, standard, extended, optional)")
+	validateCmd.Flags().BoolVar(&validateJSON, "json", false, "Output validation results as JSON with rich error details")
 	rootCmd.AddCommand(validateCmd)
 }
 
@@ -62,7 +65,12 @@ func runValidate(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to load %s: %w", inputFile, err)
 	}
 
-	// Validate
+	// Use rich validation for JSON output
+	if validateJSON {
+		return runValidateJSON(cl, inputFile)
+	}
+
+	// Standard validation
 	result := cl.Validate()
 
 	if !result.Valid {
@@ -89,6 +97,71 @@ func runValidate(cmd *cobra.Command, args []string) error {
 	// Print summary
 	printSummary(cl)
 
+	return nil
+}
+
+func runValidateJSON(cl *changelog.Changelog, _ string) error {
+	result := cl.ValidateRich()
+
+	// Add tier validation as warning if specified
+	if validateMinTier != "" {
+		tier, err := changelog.ParseTier(validateMinTier)
+		if err != nil {
+			result.Warnings = append(result.Warnings, changelog.RichValidationError{
+				Code:       changelog.WarnCodeNoTierCoverage,
+				Severity:   changelog.SeverityWarning,
+				Path:       "min-tier",
+				Message:    fmt.Sprintf("Invalid tier %q specified", validateMinTier),
+				Suggestion: "Use one of: core, standard, extended, optional",
+			})
+		} else if err := cl.ValidateMinTier(tier); err != nil {
+			if validateStrict {
+				result.Valid = false
+				result.Errors = append(result.Errors, changelog.RichValidationError{
+					Code:       changelog.WarnCodeNoTierCoverage,
+					Severity:   changelog.SeverityError,
+					Path:       "releases[0]",
+					Message:    fmt.Sprintf("No entries at or above tier %q", tier),
+					Suggestion: fmt.Sprintf("Add at least one entry in a %s-tier category", tier),
+				})
+			} else {
+				result.Warnings = append(result.Warnings, changelog.RichValidationError{
+					Code:       changelog.WarnCodeNoTierCoverage,
+					Severity:   changelog.SeverityWarning,
+					Path:       "releases[0]",
+					Message:    fmt.Sprintf("No entries at or above tier %q", tier),
+					Suggestion: fmt.Sprintf("Add at least one entry in a %s-tier category", tier),
+				})
+			}
+		}
+	}
+
+	// In strict mode, treat warnings as errors
+	if validateStrict && len(result.Warnings) > 0 {
+		result.Valid = false
+		result.Errors = append(result.Errors, result.Warnings...)
+		result.Warnings = nil
+	}
+
+	// Filter warnings if disabled
+	if !validateWarnings {
+		result.Warnings = nil
+	}
+
+	// Update summary counts
+	result.Summary.ErrorCount = len(result.Errors)
+	result.Summary.WarningCount = len(result.Warnings)
+
+	jsonBytes, err := json.MarshalIndent(result, "", "  ")
+	if err != nil {
+		return fmt.Errorf("failed to marshal JSON: %w", err)
+	}
+
+	fmt.Println(string(jsonBytes))
+
+	if !result.Valid {
+		return fmt.Errorf("validation failed")
+	}
 	return nil
 }
 
