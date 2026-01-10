@@ -12,27 +12,27 @@
         { "description": "TOON output format for LLM commands (~8x token reduction vs raw git log), GitLab repository support, and automatic reference linking" }
       ],
       "added": [
-        { "description": "TOON (Token-Oriented Object Notation) as default output format for `parse-commits`, `suggest-category`, and `validate --format`" },
-        { "description": "`--format` flag for LLM commands supporting `toon` (default), `json`, and `json-compact`" },
-        { "description": "GitLab repository support for reference links and version comparisons" },
-        { "description": "Automatic reference linking: issues, PRs, and commits become clickable links when repository URL is provided" },
-        { "description": "`LinkReferences` renderer option (enabled in `FullOptions`) for hyperlinking references" },
-        { "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`" },
-        { "description": "`commit_convention` field in changelog IR: `conventional` or `none`" },
-        { "description": "Dynamic header generation based on versioning scheme and commit convention" },
-        { "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)" }
+        { "description": "TOON (Token-Oriented Object Notation) as default output format for `parse-commits`, `suggest-category`, and `validate --format`", "commit": "2be0cc0" },
+        { "description": "`--format` flag for LLM commands supporting `toon` (default), `json`, and `json-compact`", "commit": "2be0cc0" },
+        { "description": "GitLab repository support for reference links and version comparisons", "commit": "be9b3b0" },
+        { "description": "Automatic reference linking: issues, PRs, and commits become clickable links when repository URL is provided", "commit": "be9b3b0" },
+        { "description": "`LinkReferences` renderer option (enabled in `FullOptions`) for hyperlinking references", "commit": "be9b3b0" },
+        { "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`", "commit": "93b8da1" },
+        { "description": "`commit_convention` field in changelog IR: `conventional` or `none`", "commit": "93b8da1" },
+        { "description": "Dynamic header generation based on versioning scheme and commit convention", "commit": "be9b3b0" },
+        { "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)", "commit": "93b8da1" }
       ],
       "changed": [
-        { "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON", "breaking": true },
-        { "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag", "breaking": true },
-        { "description": "`validate`: `--json` flag replaced with `--format` flag", "breaking": true },
-        { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output" }
+        { "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON", "breaking": true, "commit": "2be0cc0" },
+        { "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
+        { "description": "`validate`: `--json` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
+        { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output", "commit": "be9b3b0" }
       ],
       "documentation": [
-        { "description": "TOON integration design document" },
-        { "description": "Updated LLM guide with TOON examples and ~8x token efficiency" },
-        { "description": "Reference linking documentation in specification" },
-        { "description": "Claude Code project configuration with `/changelog` slash command" }
+        { "description": "TOON integration design document", "commit": "f5850bf" },
+        { "description": "Updated LLM guide with TOON examples and ~8x token efficiency", "commit": "f5850bf" },
+        { "description": "Reference linking documentation in specification", "commit": "f5850bf" },
+        { "description": "Claude Code project configuration with `/changelog` slash command", "commit": "8d4cf61" }
       ]
     },
     {
@@ -42,15 +42,15 @@
         { "description": "LLM-assisted changelog generation with optimized git parsing (~5x token reduction) and automatic commit classification" }
       ],
       "added": [
-        { "description": "`parse-commits` command for LLM-optimized git history output (~5x token reduction vs raw git log)" },
-        { "description": "`suggest-category` command for commit classification with confidence levels" },
-        { "description": "`--json` flag for `validate` command with structured error output, line numbers, and fix suggestions" },
-        { "description": "MkDocs documentation site with Material theme" },
-        { "description": "LLM integration guide with prompts and workflows" },
-        { "description": "PRD documents for planned localization and rendering features" }
+        { "description": "`parse-commits` command for LLM-optimized git history output (~5x token reduction vs raw git log)", "commit": "4503119" },
+        { "description": "`suggest-category` command for commit classification with confidence levels", "commit": "1432b6e" },
+        { "description": "`--json` flag for `validate` command with structured error output, line numbers, and fix suggestions", "commit": "1c705e9" },
+        { "description": "MkDocs documentation site with Material theme", "commit": "c8b280d" },
+        { "description": "LLM integration guide with prompts and workflows", "commit": "178f6a0" },
+        { "description": "PRD documents for planned localization and rendering features", "commit": "20c1f7f" }
       ],
       "documentation": [
-        { "description": "Release notes consolidated in `docsrc/releases/` for MkDocs site" }
+        { "description": "Release notes consolidated in `docsrc/releases/` for MkDocs site", "commit": "cac7f70" }
       ]
     },
     {
@@ -60,19 +60,19 @@
         { "description": "Extend Keep a Changelog with 13 additional change types organized into tiers for flexible filtering and validation" }
       ],
       "added": [
-        { "description": "Tier-based change type system with 4 levels: **core** (KACL standard), **standard** (common extensions), **extended** (docs/build/acknowledgments), **optional** (operations/internal)" },
-        { "description": "19 change types in canonical order (see `CHANGE_TYPES.json`)" },
-        { "description": "New change types beyond Keep a Changelog: Highlights, Breaking, Upgrade Guide, Performance, Dependencies, Documentation, Build, Infrastructure, Observability, Compliance, Internal, Known Issues, Contributors" },
-        { "description": "CLI flags: `--max-tier` for generate, `--min-tier` for validate" },
-        { "description": "Library functions: `Summary()`, `ValidateMinTier()`, `ParseTier()`, `OptionsFromConfig()`" },
-        { "description": "Canonical ordering documentation in README.md" }
+        { "description": "Tier-based change type system with 4 levels: **core** (KACL standard), **standard** (common extensions), **extended** (docs/build/acknowledgments), **optional** (operations/internal)", "commit": "b185758" },
+        { "description": "19 change types in canonical order (see `CHANGE_TYPES.json`)", "commit": "b185758" },
+        { "description": "New change types beyond Keep a Changelog: Highlights, Breaking, Upgrade Guide, Performance, Dependencies, Documentation, Build, Infrastructure, Observability, Compliance, Internal, Known Issues, Contributors", "commit": "b185758" },
+        { "description": "CLI flags: `--max-tier` for generate, `--min-tier` for validate", "commit": "b185758" },
+        { "description": "Library functions: `Summary()`, `ValidateMinTier()`, `ParseTier()`, `OptionsFromConfig()`", "commit": "b185758" },
+        { "description": "Canonical ordering documentation in README.md", "commit": "fd7312c" }
       ],
       "changed": [
-        { "description": "Change types now support tier-based filtering for validation and generation" },
-        { "description": "CLI refactored to use library functions for better testability" }
+        { "description": "Change types now support tier-based filtering for validation and generation", "commit": "b185758" },
+        { "description": "CLI refactored to use library functions for better testability", "commit": "b185758" }
       ],
       "tests": [
-        { "description": "Comprehensive unit tests achieving 98%+ library coverage (changelog: 98.2%, renderer: 98.9%)" }
+        { "description": "Comprehensive unit tests achieving 98%+ library coverage (changelog: 98.2%, renderer: 98.9%)", "commit": "da9559e" }
       ]
     },
     {
@@ -82,10 +82,10 @@
         { "description": "Install via Homebrew or download pre-built binaries for Linux, macOS, and Windows - no Go toolchain required" }
       ],
       "added": [
-        { "description": "GoReleaser configuration for multi-platform binary releases (Linux, macOS, Windows × amd64, arm64)" },
-        { "description": "GitHub Actions release workflow triggered by version tags" },
-        { "description": "Homebrew tap distribution via `brew install structured-changelog`" },
-        { "description": "Binary symlink: both `sclog` and `structured-changelog` commands available" }
+        { "description": "GoReleaser configuration for multi-platform binary releases (Linux, macOS, Windows × amd64, arm64)", "commit": "5f2adeb" },
+        { "description": "GitHub Actions release workflow triggered by version tags", "commit": "5f2adeb" },
+        { "description": "Homebrew tap distribution via `brew install structured-changelog`", "commit": "5f2adeb" },
+        { "description": "Binary symlink: both `sclog` and `structured-changelog` commands available", "commit": "5f2adeb" }
       ]
     },
     {
@@ -95,15 +95,15 @@
         { "description": "Generated changelogs now include clickable version comparison links for easy navigation on GitHub" }
       ],
       "added": [
-        { "description": "GitHub version reference links at bottom of rendered Markdown" },
-        { "description": "Auto-detect GitHub repository from `repository` field" },
-        { "description": "First release links to `/releases/tag/vX.Y.Z`" },
-        { "description": "Subsequent releases link to `/compare/vA...vB`" },
-        { "description": "Unreleased section links to `/compare/vLatest...HEAD`" },
-        { "description": "Dependabot configuration for Go modules and GitHub Actions" }
+        { "description": "GitHub version reference links at bottom of rendered Markdown", "commit": "b810bf0" },
+        { "description": "Auto-detect GitHub repository from `repository` field", "commit": "b810bf0" },
+        { "description": "First release links to `/releases/tag/vX.Y.Z`", "commit": "b810bf0" },
+        { "description": "Subsequent releases link to `/compare/vA...vB`", "commit": "b810bf0" },
+        { "description": "Unreleased section links to `/compare/vLatest...HEAD`", "commit": "b810bf0" },
+        { "description": "Dependabot configuration for Go modules and GitHub Actions", "commit": "36ee0c5" }
       ],
       "changed": [
-        { "description": "Add Structured Changelog attribution to rendered Markdown header" }
+        { "description": "Add Structured Changelog attribution to rendered Markdown header", "commit": "7c18e7b" }
       ]
     },
     {
@@ -113,16 +113,16 @@
         { "description": "Machine-readable JSON changelog with deterministic Markdown generation following Keep a Changelog format" }
       ],
       "added": [
-        { "description": "JSON IR schema for structured changelogs (v1.0)" },
-        { "description": "`changelog` package with IR types, parsing, and validation" },
-        { "description": "`renderer` package with deterministic Markdown generation" },
-        { "description": "`sclog` CLI with `validate` and `generate` subcommands" },
-        { "description": "Support for Keep a Changelog categories: added, changed, deprecated, removed, fixed, security" },
-        { "description": "Optional security metadata: CVE, GHSA, severity, CVSS, CWE" },
-        { "description": "Optional SBOM metadata: component, version, license" },
-        { "description": "JSON Schema for IR validation" },
-        { "description": "Example changelogs: basic, security, full" },
-        { "description": "Documentation: spec, security guide, SBOM guide" }
+        { "description": "JSON IR schema for structured changelogs (v1.0)", "commit": "0ba99fc" },
+        { "description": "`changelog` package with IR types, parsing, and validation", "commit": "0ba99fc" },
+        { "description": "`renderer` package with deterministic Markdown generation", "commit": "0ba99fc" },
+        { "description": "`sclog` CLI with `validate` and `generate` subcommands", "commit": "0ba99fc" },
+        { "description": "Support for Keep a Changelog categories: added, changed, deprecated, removed, fixed, security", "commit": "0ba99fc" },
+        { "description": "Optional security metadata: CVE, GHSA, severity, CVSS, CWE", "commit": "0ba99fc" },
+        { "description": "Optional SBOM metadata: component, version, license", "commit": "0ba99fc" },
+        { "description": "JSON Schema for IR validation", "commit": "0ba99fc" },
+        { "description": "Example changelogs: basic, security, full", "commit": "0ba99fc" },
+        { "description": "Documentation: spec, security guide, SBOM guide", "commit": "0ba99fc" }
       ]
     }
   ]
