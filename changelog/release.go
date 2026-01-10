@@ -74,6 +74,31 @@ func (r *Release) IsEmpty() bool {
 		len(r.Contributors) == 0
 }
 
+// IsMaintenanceOnly returns true if the release contains only maintenance-type
+// changes (dependencies, documentation, build, tests, internal) and no
+// user-facing changes (added, changed, fixed, removed, security, etc.).
+func (r *Release) IsMaintenanceOnly() bool {
+	// Must have at least one entry to be considered maintenance
+	if r.IsEmpty() {
+		return false
+	}
+
+	// User-facing categories - if any have entries, not maintenance-only
+	hasUserFacing := len(r.Highlights) > 0 ||
+		len(r.Breaking) > 0 ||
+		len(r.UpgradeGuide) > 0 ||
+		len(r.Security) > 0 ||
+		len(r.Added) > 0 ||
+		len(r.Changed) > 0 ||
+		len(r.Deprecated) > 0 ||
+		len(r.Removed) > 0 ||
+		len(r.Fixed) > 0 ||
+		len(r.Performance) > 0 ||
+		len(r.KnownIssues) > 0
+
+	return !hasUserFacing
+}
+
 // Categories returns all non-empty categories in canonical order.
 func (r *Release) Categories() []Category {
 	return r.CategoriesFiltered(TierOptional)
