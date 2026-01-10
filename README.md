@@ -30,38 +30,17 @@ Structured Changelog provides a machine-readable JSON Intermediate Representatio
 5. **Extensible metadata** — Optional security (CVE/GHSA/SARIF) and SBOM fields
 6. **Spec + tooling together** — Single source of truth for humans and machines
 
-### Relationship to Keep a Changelog
+### Comparison
 
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) is the de-facto standard for human-readable changelogs. Structured Changelog builds on that foundation:
+#### Keep a Changelog (the specification)
+
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) is the de-facto standard for human-readable changelogs. Structured Changelog implements this specification with a machine-readable JSON layer:
 
 > **Keep a Changelog is the human spec; Structured Changelog is the structured implementation.**
 
-| Concern | Keep a Changelog | Structured Changelog |
-|---------|------------------|----------------------|
-| Human-friendly text | ✓ | ✓ (via Markdown renderer) |
-| Machine-readable format | ✗ | ✓ (JSON IR) |
-| Deterministic rendering | ✗ | ✓ |
-| Security metadata | ✗ | ✓ (CVE/GHSA/SARIF) |
-| SBOM metadata | ✗ | ✓ |
-| Tooling / APIs | ✗ | ✓ (Go packages + CLI) |
+The generated `CHANGELOG.md` conforms to Keep a Changelog 1.1.0 formatting conventions, while adding JSON schema for machine parsing, security fields (CVE/GHSA/CVSS), and SBOM metadata.
 
-**What Keep a Changelog defines:**
-
-- Section structure (`## [Unreleased]`, `## [1.0.0] - YYYY-MM-DD`)
-- Categories (Added, Changed, Deprecated, Removed, Fixed, Security)
-- Semantic versioning and date formatting
-
-**What Structured Changelog adds:**
-
-- JSON schema for machine parsing
-- Deterministic ordering rules
-- Security fields (CVE, GHSA, severity, CVSS, CWE, SARIF)
-- SBOM fields (component, version, license)
-- CLI and Go library for automation
-
-The generated `CHANGELOG.md` conforms to Keep a Changelog 1.1.0 formatting conventions.
-
-### Comparison with Other Tools
+#### Changelog Generation Tools
 
 Several tools generate changelogs from git history. Here's how Structured Changelog differs:
 
