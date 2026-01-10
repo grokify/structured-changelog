@@ -22,6 +22,8 @@ The Structured Changelog IR is a JSON format that serves as the canonical source
 | `repository` | string | No | Repository URL |
 | `versioning` | string | No | Versioning scheme (see below) |
 | `commit_convention` | string | No | Commit message convention (see below) |
+| `maintainers` | string[] | No | Team members excluded from author attribution |
+| `bots` | string[] | No | Custom bots excluded from author attribution |
 | `generated_at` | datetime | No | ISO 8601 timestamp of generation |
 | `unreleased` | Release | No | Unreleased changes |
 | `releases` | Release[] | No | Array of releases (reverse chronological) |
@@ -85,6 +87,18 @@ When a `repository` URL is provided and the renderer is configured with `LinkRef
 | `commit: "abc123..."` | `/commit/abc123...` | `/-/commit/abc123...` |
 
 Commits are displayed as short hashes (7 characters) in the output, but the full SHA is used in the link URL.
+
+#### Author Attribution
+
+When an entry includes an `author` field and the renderer is configured with `IncludeAuthors: true` (enabled by default), external contributors are automatically attributed:
+
+```markdown
+- New feature by [@contributor](https://github.com/contributor)
+```
+
+Authors listed in the root `maintainers` array are excluded from attribution. Common bots (dependabot, renovate, github-actions, etc.) are auto-detected and excluded. Custom bots can be specified in the root `bots` array.
+
+If the description already contains inline attribution matching the author (e.g., "Feature from @user"), the inline attribution is automatically stripped to avoid duplication.
 
 ### Security Metadata (Optional)
 

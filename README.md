@@ -190,6 +190,35 @@ Example output:
 
 Supports GitHub and GitLab URL formats.
 
+### Author Attribution
+
+External contributors are automatically attributed when an `author` field is set and `maintainers` are defined:
+
+```json
+{
+  "maintainers": ["grokify"],
+  "releases": [{
+    "added": [{ "description": "New feature", "author": "@contributor" }]
+  }]
+}
+```
+
+Generates: `- New feature by [@contributor](https://github.com/contributor)`
+
+Common bots (dependabot, renovate, etc.) are auto-detected and excluded from attribution.
+
+### Compact Maintenance Releases
+
+Consecutive maintenance-only releases (dependencies, documentation, build) are automatically grouped:
+
+```markdown
+## Versions 0.71.1 - 0.71.10 (Maintenance)
+
+10 releases: 8 dependency update(s), 2 documentation change(s).
+```
+
+Use `--full` to disable grouping and show all releases expanded.
+
 ## JSON IR Schema
 
 ### Change Types

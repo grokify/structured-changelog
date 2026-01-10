@@ -4,12 +4,15 @@
   "repository": "https://github.com/grokify/structured-changelog",
   "versioning": "semver",
   "commit_convention": "conventional",
+  "maintainers": ["grokify"],
   "releases": [
     {
       "version": "0.6.0",
       "date": "2026-01-10",
       "highlights": [
-        { "description": "TOON output format for LLM commands (~8x token reduction vs raw git log), GitLab repository support, and automatic reference linking" }
+        { "description": "TOON output format for LLM commands (~8x token reduction vs raw git log)" },
+        { "description": "GitLab repository support with automatic reference linking for issues, PRs, and commits" },
+        { "description": "Author attribution for external contributors and compact grouping of maintenance releases" }
       ],
       "added": [
         { "description": "TOON (Token-Oriented Object Notation) as default output format for `parse-commits`, `suggest-category`, and `validate --format`", "commit": "2be0cc0" },
@@ -20,13 +23,22 @@
         { "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`", "commit": "93b8da1" },
         { "description": "`commit_convention` field in changelog IR: `conventional` or `none`", "commit": "93b8da1" },
         { "description": "Dynamic header generation based on versioning scheme and commit convention", "commit": "be9b3b0" },
-        { "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)", "commit": "93b8da1" }
+        { "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)", "commit": "93b8da1" },
+        { "description": "`maintainers` and `bots` fields in changelog IR for identifying team members", "commit": "91e788f" },
+        { "description": "Auto-detection of common bots (dependabot, renovate, github-actions, etc.)", "commit": "91e788f" },
+        { "description": "`IsTeamMember()` method for checking if author is maintainer or bot", "commit": "91e788f" },
+        { "description": "`IncludeAuthors` renderer option for external contributor attribution", "commit": "a2c86cb" },
+        { "description": "Automatic author attribution with linked GitHub/GitLab profiles", "commit": "a2c86cb" },
+        { "description": "Inline attribution stripping to avoid duplicate attribution when author field matches", "commit": "b5e8f34" },
+        { "description": "`CompactMaintenanceReleases` renderer option for grouping maintenance-only releases" },
+        { "description": "`IsMaintenanceOnly()` method to detect dependency/documentation-only releases" }
       ],
       "changed": [
         { "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON", "breaking": true, "commit": "2be0cc0" },
         { "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
         { "description": "`validate`: `--json` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
-        { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output", "commit": "be9b3b0" }
+        { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output", "commit": "be9b3b0" },
+        { "description": "Consecutive maintenance releases grouped into compact sections by default" }
       ],
       "documentation": [
         { "description": "TOON integration design document", "commit": "f5850bf" },
