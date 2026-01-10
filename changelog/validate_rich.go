@@ -11,13 +11,15 @@ type ErrorCode string
 // Validation error codes.
 const (
 	// Format errors (E0xx)
-	ErrCodeInvalidDate      ErrorCode = "E001"
-	ErrCodeInvalidVersion   ErrorCode = "E002"
-	ErrCodeInvalidCVE       ErrorCode = "E003"
-	ErrCodeInvalidGHSA      ErrorCode = "E004"
-	ErrCodeInvalidSeverity  ErrorCode = "E005"
-	ErrCodeInvalidCVSSScore ErrorCode = "E006"
-	ErrCodeInvalidIRVersion ErrorCode = "E007"
+	ErrCodeInvalidDate       ErrorCode = "E001"
+	ErrCodeInvalidVersion    ErrorCode = "E002"
+	ErrCodeInvalidCVE        ErrorCode = "E003"
+	ErrCodeInvalidGHSA       ErrorCode = "E004"
+	ErrCodeInvalidSeverity   ErrorCode = "E005"
+	ErrCodeInvalidCVSSScore  ErrorCode = "E006"
+	ErrCodeInvalidIRVersion  ErrorCode = "E007"
+	ErrCodeInvalidVersioning ErrorCode = "E008"
+	ErrCodeInvalidCommitConv ErrorCode = "E009"
 
 	// Structure errors (E1xx)
 	ErrCodeMissingField     ErrorCode = "E100"
@@ -103,6 +105,33 @@ func (c *Changelog) ValidateRich() RichValidationResult {
 			Expected:      IRVersion,
 			Suggestion:    fmt.Sprintf("Set ir_version to \"%s\"", IRVersion),
 			Documentation: "https://github.com/grokify/structured-changelog#ir-version",
+		})
+	}
+
+	// Validate versioning scheme
+	if !validVersioningSchemes[c.Versioning] {
+		result.addError(RichValidationError{
+			Code:       ErrCodeInvalidVersioning,
+			Severity:   SeverityError,
+			Path:       "versioning",
+			Message:    "Invalid versioning scheme",
+			Actual:     c.Versioning,
+			Expected:   "One of: semver, calver, custom, none (or omit for default)",
+			Suggestion: "Use \"semver\" for Semantic Versioning or \"calver\" for Calendar Versioning",
+		})
+	}
+
+	// Validate commit convention
+	if !validCommitConventions[c.CommitConvention] {
+		result.addError(RichValidationError{
+			Code:          ErrCodeInvalidCommitConv,
+			Severity:      SeverityError,
+			Path:          "commit_convention",
+			Message:       "Invalid commit convention",
+			Actual:        c.CommitConvention,
+			Expected:      "One of: conventional, none (or omit for default)",
+			Suggestion:    "Use \"conventional\" for Conventional Commits specification",
+			Documentation: "https://www.conventionalcommits.org/",
 		})
 	}
 

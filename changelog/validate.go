@@ -9,18 +9,34 @@ import (
 
 // Validation errors.
 var (
-	ErrEmptyProject     = errors.New("project name is required")
-	ErrInvalidIRVersion = errors.New("invalid or unsupported IR version")
-	ErrInvalidVersion   = errors.New("invalid semantic version")
-	ErrInvalidDate      = errors.New("invalid date format (expected YYYY-MM-DD)")
-	ErrEmptyDescription = errors.New("entry description is required")
-	ErrInvalidCVE       = errors.New("invalid CVE format")
-	ErrInvalidGHSA      = errors.New("invalid GHSA format")
-	ErrInvalidSeverity  = errors.New("invalid severity level")
-	ErrInvalidCVSSScore = errors.New("CVSS score must be between 0 and 10")
-	ErrDuplicateVersion = errors.New("duplicate version found")
-	ErrUnsortedReleases = errors.New("releases are not in reverse chronological order")
+	ErrEmptyProject      = errors.New("project name is required")
+	ErrInvalidIRVersion  = errors.New("invalid or unsupported IR version")
+	ErrInvalidVersion    = errors.New("invalid semantic version")
+	ErrInvalidDate       = errors.New("invalid date format (expected YYYY-MM-DD)")
+	ErrEmptyDescription  = errors.New("entry description is required")
+	ErrInvalidCVE        = errors.New("invalid CVE format")
+	ErrInvalidGHSA       = errors.New("invalid GHSA format")
+	ErrInvalidSeverity   = errors.New("invalid severity level")
+	ErrInvalidCVSSScore  = errors.New("CVSS score must be between 0 and 10")
+	ErrDuplicateVersion  = errors.New("duplicate version found")
+	ErrUnsortedReleases  = errors.New("releases are not in reverse chronological order")
+	ErrInvalidVersioning = errors.New("invalid versioning scheme")
+	ErrInvalidCommitConv = errors.New("invalid commit convention")
 )
+
+var validVersioningSchemes = map[string]bool{
+	"":               true, // empty is valid (defaults to semver)
+	VersioningSemVer: true,
+	VersioningCalVer: true,
+	VersioningCustom: true,
+	VersioningNone:   true,
+}
+
+var validCommitConventions = map[string]bool{
+	"":                           true, // empty is valid (defaults to none)
+	CommitConventionConventional: true,
+	CommitConventionNone:         true,
+}
 
 var (
 	semverRegex = regexp.MustCompile(`^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$`)
@@ -72,6 +88,16 @@ func (c *Changelog) Validate() ValidationResult {
 
 	if c.IRVersion != IRVersion {
 		result.addError("ir_version", fmt.Sprintf("expected %s, got %s", IRVersion, c.IRVersion), ErrInvalidIRVersion)
+	}
+
+	// Validate versioning scheme
+	if !validVersioningSchemes[c.Versioning] {
+		result.addError("versioning", fmt.Sprintf("invalid versioning scheme: %s (must be one of semver, calver, custom, none)", c.Versioning), ErrInvalidVersioning)
+	}
+
+	// Validate commit convention
+	if !validCommitConventions[c.CommitConvention] {
+		result.addError("commit_convention", fmt.Sprintf("invalid commit convention: %s (must be one of conventional, none)", c.CommitConvention), ErrInvalidCommitConv)
 	}
 
 	// Validate unreleased section

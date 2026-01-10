@@ -11,14 +11,30 @@ import (
 // IRVersion is the current version of the IR schema.
 const IRVersion = "1.0"
 
+// Versioning scheme constants.
+const (
+	VersioningSemVer = "semver" // Semantic Versioning (default)
+	VersioningCalVer = "calver" // Calendar Versioning
+	VersioningCustom = "custom" // Custom versioning scheme
+	VersioningNone   = "none"   // No specific versioning scheme
+)
+
+// Commit convention constants.
+const (
+	CommitConventionConventional = "conventional" // Conventional Commits
+	CommitConventionNone         = "none"         // No specific convention (default)
+)
+
 // Changelog represents the root of a structured changelog.
 type Changelog struct {
-	IRVersion   string     `json:"ir_version"`
-	Project     string     `json:"project"`
-	Repository  string     `json:"repository,omitempty"`
-	GeneratedAt *time.Time `json:"generated_at,omitempty"`
-	Unreleased  *Release   `json:"unreleased,omitempty"`
-	Releases    []Release  `json:"releases,omitempty"`
+	IRVersion        string     `json:"ir_version"`
+	Project          string     `json:"project"`
+	Repository       string     `json:"repository,omitempty"`
+	Versioning       string     `json:"versioning,omitempty"`
+	CommitConvention string     `json:"commit_convention,omitempty"`
+	GeneratedAt      *time.Time `json:"generated_at,omitempty"`
+	Unreleased       *Release   `json:"unreleased,omitempty"`
+	Releases         []Release  `json:"releases,omitempty"`
 }
 
 // New creates a new Changelog with the current IR version.
