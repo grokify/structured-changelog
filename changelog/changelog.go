@@ -56,32 +56,111 @@ var CommonBots = []string{
 
 // IsTeamMember returns true if the author is a maintainer or known bot.
 func (c *Changelog) IsTeamMember(author string) bool {
-	if author == "" {
+	return c.IsTeamMemberByNameAndEmail(author, "")
+}
+
+// IsTeamMemberByNameAndEmail returns true if the author (by name or email) is a maintainer or known bot.
+// This is useful when parsing git commits where you have both author name and email.
+// It checks:
+// 1. If author name matches a maintainer
+// 2. If email matches a maintainer entry (for emails in maintainers list)
+// 3. If GitHub username from noreply email matches a maintainer
+// 4. If author matches a known bot
+func (c *Changelog) IsTeamMemberByNameAndEmail(author, email string) bool {
+	if author == "" && email == "" {
 		return true // No author means no attribution needed
 	}
 
-	// Check maintainers
+	normAuthor := normalizeAuthor(author)
+	normEmail := normalizeAuthor(email)
+
+	// Check maintainers against author name and email
 	for _, m := range c.Maintainers {
-		if normalizeAuthor(m) == normalizeAuthor(author) {
+		normM := normalizeAuthor(m)
+		if normM == normAuthor {
 			return true
+		}
+		// Also check if email matches (allows emails in maintainers list)
+		if normEmail != "" && normM == normEmail {
+			return true
+		}
+	}
+
+	// Check if email contains a GitHub username (noreply format)
+	// Format: username@users.noreply.github.com or 12345+username@users.noreply.github.com
+	if email != "" {
+		if username := extractGitHubUsername(email); username != "" {
+			for _, m := range c.Maintainers {
+				if normalizeAuthor(m) == normalizeAuthor(username) {
+					return true
+				}
+			}
 		}
 	}
 
 	// Check custom bots
 	for _, b := range c.Bots {
-		if normalizeAuthor(b) == normalizeAuthor(author) {
+		if normalizeAuthor(b) == normAuthor {
 			return true
 		}
 	}
 
 	// Check common bots
 	for _, b := range CommonBots {
-		if normalizeAuthor(b) == normalizeAuthor(author) {
+		if normalizeAuthor(b) == normAuthor {
 			return true
 		}
 	}
 
 	return false
+}
+
+// extractGitHubUsername extracts a GitHub username from a noreply email.
+// Handles formats:
+// - username@users.noreply.github.com
+// - 12345+username@users.noreply.github.com
+func extractGitHubUsername(email string) string {
+	// Check for GitHub noreply format
+	suffix := "@users.noreply.github.com"
+	if len(email) <= len(suffix) {
+		return ""
+	}
+
+	// Convert to lowercase for comparison
+	emailLower := normalizeAuthor(email)
+	suffixLower := normalizeAuthor(suffix)
+
+	if !hasEmailSuffix(emailLower, suffixLower) {
+		return ""
+	}
+
+	// Extract the part before @users.noreply.github.com
+	local := email[:len(email)-len(suffix)]
+
+	// Handle 12345+username format
+	if idx := indexByte(local, '+'); idx >= 0 {
+		local = local[idx+1:]
+	}
+
+	return local
+}
+
+// hasEmailSuffix checks if email ends with suffix.
+func hasEmailSuffix(email, suffix string) bool {
+	if len(email) < len(suffix) {
+		return false
+	}
+	return email[len(email)-len(suffix):] == suffix
+}
+
+// indexByte returns the index of the first instance of c in s, or -1 if c is not present.
+func indexByte(s string, c byte) int {
+	for i := 0; i < len(s); i++ {
+		if s[i] == c {
+			return i
+		}
+	}
+	return -1
 }
 
 // normalizeAuthor normalizes an author string for comparison.
