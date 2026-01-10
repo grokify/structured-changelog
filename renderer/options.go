@@ -14,6 +14,10 @@ type Options struct {
 	// IncludeCommits includes commit SHAs in references.
 	IncludeCommits bool
 
+	// LinkReferences creates hyperlinks for issues, PRs, and commits
+	// when a repository URL is available. Requires IncludeReferences.
+	LinkReferences bool
+
 	// IncludeSecurityMetadata includes CVE/GHSA/severity in security entries.
 	IncludeSecurityMetadata bool
 
@@ -33,6 +37,7 @@ func DefaultOptions() Options {
 	return Options{
 		IncludeReferences:       true,
 		IncludeCommits:          false,
+		LinkReferences:          false,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
@@ -45,6 +50,7 @@ func MinimalOptions() Options {
 	return Options{
 		IncludeReferences:       false,
 		IncludeCommits:          false,
+		LinkReferences:          false,
 		IncludeSecurityMetadata: false,
 		MarkBreakingChanges:     false,
 		IncludeCompareLinks:     false,
@@ -57,6 +63,7 @@ func FullOptions() Options {
 	return Options{
 		IncludeReferences:       true,
 		IncludeCommits:          true,
+		LinkReferences:          true,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
@@ -69,6 +76,7 @@ func CoreOptions() Options {
 	return Options{
 		IncludeReferences:       true,
 		IncludeCommits:          false,
+		LinkReferences:          false,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
@@ -81,6 +89,7 @@ func StandardOptions() Options {
 	return Options{
 		IncludeReferences:       true,
 		IncludeCommits:          false,
+		LinkReferences:          false,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
