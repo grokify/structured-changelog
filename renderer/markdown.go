@@ -550,30 +550,23 @@ func renderReferenceLinks(cl *changelog.Changelog, includeUnreleasedLink bool) s
 }
 
 // formatCompareLink generates a comparison URL for the given host.
+// Versions are used as-is (no automatic v prefix added).
 func formatCompareLink(baseURL string, host repoHost, fromVersion, toVersion string) string {
-	fromRef := fromVersion
-	toRef := toVersion
-	if fromVersion != "HEAD" {
-		fromRef = "v" + fromVersion
-	}
-	if toVersion != "HEAD" {
-		toRef = "v" + toVersion
-	}
-
 	switch host {
 	case hostGitLab:
-		return fmt.Sprintf("%s/-/compare/%s...%s", baseURL, fromRef, toRef)
+		return fmt.Sprintf("%s/-/compare/%s...%s", baseURL, fromVersion, toVersion)
 	default: // hostGitHub
-		return fmt.Sprintf("%s/compare/%s...%s", baseURL, fromRef, toRef)
+		return fmt.Sprintf("%s/compare/%s...%s", baseURL, fromVersion, toVersion)
 	}
 }
 
 // formatTagLink generates a tag URL for the given host.
+// Versions are used as-is (no automatic v prefix added).
 func formatTagLink(baseURL string, host repoHost, version string) string {
 	switch host {
 	case hostGitLab:
-		return fmt.Sprintf("%s/-/releases/v%s", baseURL, version)
+		return fmt.Sprintf("%s/-/releases/%s", baseURL, version)
 	default: // hostGitHub
-		return fmt.Sprintf("%s/releases/tag/v%s", baseURL, version)
+		return fmt.Sprintf("%s/releases/tag/%s", baseURL, version)
 	}
 }

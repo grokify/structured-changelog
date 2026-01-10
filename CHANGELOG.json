@@ -7,7 +7,7 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
-      "version": "0.6.0",
+      "version": "v0.6.0",
       "date": "2026-01-10",
       "highlights": [
         { "description": "TOON output format for LLM commands (~8x token reduction vs raw git log)" },
@@ -43,7 +43,8 @@
         { "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
         { "description": "`validate`: `--json` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
         { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output", "commit": "be9b3b0" },
-        { "description": "Consecutive maintenance releases grouped into compact sections by default", "commit": "f7cdb02" }
+        { "description": "Consecutive maintenance releases grouped into compact sections by default", "commit": "f7cdb02" },
+        { "description": "Version strings now used as-is in headers and links (no automatic `v` prefix)" }
       ],
       "documentation": [
         { "description": "TOON integration design document", "commit": "f5850bf" },
@@ -53,7 +54,7 @@
       ]
     },
     {
-      "version": "0.5.0",
+      "version": "v0.5.0",
       "date": "2026-01-04",
       "highlights": [
         { "description": "LLM-assisted changelog generation with optimized git parsing (~5x token reduction) and automatic commit classification" }
@@ -71,7 +72,7 @@
       ]
     },
     {
-      "version": "0.4.0",
+      "version": "v0.4.0",
       "date": "2026-01-04",
       "highlights": [
         { "description": "Extend Keep a Changelog with 13 additional change types organized into tiers for flexible filtering and validation" }
@@ -93,7 +94,7 @@
       ]
     },
     {
-      "version": "0.3.0",
+      "version": "v0.3.0",
       "date": "2026-01-04",
       "highlights": [
         { "description": "Install via Homebrew or download pre-built binaries for Linux, macOS, and Windows - no Go toolchain required" }
@@ -106,7 +107,7 @@
       ]
     },
     {
-      "version": "0.2.0",
+      "version": "v0.2.0",
       "date": "2026-01-03",
       "highlights": [
         { "description": "Generated changelogs now include clickable version comparison links for easy navigation on GitHub" }
@@ -124,7 +125,7 @@
       ]
     },
     {
-      "version": "0.1.0",
+      "version": "v0.1.0",
       "date": "2026-01-03",
       "highlights": [
         { "description": "Machine-readable JSON changelog with deterministic Markdown generation following Keep a Changelog format" }

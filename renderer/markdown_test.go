@@ -349,19 +349,19 @@ func TestRenderMarkdown_ReferenceLinks(t *testing.T) {
 		Project:    "test",
 		Repository: "https://github.com/example/repo",
 		Releases: []changelog.Release{
-			{Version: "1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
-			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+			{Version: "v1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
 		},
 	}
 
 	md := RenderMarkdown(cl)
 
-	// Check for reference links
-	if !strings.Contains(md, "[1.1.0]: https://github.com/example/repo/compare/v1.0.0...v1.1.0") {
-		t.Error("missing compare link for 1.1.0")
+	// Check for reference links (version used as-is, no automatic v prefix)
+	if !strings.Contains(md, "[v1.1.0]: https://github.com/example/repo/compare/v1.0.0...v1.1.0") {
+		t.Error("missing compare link for v1.1.0")
 	}
-	if !strings.Contains(md, "[1.0.0]: https://github.com/example/repo/releases/tag/v1.0.0") {
-		t.Error("missing tag link for 1.0.0")
+	if !strings.Contains(md, "[v1.0.0]: https://github.com/example/repo/releases/tag/v1.0.0") {
+		t.Error("missing tag link for v1.0.0")
 	}
 }
 
@@ -374,13 +374,13 @@ func TestRenderMarkdown_ReferenceLinks_WithUnreleased(t *testing.T) {
 			Added: []changelog.Entry{{Description: "WIP"}},
 		},
 		Releases: []changelog.Release{
-			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
 		},
 	}
 
 	md := RenderMarkdown(cl)
 
-	// Check for unreleased link
+	// Check for unreleased link (version used as-is)
 	if !strings.Contains(md, "[unreleased]: https://github.com/example/repo/compare/v1.0.0...HEAD") {
 		t.Error("missing unreleased compare link")
 	}
@@ -392,19 +392,19 @@ func TestRenderMarkdown_ReferenceLinks_GitLab(t *testing.T) {
 		Project:    "test",
 		Repository: "https://gitlab.com/example/repo",
 		Releases: []changelog.Release{
-			{Version: "1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
-			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+			{Version: "v1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
 		},
 	}
 
 	md := RenderMarkdown(cl)
 
-	// Check for GitLab-style reference links
-	if !strings.Contains(md, "[1.1.0]: https://gitlab.com/example/repo/-/compare/v1.0.0...v1.1.0") {
-		t.Error("missing GitLab compare link for 1.1.0")
+	// Check for GitLab-style reference links (version used as-is)
+	if !strings.Contains(md, "[v1.1.0]: https://gitlab.com/example/repo/-/compare/v1.0.0...v1.1.0") {
+		t.Error("missing GitLab compare link for v1.1.0")
 	}
-	if !strings.Contains(md, "[1.0.0]: https://gitlab.com/example/repo/-/releases/v1.0.0") {
-		t.Error("missing GitLab release link for 1.0.0")
+	if !strings.Contains(md, "[v1.0.0]: https://gitlab.com/example/repo/-/releases/v1.0.0") {
+		t.Error("missing GitLab release link for v1.0.0")
 	}
 }
 
@@ -414,18 +414,18 @@ func TestRenderMarkdown_ReferenceLinks_GitLab_NestedGroups(t *testing.T) {
 		Project:    "test",
 		Repository: "https://gitlab.com/grokify/product/tools/mytool",
 		Releases: []changelog.Release{
-			{Version: "1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
-			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+			{Version: "v1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
 		},
 	}
 
 	md := RenderMarkdown(cl)
 
-	// Check for GitLab-style reference links with nested groups
-	if !strings.Contains(md, "[1.1.0]: https://gitlab.com/grokify/product/tools/mytool/-/compare/v1.0.0...v1.1.0") {
+	// Check for GitLab-style reference links with nested groups (version used as-is)
+	if !strings.Contains(md, "[v1.1.0]: https://gitlab.com/grokify/product/tools/mytool/-/compare/v1.0.0...v1.1.0") {
 		t.Error("missing GitLab compare link for nested group repo")
 	}
-	if !strings.Contains(md, "[1.0.0]: https://gitlab.com/grokify/product/tools/mytool/-/releases/v1.0.0") {
+	if !strings.Contains(md, "[v1.0.0]: https://gitlab.com/grokify/product/tools/mytool/-/releases/v1.0.0") {
 		t.Error("missing GitLab release link for nested group repo")
 	}
 }
@@ -439,13 +439,13 @@ func TestRenderMarkdown_ReferenceLinks_GitLab_WithUnreleased(t *testing.T) {
 			Added: []changelog.Entry{{Description: "WIP"}},
 		},
 		Releases: []changelog.Release{
-			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
 		},
 	}
 
 	md := RenderMarkdown(cl)
 
-	// Check for GitLab unreleased link
+	// Check for GitLab unreleased link (version used as-is)
 	if !strings.Contains(md, "[unreleased]: https://gitlab.com/example/repo/-/compare/v1.0.0...HEAD") {
 		t.Error("missing GitLab unreleased compare link")
 	}
