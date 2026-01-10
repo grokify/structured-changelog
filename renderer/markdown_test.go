@@ -1324,3 +1324,207 @@ func TestRenderMarkdown_StripInlineAttribution_CaseInsensitive(t *testing.T) {
 		t.Error("should strip attribution case-insensitively")
 	}
 }
+
+func TestRelease_IsMaintenanceOnly(t *testing.T) {
+	tests := []struct {
+		name    string
+		release changelog.Release
+		want    bool
+	}{
+		{
+			name:    "empty release",
+			release: changelog.Release{Version: "1.0.0"},
+			want:    false,
+		},
+		{
+			name: "dependencies only",
+			release: changelog.Release{
+				Version:      "1.0.1",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+			},
+			want: true,
+		},
+		{
+			name: "documentation only",
+			release: changelog.Release{
+				Version:       "1.0.1",
+				Documentation: []changelog.Entry{{Description: "Update docs"}},
+			},
+			want: true,
+		},
+		{
+			name: "deps and docs",
+			release: changelog.Release{
+				Version:       "1.0.1",
+				Dependencies:  []changelog.Entry{{Description: "Update deps"}},
+				Documentation: []changelog.Entry{{Description: "Update docs"}},
+			},
+			want: true,
+		},
+		{
+			name: "has added entries",
+			release: changelog.Release{
+				Version:      "1.0.0",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+				Added:        []changelog.Entry{{Description: "New feature"}},
+			},
+			want: false,
+		},
+		{
+			name: "has changed entries",
+			release: changelog.Release{
+				Version: "1.0.0",
+				Changed: []changelog.Entry{{Description: "Changed something"}},
+			},
+			want: false,
+		},
+		{
+			name: "has fixed entries",
+			release: changelog.Release{
+				Version: "1.0.0",
+				Fixed:   []changelog.Entry{{Description: "Fixed bug"}},
+			},
+			want: false,
+		},
+		{
+			name: "has security entries",
+			release: changelog.Release{
+				Version:  "1.0.0",
+				Security: []changelog.Entry{{Description: "Security fix"}},
+			},
+			want: false,
+		},
+		{
+			name: "build and tests only",
+			release: changelog.Release{
+				Version: "1.0.1",
+				Build:   []changelog.Entry{{Description: "Update CI"}},
+				Tests:   []changelog.Entry{{Description: "Add tests"}},
+			},
+			want: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.release.IsMaintenanceOnly()
+			if got != tt.want {
+				t.Errorf("IsMaintenanceOnly() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRenderMarkdown_MaintenanceGrouping(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.3",
+				Date:    "2024-03-01",
+				Added:   []changelog.Entry{{Description: "New feature"}},
+			},
+			{
+				Version:      "1.0.2",
+				Date:         "2024-02-15",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+			},
+			{
+				Version:      "1.0.1",
+				Date:         "2024-02-01",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+			},
+			{
+				Version: "1.0.0",
+				Date:    "2024-01-01",
+				Added:   []changelog.Entry{{Description: "Initial release"}},
+			},
+		},
+	}
+
+	// With grouping enabled (default)
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should have grouped maintenance releases
+	if !strings.Contains(md, "## Versions 1.0.1 - 1.0.2 (Maintenance)") {
+		t.Error("should group consecutive maintenance releases")
+	}
+	if !strings.Contains(md, "2 releases: 2 dependency update(s)") {
+		t.Error("should show release count and change summary")
+	}
+
+	// Feature releases should render normally
+	if !strings.Contains(md, "## [1.0.3] - 2024-03-01") {
+		t.Error("feature releases should render normally")
+	}
+	if !strings.Contains(md, "## [1.0.0] - 2024-01-01") {
+		t.Error("feature releases should render normally")
+	}
+}
+
+func TestRenderMarkdown_MaintenanceGroupingDisabled(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version:      "1.0.2",
+				Date:         "2024-02-15",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+			},
+			{
+				Version:      "1.0.1",
+				Date:         "2024-02-01",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+			},
+		},
+	}
+
+	// With grouping disabled (FullOptions)
+	md := RenderMarkdownWithOptions(cl, FullOptions())
+
+	// Should NOT group - each release separate
+	if strings.Contains(md, "(Maintenance)") {
+		t.Error("should not group when CompactMaintenanceReleases is false")
+	}
+	if !strings.Contains(md, "## [1.0.2] - 2024-02-15") {
+		t.Error("should render each release separately")
+	}
+	if !strings.Contains(md, "## [1.0.1] - 2024-02-01") {
+		t.Error("should render each release separately")
+	}
+}
+
+func TestRenderMarkdown_SingleMaintenanceRelease(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.1",
+				Date:    "2024-02-01",
+				Added:   []changelog.Entry{{Description: "New feature"}},
+			},
+			{
+				Version:      "1.0.0",
+				Date:         "2024-01-15",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Single maintenance release should render with (Maintenance) suffix
+	if !strings.Contains(md, "## [1.0.0] - 2024-01-15 (Maintenance)") {
+		t.Error("single maintenance release should have (Maintenance) suffix")
+	}
+	// Should list the change types
+	if !strings.Contains(md, "dependency updates") {
+		t.Error("should list change types for single maintenance release")
+	}
+}
