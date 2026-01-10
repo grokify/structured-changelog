@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -9,13 +8,14 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/grokify/structured-changelog/changelog"
+	"github.com/grokify/structured-changelog/format"
 )
 
 var (
 	validateStrict   bool
 	validateWarnings bool
 	validateMinTier  string
-	validateJSON     bool
+	validateFormat   string
 )
 
 var validateCmd = &cobra.Command{
@@ -31,6 +31,11 @@ Checks for:
   - No duplicate versions
   - Non-empty descriptions
 
+Output formats (with --format flag):
+  - toon: Token-Oriented Object Notation, ~40% fewer tokens than JSON
+  - json: Standard JSON with indentation
+  - json-compact: Minified JSON
+
 Tier validation:
   --min-tier     Require at least one entry in a category at or above this tier
 
@@ -43,7 +48,8 @@ Tiers:
 Examples:
   sclog validate CHANGELOG.json
   sclog validate CHANGELOG.json --strict
-  sclog validate CHANGELOG.json --min-tier core`,
+  sclog validate CHANGELOG.json --min-tier core
+  sclog validate CHANGELOG.json --format=toon`,
 	Args: cobra.ExactArgs(1),
 	RunE: runValidate,
 }
@@ -52,7 +58,7 @@ func init() {
 	validateCmd.Flags().BoolVar(&validateStrict, "strict", false, "Enable strict validation (treat warnings as errors)")
 	validateCmd.Flags().BoolVar(&validateWarnings, "warnings", true, "Show warnings")
 	validateCmd.Flags().StringVar(&validateMinTier, "min-tier", "", "Minimum tier to require coverage for (core, standard, extended, optional)")
-	validateCmd.Flags().BoolVar(&validateJSON, "json", false, "Output validation results as JSON with rich error details")
+	validateCmd.Flags().StringVar(&validateFormat, "format", "", "Output format: toon, json, json-compact (enables structured output)")
 	rootCmd.AddCommand(validateCmd)
 }
 
@@ -65,9 +71,9 @@ func runValidate(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to load %s: %w", inputFile, err)
 	}
 
-	// Use rich validation for JSON output
-	if validateJSON {
-		return runValidateJSON(cl, inputFile)
+	// Use rich validation for structured output
+	if validateFormat != "" {
+		return runValidateStructured(cl, inputFile)
 	}
 
 	// Standard validation
@@ -100,7 +106,7 @@ func runValidate(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func runValidateJSON(cl *changelog.Changelog, _ string) error {
+func runValidateStructured(cl *changelog.Changelog, _ string) error {
 	result := cl.ValidateRich()
 
 	// Add tier validation as warning if specified
@@ -152,12 +158,18 @@ func runValidateJSON(cl *changelog.Changelog, _ string) error {
 	result.Summary.ErrorCount = len(result.Errors)
 	result.Summary.WarningCount = len(result.Warnings)
 
-	jsonBytes, err := json.MarshalIndent(result, "", "  ")
+	// Parse output format
+	f, err := format.Parse(validateFormat)
 	if err != nil {
-		return fmt.Errorf("failed to marshal JSON: %w", err)
+		return err
 	}
 
-	fmt.Println(string(jsonBytes))
+	output, err := format.Marshal(result, f)
+	if err != nil {
+		return fmt.Errorf("failed to marshal output: %w", err)
+	}
+
+	fmt.Println(string(output))
 
 	if !result.Valid {
 		return fmt.Errorf("validation failed")

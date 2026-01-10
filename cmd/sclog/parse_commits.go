@@ -1,13 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os/exec"
 	"strings"
 
 	"github.com/spf13/cobra"
 
+	"github.com/grokify/structured-changelog/format"
 	"github.com/grokify/structured-changelog/gitlog"
 )
 
@@ -18,17 +18,22 @@ var (
 	parseCommitsPath     string
 	parseCommitsNoFiles  bool
 	parseCommitsNoMerges bool
-	parseCommitsCompact  bool
+	parseCommitsFormat   string
 	parseCommitsRepoURL  string
 )
 
 var parseCommitsCmd = &cobra.Command{
 	Use:   "parse-commits",
-	Short: "Parse git commits into structured JSON",
-	Long: `Parse git commits into structured JSON optimized for LLM consumption.
+	Short: "Parse git commits into structured output for LLM consumption",
+	Long: `Parse git commits into structured output optimized for LLM consumption.
 
-This command runs git log and parses the output into a compact JSON format
+This command runs git log and parses the output into a compact format
 that reduces token usage when working with LLMs for changelog generation.
+
+Output formats:
+  - toon (default): Token-Oriented Object Notation, ~40% fewer tokens than JSON
+  - json: Standard JSON with indentation
+  - json-compact: Minified JSON
 
 The output includes:
   - Parsed conventional commit components (type, scope, subject)
@@ -38,8 +43,11 @@ The output includes:
   - Summary statistics grouped by type and category
 
 Examples:
-  # Parse commits since a tag
+  # Parse commits since a tag (TOON format, default)
   sclog parse-commits --since=v0.3.0
+
+  # Parse commits with JSON output
+  sclog parse-commits --since=v0.3.0 --format=json
 
   # Parse commits between two refs
   sclog parse-commits --since=v0.2.0 --until=v0.3.0
@@ -50,7 +58,7 @@ Examples:
   # Parse commits for specific path
   sclog parse-commits --since=v0.3.0 --path=src/
 
-  # Compact output (no file list)
+  # Exclude file list from output
   sclog parse-commits --since=v0.3.0 --no-files
 
   # Exclude merge commits
@@ -65,7 +73,7 @@ func init() {
 	parseCommitsCmd.Flags().StringVar(&parseCommitsPath, "path", "", "Only include commits touching this path")
 	parseCommitsCmd.Flags().BoolVar(&parseCommitsNoFiles, "no-files", false, "Exclude file list from output")
 	parseCommitsCmd.Flags().BoolVar(&parseCommitsNoMerges, "no-merges", false, "Exclude merge commits")
-	parseCommitsCmd.Flags().BoolVar(&parseCommitsCompact, "compact", false, "Compact JSON output (no indentation)")
+	parseCommitsCmd.Flags().StringVar(&parseCommitsFormat, "format", "toon", "Output format: toon (default), json, json-compact")
 	parseCommitsCmd.Flags().StringVar(&parseCommitsRepoURL, "repo", "", "Repository URL to include in output")
 	rootCmd.AddCommand(parseCommitsCmd)
 }
@@ -109,18 +117,19 @@ func runParseCommits(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	// Output JSON
-	var jsonBytes []byte
-	if parseCommitsCompact {
-		jsonBytes, err = json.Marshal(result)
-	} else {
-		jsonBytes, err = json.MarshalIndent(result, "", "  ")
-	}
+	// Parse output format
+	f, err := format.Parse(parseCommitsFormat)
 	if err != nil {
-		return fmt.Errorf("failed to marshal JSON: %w", err)
+		return err
 	}
 
-	fmt.Println(string(jsonBytes))
+	// Output in specified format
+	outputBytes, err := format.Marshal(result, f)
+	if err != nil {
+		return fmt.Errorf("failed to marshal output: %w", err)
+	}
+
+	fmt.Println(string(outputBytes))
 	return nil
 }
 

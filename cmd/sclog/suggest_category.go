@@ -2,19 +2,19 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
 
+	"github.com/grokify/structured-changelog/format"
 	"github.com/grokify/structured-changelog/gitlog"
 )
 
 var (
-	suggestCategoryBatch   bool
-	suggestCategoryCompact bool
+	suggestCategoryBatch  bool
+	suggestCategoryFormat string
 )
 
 // SuggestCategoryOutput is the JSON output for a single suggestion.
@@ -32,20 +32,25 @@ var suggestCategoryCmd = &cobra.Command{
 This command analyzes commit messages and suggests which changelog category
 they should belong to, based on conventional commit types and message content.
 
+Output formats:
+  - toon (default): Token-Oriented Object Notation, ~40% fewer tokens than JSON
+  - json: Standard JSON with indentation
+  - json-compact: Minified JSON
+
 The output includes:
   - Primary suggestion with confidence score and reasoning
   - Conventional commit parsing (if applicable)
   - Alternative suggestions when relevant
 
 Examples:
-  # Suggest category for a single message
+  # Suggest category for a single message (TOON format, default)
   sclog suggest-category "feat(auth): add OAuth2 support"
 
-  # Batch mode from stdin (one message per line)
-  echo -e "feat: add feature\nfix: resolve bug" | sclog suggest-category --batch
+  # Suggest category with JSON output
+  sclog suggest-category --format=json "feat(auth): add OAuth2 support"
 
-  # Compact JSON output
-  sclog suggest-category --compact "fix: resolve memory leak"`,
+  # Batch mode from stdin (one message per line)
+  echo -e "feat: add feature\nfix: resolve bug" | sclog suggest-category --batch`,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if suggestCategoryBatch {
 			return nil // No args required in batch mode
@@ -60,7 +65,7 @@ Examples:
 
 func init() {
 	suggestCategoryCmd.Flags().BoolVar(&suggestCategoryBatch, "batch", false, "Read messages from stdin (one per line)")
-	suggestCategoryCmd.Flags().BoolVar(&suggestCategoryCompact, "compact", false, "Compact JSON output (no indentation)")
+	suggestCategoryCmd.Flags().StringVar(&suggestCategoryFormat, "format", "toon", "Output format: toon (default), json, json-compact")
 	rootCmd.AddCommand(suggestCategoryCmd)
 }
 
@@ -175,26 +180,24 @@ func containsAny(s string, substrs []string) bool {
 }
 
 func printSuggestOutput(output SuggestCategoryOutput) error {
-	return printJSON(output)
+	return printFormatted(output)
 }
 
 func printSuggestOutputs(outputs []SuggestCategoryOutput) error {
-	return printJSON(outputs)
+	return printFormatted(outputs)
 }
 
-func printJSON(v interface{}) error {
-	var jsonBytes []byte
-	var err error
-
-	if suggestCategoryCompact {
-		jsonBytes, err = json.Marshal(v)
-	} else {
-		jsonBytes, err = json.MarshalIndent(v, "", "  ")
-	}
+func printFormatted(v any) error {
+	f, err := format.Parse(suggestCategoryFormat)
 	if err != nil {
-		return fmt.Errorf("failed to marshal JSON: %w", err)
+		return err
 	}
 
-	fmt.Println(string(jsonBytes))
+	output, err := format.Marshal(v, f)
+	if err != nil {
+		return fmt.Errorf("failed to marshal output: %w", err)
+	}
+
+	fmt.Println(string(output))
 	return nil
 }
