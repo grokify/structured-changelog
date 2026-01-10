@@ -2,7 +2,39 @@
   "ir_version": "1.0",
   "project": "structured-changelog",
   "repository": "https://github.com/grokify/structured-changelog",
+  "versioning": "semver",
+  "commit_convention": "conventional",
   "releases": [
+    {
+      "version": "0.6.0",
+      "date": "2026-01-10",
+      "highlights": [
+        { "description": "TOON output format for LLM commands (~8x token reduction vs raw git log), GitLab repository support, and automatic reference linking" }
+      ],
+      "added": [
+        { "description": "TOON (Token-Oriented Object Notation) as default output format for `parse-commits`, `suggest-category`, and `validate --format`" },
+        { "description": "`--format` flag for LLM commands supporting `toon` (default), `json`, and `json-compact`" },
+        { "description": "GitLab repository support for reference links and version comparisons" },
+        { "description": "Automatic reference linking: issues, PRs, and commits become clickable links when repository URL is provided" },
+        { "description": "`LinkReferences` renderer option (enabled in `FullOptions`) for hyperlinking references" },
+        { "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`" },
+        { "description": "`commit_convention` field in changelog IR: `conventional` or `none`" },
+        { "description": "Dynamic header generation based on versioning scheme and commit convention" },
+        { "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)" }
+      ],
+      "changed": [
+        { "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON", "breaking": true },
+        { "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag", "breaking": true },
+        { "description": "`validate`: `--json` flag replaced with `--format` flag", "breaking": true },
+        { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output" }
+      ],
+      "documentation": [
+        { "description": "TOON integration design document" },
+        { "description": "Updated LLM guide with TOON examples and ~8x token efficiency" },
+        { "description": "Reference linking documentation in specification" },
+        { "description": "Claude Code project configuration with `/changelog` slash command" }
+      ]
+    },
     {
       "version": "0.5.0",
       "date": "2026-01-04",
