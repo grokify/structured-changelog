@@ -48,6 +48,9 @@ sclog parse-commits --since=v0.3.0 --no-files
 
 # Exclude merge commits
 sclog parse-commits --since=v0.3.0 --no-merges
+
+# Mark external contributors (reads maintainers/bots from CHANGELOG.json)
+sclog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json
 ```
 
 **Output includes:**
@@ -58,6 +61,8 @@ sclog parse-commits --since=v0.3.0 --no-merges
 - File statistics (insertions, deletions, files changed)
 - Suggested changelog category for each commit
 - Summary statistics grouped by type and category
+- External contributor marking (with `--changelog` flag)
+- Contributors summary with deduplicated author list
 
 **Example TOON output (default):**
 

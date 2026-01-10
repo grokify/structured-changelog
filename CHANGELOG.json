@@ -4,7 +4,7 @@
   "repository": "https://github.com/grokify/structured-changelog",
   "versioning": "semver",
   "commit_convention": "conventional",
-  "maintainers": ["grokify"],
+  "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
       "version": "0.6.0",
@@ -31,7 +31,11 @@
         { "description": "Automatic author attribution with linked GitHub/GitLab profiles", "commit": "a2c86cb" },
         { "description": "Inline attribution stripping to avoid duplicate attribution when author field matches", "commit": "b5e8f34" },
         { "description": "`CompactMaintenanceReleases` renderer option for grouping maintenance-only releases" },
-        { "description": "`IsMaintenanceOnly()` method to detect dependency/documentation-only releases" }
+        { "description": "`IsMaintenanceOnly()` method to detect dependency/documentation-only releases" },
+        { "description": "`--changelog` flag for `parse-commits` to auto-detect external contributors" },
+        { "description": "`IsExternal` field in commit output marking external contributors" },
+        { "description": "`Contributors` summary in `parse-commits` output with deduplicated author list" },
+        { "description": "`IsTeamMemberByNameAndEmail()` for matching by git author name, email, or GitHub noreply username" }
       ],
       "changed": [
         { "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON", "breaking": true, "commit": "2be0cc0" },
