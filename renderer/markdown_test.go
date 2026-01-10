@@ -386,11 +386,58 @@ func TestRenderMarkdown_ReferenceLinks_WithUnreleased(t *testing.T) {
 	}
 }
 
-func TestRenderMarkdown_ReferenceLinks_NonGitHub(t *testing.T) {
+func TestRenderMarkdown_ReferenceLinks_GitLab(t *testing.T) {
 	cl := &changelog.Changelog{
 		IRVersion:  "1.0",
 		Project:    "test",
 		Repository: "https://gitlab.com/example/repo",
+		Releases: []changelog.Release{
+			{Version: "1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Check for GitLab-style reference links
+	if !strings.Contains(md, "[1.1.0]: https://gitlab.com/example/repo/-/compare/v1.0.0...v1.1.0") {
+		t.Error("missing GitLab compare link for 1.1.0")
+	}
+	if !strings.Contains(md, "[1.0.0]: https://gitlab.com/example/repo/-/releases/v1.0.0") {
+		t.Error("missing GitLab release link for 1.0.0")
+	}
+}
+
+func TestRenderMarkdown_ReferenceLinks_GitLab_NestedGroups(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://gitlab.com/grokify/product/tools/mytool",
+		Releases: []changelog.Release{
+			{Version: "1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Check for GitLab-style reference links with nested groups
+	if !strings.Contains(md, "[1.1.0]: https://gitlab.com/grokify/product/tools/mytool/-/compare/v1.0.0...v1.1.0") {
+		t.Error("missing GitLab compare link for nested group repo")
+	}
+	if !strings.Contains(md, "[1.0.0]: https://gitlab.com/grokify/product/tools/mytool/-/releases/v1.0.0") {
+		t.Error("missing GitLab release link for nested group repo")
+	}
+}
+
+func TestRenderMarkdown_ReferenceLinks_GitLab_WithUnreleased(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://gitlab.com/example/repo",
+		Unreleased: &changelog.Release{
+			Added: []changelog.Entry{{Description: "WIP"}},
+		},
 		Releases: []changelog.Release{
 			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
 		},
@@ -398,9 +445,27 @@ func TestRenderMarkdown_ReferenceLinks_NonGitHub(t *testing.T) {
 
 	md := RenderMarkdown(cl)
 
-	// Non-GitHub repos should not have reference links
+	// Check for GitLab unreleased link
+	if !strings.Contains(md, "[unreleased]: https://gitlab.com/example/repo/-/compare/v1.0.0...HEAD") {
+		t.Error("missing GitLab unreleased compare link")
+	}
+}
+
+func TestRenderMarkdown_ReferenceLinks_UnsupportedHost(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://bitbucket.org/example/repo",
+		Releases: []changelog.Release{
+			{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Unsupported hosts should not have reference links
 	if strings.Contains(md, "[1.0.0]:") {
-		t.Error("non-GitHub repos should not have reference links")
+		t.Error("unsupported hosts should not have reference links")
 	}
 }
 
@@ -459,7 +524,7 @@ func TestRenderMarkdown_URLReference(t *testing.T) {
 
 	md := RenderMarkdownWithOptions(cl, DefaultOptions())
 
-	if !strings.Contains(md, "[issue](https://github.com/example/repo/issues/123)") {
+	if !strings.Contains(md, "[#123](https://github.com/example/repo/issues/123)") {
 		t.Error("missing URL reference link")
 	}
 }
@@ -562,13 +627,13 @@ func TestRenderMarkdown_CommitReference(t *testing.T) {
 
 	// Default options should NOT include commits
 	md := RenderMarkdownWithOptions(cl, DefaultOptions())
-	if strings.Contains(md, "abc123def") {
+	if strings.Contains(md, "abc123d") {
 		t.Error("commits should not be included with default options")
 	}
 
-	// Full options should include commits
+	// Full options should include commits (short hash displayed)
 	md = RenderMarkdownWithOptions(cl, FullOptions())
-	if !strings.Contains(md, "abc123def") {
+	if !strings.Contains(md, "abc123d") {
 		t.Error("commits should be included with full options")
 	}
 }
@@ -656,5 +721,267 @@ func TestOptions_StandardMaxTier(t *testing.T) {
 	opts := StandardOptions()
 	if opts.MaxTier != changelog.TierStandard {
 		t.Errorf("StandardOptions MaxTier = %q, want %q", opts.MaxTier, changelog.TierStandard)
+	}
+}
+
+func TestRenderMarkdown_VersioningSchemes(t *testing.T) {
+	tests := []struct {
+		name       string
+		versioning string
+		want       string
+		notWant    string
+	}{
+		{
+			name:       "default (semver)",
+			versioning: "",
+			want:       "Semantic Versioning",
+		},
+		{
+			name:       "explicit semver",
+			versioning: changelog.VersioningSemVer,
+			want:       "Semantic Versioning",
+		},
+		{
+			name:       "calver",
+			versioning: changelog.VersioningCalVer,
+			want:       "Calendar Versioning",
+			notWant:    "Semantic Versioning",
+		},
+		{
+			name:       "custom",
+			versioning: changelog.VersioningCustom,
+			notWant:    "Semantic Versioning",
+		},
+		{
+			name:       "none",
+			versioning: changelog.VersioningNone,
+			notWant:    "Semantic Versioning",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cl := &changelog.Changelog{
+				IRVersion:  "1.0",
+				Project:    "test",
+				Versioning: tt.versioning,
+				Releases: []changelog.Release{
+					{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Init"}}},
+				},
+			}
+
+			md := RenderMarkdown(cl)
+
+			if tt.want != "" && !strings.Contains(md, tt.want) {
+				t.Errorf("expected %q in output", tt.want)
+			}
+			if tt.notWant != "" && strings.Contains(md, tt.notWant) {
+				t.Errorf("unexpected %q in output", tt.notWant)
+			}
+		})
+	}
+}
+
+func TestRenderMarkdown_CommitConvention(t *testing.T) {
+	tests := []struct {
+		name             string
+		commitConvention string
+		want             string
+	}{
+		{
+			name:             "default (none)",
+			commitConvention: "",
+			want:             "",
+		},
+		{
+			name:             "conventional",
+			commitConvention: changelog.CommitConventionConventional,
+			want:             "Conventional Commits",
+		},
+		{
+			name:             "none",
+			commitConvention: changelog.CommitConventionNone,
+			want:             "",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cl := &changelog.Changelog{
+				IRVersion:        "1.0",
+				Project:          "test",
+				CommitConvention: tt.commitConvention,
+				Releases: []changelog.Release{
+					{Version: "1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Init"}}},
+				},
+			}
+
+			md := RenderMarkdown(cl)
+
+			if tt.want != "" && !strings.Contains(md, tt.want) {
+				t.Errorf("expected %q in output", tt.want)
+			}
+			if tt.want == "" && strings.Contains(md, "Conventional Commits") {
+				t.Error("unexpected Conventional Commits in output")
+			}
+		})
+	}
+}
+
+func TestRenderMarkdown_CombinedHeaderOptions(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:        "1.0",
+		Project:          "test",
+		Versioning:       changelog.VersioningCalVer,
+		CommitConvention: changelog.CommitConventionConventional,
+		Releases: []changelog.Release{
+			{Version: "2026.01", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Init"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Should have CalVer
+	if !strings.Contains(md, "Calendar Versioning") {
+		t.Error("expected Calendar Versioning in output")
+	}
+	// Should NOT have SemVer
+	if strings.Contains(md, "Semantic Versioning") {
+		t.Error("unexpected Semantic Versioning in output")
+	}
+	// Should have Conventional Commits
+	if !strings.Contains(md, "Conventional Commits") {
+		t.Error("expected Conventional Commits in output")
+	}
+	// Should have Structured Changelog
+	if !strings.Contains(md, "Structured Changelog") {
+		t.Error("expected Structured Changelog in output")
+	}
+}
+
+func TestRenderMarkdown_LinkedReferences_GitHub(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "Feature", Issue: "42", PR: "43", Commit: "abc123def456789"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, FullOptions())
+
+	// Check issue link
+	if !strings.Contains(md, "[#42](https://github.com/example/repo/issues/42)") {
+		t.Error("missing linked issue reference")
+	}
+	// Check PR link
+	if !strings.Contains(md, "[#43](https://github.com/example/repo/pull/43)") {
+		t.Error("missing linked PR reference")
+	}
+	// Check commit link (short hash with backticks)
+	if !strings.Contains(md, "[`abc123d`](https://github.com/example/repo/commit/abc123def456789)") {
+		t.Error("missing linked commit reference")
+	}
+}
+
+func TestRenderMarkdown_LinkedReferences_GitLab(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://gitlab.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "Feature", Issue: "42", PR: "43", Commit: "abc123def456789"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, FullOptions())
+
+	// Check issue link (GitLab style)
+	if !strings.Contains(md, "[#42](https://gitlab.com/example/repo/-/issues/42)") {
+		t.Error("missing linked issue reference for GitLab")
+	}
+	// Check MR link (GitLab style)
+	if !strings.Contains(md, "[#43](https://gitlab.com/example/repo/-/merge_requests/43)") {
+		t.Error("missing linked MR reference for GitLab")
+	}
+	// Check commit link (GitLab style)
+	if !strings.Contains(md, "[`abc123d`](https://gitlab.com/example/repo/-/commit/abc123def456789)") {
+		t.Error("missing linked commit reference for GitLab")
+	}
+}
+
+func TestRenderMarkdown_LinkedReferences_Disabled(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "Feature", Issue: "42"},
+				},
+			},
+		},
+	}
+
+	// Default options should NOT link references in entries (LinkReferences: false)
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should not have issue link (but will have compare links at bottom)
+	if strings.Contains(md, "issues/42") {
+		t.Error("issue references should not be linked with default options")
+	}
+	if !strings.Contains(md, "#42") {
+		t.Error("reference should still be present")
+	}
+}
+
+func TestRenderMarkdown_LinkedReferences_NoRepo(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion: "1.0",
+		Project:   "test",
+		// No repository
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "Feature", Issue: "42", Commit: "abc123def456789"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, FullOptions())
+
+	// Should not have issue/commit links (no repo to link to)
+	if strings.Contains(md, "issues/42") {
+		t.Error("should not have issue links without repository")
+	}
+	if strings.Contains(md, "/commit/") {
+		t.Error("should not have commit links without repository")
+	}
+	// Should still show the reference
+	if !strings.Contains(md, "#42") {
+		t.Error("issue reference should still be present")
+	}
+	// Commit should be shown as short hash without link
+	if !strings.Contains(md, "abc123d") {
+		t.Error("commit reference should still be present")
 	}
 }
