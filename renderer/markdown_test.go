@@ -985,3 +985,214 @@ func TestRenderMarkdown_LinkedReferences_NoRepo(t *testing.T) {
 		t.Error("commit reference should still be present")
 	}
 }
+
+func TestRenderMarkdown_AuthorAttribution_ExternalContributor(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "New feature", Author: "external-contributor"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should include author attribution with GitHub link
+	if !strings.Contains(md, "by [@external-contributor](https://github.com/external-contributor)") {
+		t.Error("missing author attribution for external contributor")
+	}
+}
+
+func TestRenderMarkdown_AuthorAttribution_Maintainer(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "New feature", Author: "grokify"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should NOT include author attribution for maintainer
+	if strings.Contains(md, "by [@grokify]") {
+		t.Error("maintainer should not have author attribution")
+	}
+}
+
+func TestRenderMarkdown_AuthorAttribution_CommonBot(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "Bump dependency", Author: "dependabot"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should NOT include author attribution for common bot
+	if strings.Contains(md, "by [@dependabot]") {
+		t.Error("common bot should not have author attribution")
+	}
+}
+
+func TestRenderMarkdown_AuthorAttribution_CustomBot(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Bots:       []string{"my-custom-bot"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "Automated update", Author: "my-custom-bot"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should NOT include author attribution for custom bot
+	if strings.Contains(md, "by [@my-custom-bot]") {
+		t.Error("custom bot should not have author attribution")
+	}
+}
+
+func TestRenderMarkdown_AuthorAttribution_GitLab(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://gitlab.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "New feature", Author: "gitlab-user"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should include author attribution with GitLab link
+	if !strings.Contains(md, "by [@gitlab-user](https://gitlab.com/gitlab-user)") {
+		t.Error("missing GitLab author attribution")
+	}
+}
+
+func TestRenderMarkdown_AuthorAttribution_Disabled(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "New feature", Author: "external-contributor"},
+				},
+			},
+		},
+	}
+
+	// Minimal options have IncludeAuthors: false
+	md := RenderMarkdownWithOptions(cl, MinimalOptions())
+
+	// Should NOT include author attribution when disabled
+	if strings.Contains(md, "by [@external-contributor]") {
+		t.Error("author attribution should not appear when IncludeAuthors is false")
+	}
+}
+
+func TestRenderMarkdown_AuthorAttribution_WithAtPrefix(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{Description: "New feature", Author: "@Petess"},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should normalize author and include proper attribution
+	if !strings.Contains(md, "by [@Petess](https://github.com/Petess)") {
+		t.Error("missing author attribution for @Petess")
+	}
+	// Should not have double @
+	if strings.Contains(md, "@@Petess") {
+		t.Error("should not have double @ in author attribution")
+	}
+}
+
+func TestChangelog_IsTeamMember(t *testing.T) {
+	cl := &changelog.Changelog{
+		Maintainers: []string{"grokify", "JohnDoe"},
+		Bots:        []string{"my-bot"},
+	}
+
+	tests := []struct {
+		author string
+		want   bool
+	}{
+		{"", true},                  // Empty author = no attribution needed
+		{"grokify", true},           // Maintainer
+		{"GROKIFY", true},           // Case insensitive
+		{"@grokify", true},          // With @ prefix
+		{"JohnDoe", true},           // Another maintainer
+		{"my-bot", true},            // Custom bot
+		{"dependabot", true},        // Common bot
+		{"dependabot[bot]", true},   // Common bot variant
+		{"renovate", true},          // Common bot
+		{"external-user", false},    // External contributor
+		{"random-person", false},    // External contributor
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.author, func(t *testing.T) {
+			if got := cl.IsTeamMember(tt.author); got != tt.want {
+				t.Errorf("IsTeamMember(%q) = %v, want %v", tt.author, got, tt.want)
+			}
+		})
+	}
+}
