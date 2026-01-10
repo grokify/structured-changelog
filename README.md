@@ -147,11 +147,11 @@ sclog generate CHANGELOG.json
 # Output to file
 sclog generate CHANGELOG.json -o CHANGELOG.md
 
-# Minimal output (no references/metadata)
-sclog generate CHANGELOG.json --minimal
+# Full output (default: includes commit links and reference linking)
+sclog generate CHANGELOG.json
 
-# Full output (include commit SHAs)
-sclog generate CHANGELOG.json --full
+# Minimal output (no references/metadata/commit links)
+sclog generate CHANGELOG.json --minimal
 ```
 
 Show version:
@@ -176,11 +176,11 @@ See the [LLM Guide](https://grokify.github.io/structured-changelog/guides/llm-gu
 
 ### Reference Linking
 
-When a repository URL is provided, references (issues, PRs, commits) can be automatically linked:
+When a repository URL is provided, references (issues, PRs, commits) are automatically linked by default:
 
 ```bash
-# Generate with linked references (full preset)
-sclog generate CHANGELOG.json --full
+# Generate with linked references (default behavior)
+sclog generate CHANGELOG.json
 ```
 
 Example output:

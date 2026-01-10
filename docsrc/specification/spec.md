@@ -78,7 +78,7 @@ The `commit_convention` field adds a reference to the commit message convention:
 
 #### Reference Linking
 
-When a `repository` URL is provided and the renderer is configured with `LinkReferences: true` (enabled in `FullOptions`), references are automatically linked:
+When a `repository` URL is provided, references are automatically linked by default (`LinkReferences: true`):
 
 | Reference | GitHub URL | GitLab URL |
 |-----------|------------|------------|
