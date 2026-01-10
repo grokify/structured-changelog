@@ -30,19 +30,19 @@
         { "description": "`IncludeAuthors` renderer option for external contributor attribution", "commit": "a2c86cb" },
         { "description": "Automatic author attribution with linked GitHub/GitLab profiles", "commit": "a2c86cb" },
         { "description": "Inline attribution stripping to avoid duplicate attribution when author field matches", "commit": "b5e8f34" },
-        { "description": "`CompactMaintenanceReleases` renderer option for grouping maintenance-only releases" },
-        { "description": "`IsMaintenanceOnly()` method to detect dependency/documentation-only releases" },
-        { "description": "`--changelog` flag for `parse-commits` to auto-detect external contributors" },
-        { "description": "`IsExternal` field in commit output marking external contributors" },
-        { "description": "`Contributors` summary in `parse-commits` output with deduplicated author list" },
-        { "description": "`IsTeamMemberByNameAndEmail()` for matching by git author name, email, or GitHub noreply username" }
+        { "description": "`CompactMaintenanceReleases` renderer option for grouping maintenance-only releases", "commit": "f7cdb02" },
+        { "description": "`IsMaintenanceOnly()` method to detect dependency/documentation-only releases", "commit": "824a075" },
+        { "description": "`--changelog` flag for `parse-commits` to auto-detect external contributors", "commit": "817fa7f" },
+        { "description": "`IsExternal` field in commit output marking external contributors", "commit": "8e1ab0a" },
+        { "description": "`Contributors` summary in `parse-commits` output with deduplicated author list", "commit": "8e1ab0a" },
+        { "description": "`IsTeamMemberByNameAndEmail()` for matching by git author name, email, or GitHub noreply username", "commit": "5169681" }
       ],
       "changed": [
         { "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON", "breaking": true, "commit": "2be0cc0" },
         { "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
         { "description": "`validate`: `--json` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
         { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output", "commit": "be9b3b0" },
-        { "description": "Consecutive maintenance releases grouped into compact sections by default" }
+        { "description": "Consecutive maintenance releases grouped into compact sections by default", "commit": "f7cdb02" }
       ],
       "documentation": [
         { "description": "TOON integration design document", "commit": "f5850bf" },
