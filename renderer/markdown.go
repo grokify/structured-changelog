@@ -102,9 +102,12 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 	sb.WriteString(renderHeaderLine(cl))
 
 	// Unreleased section
+	// Always show if IncludeUnreleasedLink is enabled and there are releases to compare against
 	if cl.Unreleased != nil && !cl.Unreleased.IsEmpty() {
 		sb.WriteString("\n## [Unreleased]\n")
 		renderReleaseContent(&sb, cl.Unreleased, ctx)
+	} else if opts.IncludeUnreleasedLink && len(cl.Releases) > 0 {
+		sb.WriteString("\n## [Unreleased]\n")
 	}
 
 	// Releases

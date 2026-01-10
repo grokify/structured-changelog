@@ -604,11 +604,16 @@ func TestRenderMarkdown_EmptyUnreleased(t *testing.T) {
 		},
 	}
 
+	// Default options: empty unreleased header IS rendered (for consistency with link)
 	md := RenderMarkdown(cl)
+	if !strings.Contains(md, "## [Unreleased]") {
+		t.Error("empty unreleased section header should be rendered with default options")
+	}
 
-	// Empty unreleased should not be rendered
+	// Minimal options: empty unreleased should NOT be rendered
+	md = RenderMarkdownWithOptions(cl, MinimalOptions())
 	if strings.Contains(md, "## [Unreleased]") {
-		t.Error("empty unreleased section should not be rendered")
+		t.Error("empty unreleased section should not be rendered with minimal options")
 	}
 }
 
