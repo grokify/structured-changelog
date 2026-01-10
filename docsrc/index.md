@@ -105,6 +105,7 @@ sclog generate CHANGELOG.json -o CHANGELOG.md
 - [JSON IR Specification](specification/spec.md) — Full schema documentation
 - [Security Metadata](specification/security.md) — CVE, GHSA, SARIF fields
 - [SBOM Metadata](specification/sbom.md) — Component tracking
+- [LLM Guide](guides/llm-guide.md) — AI-assisted changelog generation with TOON format
 - [Release Notes Guide](guides/release-notes-guide.md) — CHANGELOG vs RELEASE_NOTES
 
 ## Links

@@ -167,6 +167,7 @@ The CLI includes tools optimized for AI-assisted changelog generation. Commands 
 ```bash
 sclog parse-commits --since=v0.3.0           # Structured git history (TOON)
 sclog parse-commits --since=v0.3.0 --format=json  # JSON output
+sclog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json  # Mark external contributors
 sclog suggest-category "feat: ..."           # Category suggestions
 sclog validate --format=toon CHANGELOG.json  # Rich error output
 ```
