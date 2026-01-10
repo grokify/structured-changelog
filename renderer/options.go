@@ -31,6 +31,10 @@ type Options struct {
 	// IncludeCompareLinks adds version comparison links at the bottom.
 	IncludeCompareLinks bool
 
+	// IncludeUnreleasedLink adds an [Unreleased] link comparing latest version to HEAD.
+	// This lets users see what's been merged since the last release.
+	IncludeUnreleasedLink bool
+
 	// CompactMaintenanceReleases groups consecutive maintenance-only releases
 	// (those with only dependencies, documentation, build, tests, internal changes)
 	// into a single compact section like "## Versions 0.71.1 - 0.71.10 (Maintenance)".
@@ -52,6 +56,7 @@ func DefaultOptions() Options {
 		IncludeSecurityMetadata:    true,
 		MarkBreakingChanges:        true,
 		IncludeCompareLinks:        true,
+		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierOptional,
 	}
@@ -67,6 +72,7 @@ func MinimalOptions() Options {
 		IncludeSecurityMetadata:    false,
 		MarkBreakingChanges:        false,
 		IncludeCompareLinks:        false,
+		IncludeUnreleasedLink:      false,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierCore,
 	}
@@ -84,6 +90,7 @@ func FullOptions() Options {
 		IncludeSecurityMetadata:    true,
 		MarkBreakingChanges:        true,
 		IncludeCompareLinks:        true,
+		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: false, // Full detail shows all releases expanded
 		MaxTier:                    changelog.TierOptional,
 	}
@@ -99,6 +106,7 @@ func CoreOptions() Options {
 		IncludeSecurityMetadata:    true,
 		MarkBreakingChanges:        true,
 		IncludeCompareLinks:        true,
+		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierCore,
 	}
@@ -114,6 +122,7 @@ func StandardOptions() Options {
 		IncludeSecurityMetadata:    true,
 		MarkBreakingChanges:        true,
 		IncludeCompareLinks:        true,
+		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierStandard,
 	}

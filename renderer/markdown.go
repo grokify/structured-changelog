@@ -119,7 +119,7 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 
 	// Reference links at bottom (for GitHub repositories)
 	if opts.IncludeCompareLinks && cl.Repository != "" {
-		if links := renderReferenceLinks(cl); links != "" {
+		if links := renderReferenceLinks(cl, opts.IncludeUnreleasedLink); links != "" {
 			sb.WriteString("\n")
 			sb.WriteString(links)
 		}
@@ -516,7 +516,7 @@ func parseRepository(repoURL string) (baseURL string, host repoHost) {
 // - Compare links for subsequent releases: /-/compare/v0.1.0...v0.2.0
 // - Tag links for the first release: /-/tags/v0.1.0
 // - Compare to HEAD for unreleased: /-/compare/v0.2.0...HEAD
-func renderReferenceLinks(cl *changelog.Changelog) string {
+func renderReferenceLinks(cl *changelog.Changelog, includeUnreleasedLink bool) string {
 	baseURL, host := parseRepository(cl.Repository)
 	if host == hostUnknown {
 		return ""
@@ -524,8 +524,9 @@ func renderReferenceLinks(cl *changelog.Changelog) string {
 
 	var sb strings.Builder
 
-	// Unreleased link (if there are releases to compare against)
-	if cl.Unreleased != nil && len(cl.Releases) > 0 {
+	// Unreleased link (always included by default when there are releases)
+	// This lets users see what's been merged since the last release
+	if includeUnreleasedLink && len(cl.Releases) > 0 {
 		latestVersion := cl.Releases[0].Version
 		fmt.Fprintf(&sb, "[unreleased]: %s\n", formatCompareLink(baseURL, host, latestVersion, "HEAD"))
 	}

@@ -20,6 +20,7 @@
         { "description": "GitLab repository support for reference links and version comparisons", "commit": "be9b3b0" },
         { "description": "Automatic reference linking: issues, PRs, and commits become clickable links when repository URL is provided", "commit": "be9b3b0" },
         { "description": "`LinkReferences` renderer option (now enabled by default) for hyperlinking references", "commit": "be9b3b0" },
+        { "description": "`IncludeUnreleasedLink` renderer option (enabled by default) for always showing compare link to HEAD" },
         { "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`", "commit": "93b8da1" },
         { "description": "`commit_convention` field in changelog IR: `conventional` or `none`", "commit": "93b8da1" },
         { "description": "Dynamic header generation based on versioning scheme and commit convention", "commit": "be9b3b0" },
