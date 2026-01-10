@@ -77,6 +77,7 @@ func renderHeaderLine(cl *changelog.Changelog) string {
 
 // renderContext holds context needed during rendering.
 type renderContext struct {
+	cl      *changelog.Changelog
 	opts    Options
 	baseURL string
 	host    repoHost
@@ -89,6 +90,7 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 	// Parse repository for linking
 	baseURL, host := parseRepository(cl.Repository)
 	ctx := renderContext{
+		cl:      cl,
 		opts:    opts,
 		baseURL: baseURL,
 		host:    host,
@@ -192,7 +194,32 @@ func renderEntry(sb *strings.Builder, e *changelog.Entry, ctx renderContext, isS
 		line += " (" + strings.Join(refs, ", ") + ")"
 	}
 
+	// Author attribution for external contributors
+	if opts.IncludeAuthors && e.Author != "" && !ctx.cl.IsTeamMember(e.Author) {
+		line += " " + formatAuthorAttribution(e.Author, ctx)
+	}
+
 	sb.WriteString("- " + line + "\n")
+}
+
+// formatAuthorAttribution formats an author attribution with a GitHub link.
+func formatAuthorAttribution(author string, ctx renderContext) string {
+	// Normalize author (remove @ if present)
+	name := author
+	if len(name) > 0 && name[0] == '@' {
+		name = name[1:]
+	}
+
+	// Create linked attribution if we can determine the host
+	if ctx.host == hostGitHub {
+		return fmt.Sprintf("by [@%s](https://github.com/%s)", name, name)
+	}
+	if ctx.host == hostGitLab {
+		return fmt.Sprintf("by [@%s](https://gitlab.com/%s)", name, name)
+	}
+
+	// Fallback: just show the author name with @ prefix
+	return fmt.Sprintf("by @%s", name)
 }
 
 // formatIssueRef formats an issue reference, optionally with a link.

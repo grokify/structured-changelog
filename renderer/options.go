@@ -18,6 +18,10 @@ type Options struct {
 	// when a repository URL is available. Requires IncludeReferences.
 	LinkReferences bool
 
+	// IncludeAuthors appends author attribution for external contributors.
+	// Authors listed in Changelog.Maintainers or known bots are excluded.
+	IncludeAuthors bool
+
 	// IncludeSecurityMetadata includes CVE/GHSA/severity in security entries.
 	IncludeSecurityMetadata bool
 
@@ -38,6 +42,7 @@ func DefaultOptions() Options {
 		IncludeReferences:       true,
 		IncludeCommits:          false,
 		LinkReferences:          false,
+		IncludeAuthors:          true,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
@@ -51,6 +56,7 @@ func MinimalOptions() Options {
 		IncludeReferences:       false,
 		IncludeCommits:          false,
 		LinkReferences:          false,
+		IncludeAuthors:          false,
 		IncludeSecurityMetadata: false,
 		MarkBreakingChanges:     false,
 		IncludeCompareLinks:     false,
@@ -64,6 +70,7 @@ func FullOptions() Options {
 		IncludeReferences:       true,
 		IncludeCommits:          true,
 		LinkReferences:          true,
+		IncludeAuthors:          true,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
@@ -77,6 +84,7 @@ func CoreOptions() Options {
 		IncludeReferences:       true,
 		IncludeCommits:          false,
 		LinkReferences:          false,
+		IncludeAuthors:          true,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
@@ -90,6 +98,7 @@ func StandardOptions() Options {
 		IncludeReferences:       true,
 		IncludeCommits:          false,
 		LinkReferences:          false,
+		IncludeAuthors:          true,
 		IncludeSecurityMetadata: true,
 		MarkBreakingChanges:     true,
 		IncludeCompareLinks:     true,
