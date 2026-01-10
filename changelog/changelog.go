@@ -32,9 +32,74 @@ type Changelog struct {
 	Repository       string     `json:"repository,omitempty"`
 	Versioning       string     `json:"versioning,omitempty"`
 	CommitConvention string     `json:"commit_convention,omitempty"`
+	Maintainers      []string   `json:"maintainers,omitempty"`
+	Bots             []string   `json:"bots,omitempty"`
 	GeneratedAt      *time.Time `json:"generated_at,omitempty"`
 	Unreleased       *Release   `json:"unreleased,omitempty"`
 	Releases         []Release  `json:"releases,omitempty"`
+}
+
+// CommonBots is a list of well-known bot usernames that are auto-detected.
+var CommonBots = []string{
+	"dependabot",
+	"dependabot[bot]",
+	"renovate",
+	"renovate[bot]",
+	"github-actions",
+	"github-actions[bot]",
+	"semantic-release-bot",
+	"greenkeeper[bot]",
+	"snyk-bot",
+	"imgbot[bot]",
+	"allcontributors[bot]",
+}
+
+// IsTeamMember returns true if the author is a maintainer or known bot.
+func (c *Changelog) IsTeamMember(author string) bool {
+	if author == "" {
+		return true // No author means no attribution needed
+	}
+
+	// Check maintainers
+	for _, m := range c.Maintainers {
+		if normalizeAuthor(m) == normalizeAuthor(author) {
+			return true
+		}
+	}
+
+	// Check custom bots
+	for _, b := range c.Bots {
+		if normalizeAuthor(b) == normalizeAuthor(author) {
+			return true
+		}
+	}
+
+	// Check common bots
+	for _, b := range CommonBots {
+		if normalizeAuthor(b) == normalizeAuthor(author) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// normalizeAuthor normalizes an author string for comparison.
+// Removes @ prefix and converts to lowercase.
+func normalizeAuthor(author string) string {
+	if len(author) > 0 && author[0] == '@' {
+		author = author[1:]
+	}
+	// Use lowercase for case-insensitive comparison
+	result := make([]byte, len(author))
+	for i := 0; i < len(author); i++ {
+		c := author[i]
+		if c >= 'A' && c <= 'Z' {
+			c += 'a' - 'A'
+		}
+		result[i] = c
+	}
+	return string(result)
 }
 
 // New creates a new Changelog with the current IR version.
