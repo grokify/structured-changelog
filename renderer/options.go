@@ -42,11 +42,12 @@ type Options struct {
 }
 
 // DefaultOptions returns the default rendering options.
+// Includes commit links and reference linking when repository URL is available.
 func DefaultOptions() Options {
 	return Options{
 		IncludeReferences:          true,
-		IncludeCommits:             false,
-		LinkReferences:             false,
+		IncludeCommits:             true,
+		LinkReferences:             true,
 		IncludeAuthors:             true,
 		IncludeSecurityMetadata:    true,
 		MarkBreakingChanges:        true,
@@ -72,6 +73,8 @@ func MinimalOptions() Options {
 }
 
 // FullOptions returns options for maximum detail.
+// Same as DefaultOptions but with CompactMaintenanceReleases disabled
+// to show all releases expanded instead of grouping maintenance releases.
 func FullOptions() Options {
 	return Options{
 		IncludeReferences:          true,

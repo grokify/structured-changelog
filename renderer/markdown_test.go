@@ -625,16 +625,16 @@ func TestRenderMarkdown_CommitReference(t *testing.T) {
 		},
 	}
 
-	// Default options should NOT include commits
+	// Default options should include commits (short hash displayed)
 	md := RenderMarkdownWithOptions(cl, DefaultOptions())
-	if strings.Contains(md, "abc123d") {
-		t.Error("commits should not be included with default options")
+	if !strings.Contains(md, "abc123d") {
+		t.Error("commits should be included with default options")
 	}
 
-	// Full options should include commits (short hash displayed)
-	md = RenderMarkdownWithOptions(cl, FullOptions())
-	if !strings.Contains(md, "abc123d") {
-		t.Error("commits should be included with full options")
+	// Minimal options should NOT include commits
+	md = RenderMarkdownWithOptions(cl, MinimalOptions())
+	if strings.Contains(md, "abc123d") {
+		t.Error("commits should not be included with minimal options")
 	}
 }
 
@@ -923,7 +923,7 @@ func TestRenderMarkdown_LinkedReferences_GitLab(t *testing.T) {
 	}
 }
 
-func TestRenderMarkdown_LinkedReferences_Disabled(t *testing.T) {
+func TestRenderMarkdown_LinkedReferences_Default(t *testing.T) {
 	cl := &changelog.Changelog{
 		IRVersion:  "1.0",
 		Project:    "test",
@@ -939,15 +939,18 @@ func TestRenderMarkdown_LinkedReferences_Disabled(t *testing.T) {
 		},
 	}
 
-	// Default options should NOT link references in entries (LinkReferences: false)
+	// Default options should link references in entries (LinkReferences: true)
 	md := RenderMarkdownWithOptions(cl, DefaultOptions())
 
-	// Should not have issue link (but will have compare links at bottom)
-	if strings.Contains(md, "issues/42") {
-		t.Error("issue references should not be linked with default options")
+	// Should have issue link
+	if !strings.Contains(md, "issues/42") {
+		t.Error("issue references should be linked with default options")
 	}
-	if !strings.Contains(md, "#42") {
-		t.Error("reference should still be present")
+
+	// Minimal options should NOT link references
+	md = RenderMarkdownWithOptions(cl, MinimalOptions())
+	if strings.Contains(md, "issues/42") {
+		t.Error("issue references should not be linked with minimal options")
 	}
 }
 

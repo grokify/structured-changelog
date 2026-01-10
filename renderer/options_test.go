@@ -13,8 +13,11 @@ func TestDefaultOptions(t *testing.T) {
 	if !opts.IncludeReferences {
 		t.Error("expected IncludeReferences to be true")
 	}
-	if opts.IncludeCommits {
-		t.Error("expected IncludeCommits to be false")
+	if !opts.IncludeCommits {
+		t.Error("expected IncludeCommits to be true")
+	}
+	if !opts.LinkReferences {
+		t.Error("expected LinkReferences to be true")
 	}
 	if !opts.IncludeSecurityMetadata {
 		t.Error("expected IncludeSecurityMetadata to be true")
