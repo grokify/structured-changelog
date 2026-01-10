@@ -1536,3 +1536,145 @@ func TestRenderMarkdown_SingleMaintenanceRelease(t *testing.T) {
 		t.Error("should list change types for single maintenance release")
 	}
 }
+
+func TestRenderMarkdown_MaintenanceReleaseAllTypes(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion: "1.0",
+		Project:   "test",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.1",
+				Date:    "2024-02-01",
+				Added:   []changelog.Entry{{Description: "New feature"}},
+			},
+			{
+				Version:        "1.0.0",
+				Date:           "2024-01-15",
+				Dependencies:   []changelog.Entry{{Description: "Update deps"}},
+				Documentation:  []changelog.Entry{{Description: "Update docs"}},
+				Build:          []changelog.Entry{{Description: "Fix CI"}},
+				Tests:          []changelog.Entry{{Description: "Add tests"}},
+				Internal:       []changelog.Entry{{Description: "Refactor"}},
+				Infrastructure: []changelog.Entry{{Description: "Infra change"}},
+				Observability:  []changelog.Entry{{Description: "Add metrics"}},
+				Compliance:     []changelog.Entry{{Description: "Audit log"}},
+				Contributors:   []changelog.Entry{{Description: "Thanks"}},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// All maintenance types should be listed
+	expectedTypes := []string{
+		"dependency updates",
+		"documentation",
+		"build",
+		"tests",
+		"internal",
+		"infrastructure",
+		"observability",
+		"compliance",
+		"contributors",
+	}
+
+	for _, typ := range expectedTypes {
+		if !strings.Contains(md, typ) {
+			t.Errorf("expected maintenance type %q in output", typ)
+		}
+	}
+}
+
+func TestRenderMarkdown_MaintenanceGroupSummary(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion: "1.0",
+		Project:   "test",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.5",
+				Date:    "2024-02-15",
+				Added:   []changelog.Entry{{Description: "New feature"}},
+			},
+			{
+				Version:      "1.0.4",
+				Date:         "2024-02-10",
+				Dependencies: []changelog.Entry{{Description: "Dep 1"}, {Description: "Dep 2"}},
+			},
+			{
+				Version:       "1.0.3",
+				Date:          "2024-02-05",
+				Documentation: []changelog.Entry{{Description: "Doc 1"}},
+			},
+			{
+				Version:      "1.0.2",
+				Date:         "2024-02-01",
+				Dependencies: []changelog.Entry{{Description: "Dep 3"}},
+				Build:        []changelog.Entry{{Description: "Build 1"}},
+			},
+			{
+				Version: "1.0.1",
+				Date:    "2024-01-15",
+				Tests:   []changelog.Entry{{Description: "Test 1"}, {Description: "Test 2"}},
+			},
+			{
+				Version:  "1.0.0",
+				Date:     "2024-01-01",
+				Internal: []changelog.Entry{{Description: "Internal 1"}},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should group maintenance releases
+	if !strings.Contains(md, "## Versions 1.0.0 - 1.0.4 (Maintenance)") {
+		t.Error("expected maintenance group header with version range")
+	}
+
+	// Should show release count
+	if !strings.Contains(md, "5 releases") {
+		t.Error("expected '5 releases' in summary")
+	}
+
+	// Should summarize counts
+	if !strings.Contains(md, "3 dependency update(s)") {
+		t.Error("expected '3 dependency update(s)' in summary")
+	}
+	if !strings.Contains(md, "1 documentation change(s)") {
+		t.Error("expected '1 documentation change(s)' in summary")
+	}
+	if !strings.Contains(md, "1 build change(s)") {
+		t.Error("expected '1 build change(s)' in summary")
+	}
+	if !strings.Contains(md, "2 test change(s)") {
+		t.Error("expected '2 test change(s)' in summary")
+	}
+	if !strings.Contains(md, "1 other change(s)") {
+		t.Error("expected '1 other change(s)' in summary")
+	}
+}
+
+func TestRenderMarkdown_MaintenanceGroupEmpty(t *testing.T) {
+	// Test that empty maintenance group doesn't panic
+	cl := &changelog.Changelog{
+		IRVersion: "1.0",
+		Project:   "test",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2024-01-01",
+				Added:   []changelog.Entry{{Description: "Initial"}},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should render without maintenance grouping
+	if !strings.Contains(md, "## [1.0.0]") {
+		t.Error("expected regular release header")
+	}
+	if strings.Contains(md, "(Maintenance)") {
+		t.Error("should not have maintenance suffix for non-maintenance release")
+	}
+}

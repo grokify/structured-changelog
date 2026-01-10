@@ -304,3 +304,158 @@ func TestSummary_EmptyUnreleased(t *testing.T) {
 		t.Error("expected HasUnreleased to be false for empty unreleased")
 	}
 }
+
+func TestIsTeamMember(t *testing.T) {
+	cl := &Changelog{
+		Maintainers: []string{"grokify", "john@example.com"},
+		Bots:        []string{"mybot"},
+	}
+
+	tests := []struct {
+		name     string
+		author   string
+		expected bool
+	}{
+		{"maintainer by username", "grokify", true},
+		{"maintainer with @ prefix", "@grokify", true},
+		{"maintainer case insensitive", "GROKIFY", true},
+		{"maintainer by email", "john@example.com", true},
+		{"custom bot", "mybot", true},
+		{"common bot dependabot", "dependabot", true},
+		{"common bot dependabot[bot]", "dependabot[bot]", true},
+		{"common bot renovate", "renovate", true},
+		{"common bot github-actions", "github-actions[bot]", true},
+		{"external contributor", "external-user", false},
+		{"empty author", "", true}, // empty means no attribution needed
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := cl.IsTeamMember(tt.author)
+			if got != tt.expected {
+				t.Errorf("IsTeamMember(%q) = %v, want %v", tt.author, got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestIsTeamMemberByNameAndEmail(t *testing.T) {
+	cl := &Changelog{
+		Maintainers: []string{"grokify", "john@example.com"},
+	}
+
+	tests := []struct {
+		name     string
+		author   string
+		email    string
+		expected bool
+	}{
+		{"maintainer by name", "grokify", "", true},
+		{"maintainer by email in list", "John Wang", "john@example.com", true},
+		{"github noreply email", "John Wang", "grokify@users.noreply.github.com", true},
+		{"github noreply with id", "John Wang", "12345+grokify@users.noreply.github.com", true},
+		{"external contributor", "external", "ext@other.com", false},
+		{"both empty", "", "", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := cl.IsTeamMemberByNameAndEmail(tt.author, tt.email)
+			if got != tt.expected {
+				t.Errorf("IsTeamMemberByNameAndEmail(%q, %q) = %v, want %v", tt.author, tt.email, got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestExtractGitHubUsername(t *testing.T) {
+	tests := []struct {
+		email    string
+		expected string
+	}{
+		{"user@users.noreply.github.com", "user"},
+		{"12345+user@users.noreply.github.com", "user"},
+		{"USER@users.noreply.github.com", "USER"},
+		{"user@example.com", ""},
+		{"short@x.com", ""},
+		{"", ""},
+		{"@users.noreply.github.com", ""}, // just the suffix
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.email, func(t *testing.T) {
+			got := extractGitHubUsername(tt.email)
+			if got != tt.expected {
+				t.Errorf("extractGitHubUsername(%q) = %q, want %q", tt.email, got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestNormalizeAuthor(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"user", "user"},
+		{"@user", "user"},
+		{"USER", "user"},
+		{"@USER", "user"},
+		{"User123", "user123"},
+		{"", ""},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.input, func(t *testing.T) {
+			got := normalizeAuthor(tt.input)
+			if got != tt.expected {
+				t.Errorf("normalizeAuthor(%q) = %q, want %q", tt.input, got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestHasEmailSuffix(t *testing.T) {
+	tests := []struct {
+		email    string
+		suffix   string
+		expected bool
+	}{
+		{"user@example.com", "@example.com", true},
+		{"user@example.com", "@other.com", false},
+		{"short", "@example.com", false},
+		{"", "@example.com", false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.email+"_"+tt.suffix, func(t *testing.T) {
+			got := hasEmailSuffix(tt.email, tt.suffix)
+			if got != tt.expected {
+				t.Errorf("hasEmailSuffix(%q, %q) = %v, want %v", tt.email, tt.suffix, got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestIndexByte(t *testing.T) {
+	tests := []struct {
+		s        string
+		c        byte
+		expected int
+	}{
+		{"hello", 'e', 1},
+		{"hello", 'l', 2},
+		{"hello", 'x', -1},
+		{"", 'x', -1},
+		{"a+b", '+', 1},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.s, func(t *testing.T) {
+			got := indexByte(tt.s, tt.c)
+			if got != tt.expected {
+				t.Errorf("indexByte(%q, %q) = %d, want %d", tt.s, tt.c, got, tt.expected)
+			}
+		})
+	}
+}

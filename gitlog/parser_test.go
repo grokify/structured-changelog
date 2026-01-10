@@ -308,3 +308,80 @@ func TestParseResultAddCommit(t *testing.T) {
 		t.Errorf("expected TotalDeletions 50, got %d", result.Summary.TotalDeletions)
 	}
 }
+
+func TestComputeContributors(t *testing.T) {
+	result := NewParseResult()
+
+	// Add commits from different authors
+	result.Commits = []Commit{
+		{Author: "Alice", IsExternal: true},
+		{Author: "Alice", IsExternal: true},
+		{Author: "Alice", IsExternal: true},
+		{Author: "Bob", IsExternal: false},
+		{Author: "Bob", IsExternal: false},
+		{Author: "Charlie", IsExternal: true},
+		{Author: "", IsExternal: false}, // empty author should be skipped
+	}
+
+	result.ComputeContributors()
+
+	if len(result.Contributors) != 3 {
+		t.Fatalf("expected 3 contributors, got %d", len(result.Contributors))
+	}
+
+	// External contributors should come first, sorted by commit count
+	// Alice (3 commits, external), Charlie (1 commit, external), Bob (2 commits, internal)
+	if result.Contributors[0].Name != "Alice" {
+		t.Errorf("expected first contributor to be Alice, got %s", result.Contributors[0].Name)
+	}
+	if result.Contributors[0].CommitCount != 3 {
+		t.Errorf("expected Alice to have 3 commits, got %d", result.Contributors[0].CommitCount)
+	}
+	if !result.Contributors[0].IsExternal {
+		t.Error("expected Alice to be external")
+	}
+
+	if result.Contributors[1].Name != "Charlie" {
+		t.Errorf("expected second contributor to be Charlie, got %s", result.Contributors[1].Name)
+	}
+	if !result.Contributors[1].IsExternal {
+		t.Error("expected Charlie to be external")
+	}
+
+	if result.Contributors[2].Name != "Bob" {
+		t.Errorf("expected third contributor to be Bob, got %s", result.Contributors[2].Name)
+	}
+	if result.Contributors[2].IsExternal {
+		t.Error("expected Bob to be internal")
+	}
+}
+
+func TestComputeContributorsEmpty(t *testing.T) {
+	result := NewParseResult()
+	result.ComputeContributors()
+
+	if len(result.Contributors) != 0 {
+		t.Errorf("expected 0 contributors, got %d", len(result.Contributors))
+	}
+}
+
+func TestComputeContributorsAllInternal(t *testing.T) {
+	result := NewParseResult()
+	result.Commits = []Commit{
+		{Author: "Maintainer1", IsExternal: false},
+		{Author: "Maintainer2", IsExternal: false},
+	}
+
+	result.ComputeContributors()
+
+	if len(result.Contributors) != 2 {
+		t.Fatalf("expected 2 contributors, got %d", len(result.Contributors))
+	}
+
+	// All internal, so just sorted by commit count
+	for _, c := range result.Contributors {
+		if c.IsExternal {
+			t.Errorf("expected all contributors to be internal, got external: %s", c.Name)
+		}
+	}
+}

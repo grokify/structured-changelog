@@ -455,7 +455,7 @@ MIT License - see [LICENSE](LICENSE) for details.
  [build-status-url]: https://github.com/grokify/structured-changelog/actions/workflows/ci.yaml
  [lint-status-svg]: https://github.com/grokify/structured-changelog/actions/workflows/lint.yaml/badge.svg?branch=main
  [lint-status-url]: https://github.com/grokify/structured-changelog/actions/workflows/lint.yaml
- [coverage-svg]: https://img.shields.io/badge/coverage-85.2%25-green
+ [coverage-svg]: https://img.shields.io/badge/coverage-96.1%25-brightgreen
  [coverage-url]: https://github.com/grokify/structured-changelog
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/structured-changelog
  [goreport-url]: https://goreportcard.com/report/github.com/grokify/structured-changelog

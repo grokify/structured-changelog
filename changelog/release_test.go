@@ -302,3 +302,135 @@ func TestCategoryStruct(t *testing.T) {
 		t.Errorf("expected 2 entries, got %d", len(cat.Entries))
 	}
 }
+
+func TestIsMaintenanceOnly(t *testing.T) {
+	tests := []struct {
+		name     string
+		release  Release
+		expected bool
+	}{
+		{
+			name:     "empty release",
+			release:  Release{},
+			expected: false, // empty is not maintenance
+		},
+		{
+			name:     "dependencies only",
+			release:  Release{Dependencies: []Entry{{Description: "bump lib"}}},
+			expected: true,
+		},
+		{
+			name:     "documentation only",
+			release:  Release{Documentation: []Entry{{Description: "update docs"}}},
+			expected: true,
+		},
+		{
+			name:     "build only",
+			release:  Release{Build: []Entry{{Description: "fix ci"}}},
+			expected: true,
+		},
+		{
+			name:     "tests only",
+			release:  Release{Tests: []Entry{{Description: "add tests"}}},
+			expected: true,
+		},
+		{
+			name:     "internal only",
+			release:  Release{Internal: []Entry{{Description: "refactor"}}},
+			expected: true,
+		},
+		{
+			name:     "multiple maintenance types",
+			release:  Release{Dependencies: []Entry{{Description: "bump"}}, Documentation: []Entry{{Description: "docs"}}},
+			expected: true,
+		},
+		{
+			name:     "has added - not maintenance",
+			release:  Release{Added: []Entry{{Description: "new feature"}}, Dependencies: []Entry{{Description: "bump"}}},
+			expected: false,
+		},
+		{
+			name:     "has changed - not maintenance",
+			release:  Release{Changed: []Entry{{Description: "change"}}, Documentation: []Entry{{Description: "docs"}}},
+			expected: false,
+		},
+		{
+			name:     "has fixed - not maintenance",
+			release:  Release{Fixed: []Entry{{Description: "fix"}}},
+			expected: false,
+		},
+		{
+			name:     "has security - not maintenance",
+			release:  Release{Security: []Entry{{Description: "security fix"}}},
+			expected: false,
+		},
+		{
+			name:     "has removed - not maintenance",
+			release:  Release{Removed: []Entry{{Description: "removed"}}},
+			expected: false,
+		},
+		{
+			name:     "has deprecated - not maintenance",
+			release:  Release{Deprecated: []Entry{{Description: "deprecated"}}},
+			expected: false,
+		},
+		{
+			name:     "has highlights - not maintenance",
+			release:  Release{Highlights: []Entry{{Description: "highlight"}}},
+			expected: false,
+		},
+		{
+			name:     "has breaking - not maintenance",
+			release:  Release{Breaking: []Entry{{Description: "breaking"}}},
+			expected: false,
+		},
+		{
+			name:     "has performance - not maintenance",
+			release:  Release{Performance: []Entry{{Description: "perf"}}},
+			expected: false,
+		},
+		{
+			name:     "infrastructure only - maintenance",
+			release:  Release{Infrastructure: []Entry{{Description: "infra"}}},
+			expected: true,
+		},
+		{
+			name:     "observability only - maintenance",
+			release:  Release{Observability: []Entry{{Description: "metrics"}}},
+			expected: true,
+		},
+		{
+			name:     "compliance only - maintenance",
+			release:  Release{Compliance: []Entry{{Description: "audit"}}},
+			expected: true,
+		},
+		{
+			name:     "contributors only - maintenance",
+			release:  Release{Contributors: []Entry{{Description: "thanks"}}},
+			expected: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.release.IsMaintenanceOnly()
+			if got != tt.expected {
+				t.Errorf("IsMaintenanceOnly() = %v, want %v", got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestAddTests(t *testing.T) {
+	r := Release{}
+	e := Entry{Description: "add unit tests"}
+
+	r.AddTests(e)
+
+	if len(r.Tests) != 1 {
+		t.Errorf("expected 1 test entry, got %d", len(r.Tests))
+	}
+	if r.Tests[0].Description != "add unit tests" {
+		t.Errorf("expected description 'add unit tests', got %q", r.Tests[0].Description)
+	}
+}
