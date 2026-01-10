@@ -8,19 +8,34 @@ The `sclog` CLI includes tools optimized for LLM-assisted workflows:
 
 | Tool | Purpose | Token Savings |
 |------|---------|---------------|
-| `parse-commits` | Convert git log to structured JSON | ~5x reduction |
+| `parse-commits` | Convert git log to structured output | ~8x reduction (TOON) |
 | `suggest-category` | Classify commits into changelog categories | Consistent mapping |
-| `validate --json` | Rich error output with suggestions | Actionable fixes |
+| `validate --format` | Rich error output with suggestions | Actionable fixes |
+
+## Output Formats
+
+All LLM-facing commands default to TOON (Token-Oriented Object Notation) for maximum token efficiency:
+
+| Format | Flag | Description |
+|--------|------|-------------|
+| TOON | `--format=toon` (default) | ~40% fewer tokens than JSON |
+| JSON | `--format=json` | Standard JSON with indentation |
+| JSON Compact | `--format=json-compact` | Minified JSON |
+
+TOON is a compact, human-readable format optimized for LLM consumption. See [toonformat.dev](https://toonformat.dev/) for the specification.
 
 ## Tools
 
 ### parse-commits
 
-Parses git history into structured JSON optimized for LLM consumption.
+Parses git history into structured output optimized for LLM consumption.
 
 ```bash
-# Parse commits since a tag
+# Parse commits since a tag (TOON format, default)
 sclog parse-commits --since=v0.3.0
+
+# Parse commits with JSON output
+sclog parse-commits --since=v0.3.0 --format=json
 
 # Parse commits between versions
 sclog parse-commits --since=v0.2.0 --until=v0.3.0
@@ -28,8 +43,8 @@ sclog parse-commits --since=v0.2.0 --until=v0.3.0
 # Parse last N commits
 sclog parse-commits --last=20
 
-# Compact output without file list
-sclog parse-commits --since=v0.3.0 --no-files --compact
+# Exclude file list from output
+sclog parse-commits --since=v0.3.0 --no-files
 
 # Exclude merge commits
 sclog parse-commits --since=v0.3.0 --no-merges
@@ -44,7 +59,25 @@ sclog parse-commits --since=v0.3.0 --no-merges
 - Suggested changelog category for each commit
 - Summary statistics grouped by type and category
 
-**Example output:**
+**Example TOON output (default):**
+
+```
+Repository: github.com/example/project
+Range:
+  Since: v0.3.0
+  Until: HEAD
+  CommitCount: 5
+Commits[5]{Hash,Author,Date,Type,Scope,Subject,FilesChanged,Insertions,SuggestedCategory}:
+  abc123d,John Doe,2026-01-04,feat,auth,add OAuth2 support,3,230,Added
+  def456a,Jane Smith,2026-01-03,fix,,resolve memory leak,1,12,Fixed
+Summary:
+  ByType{feat,fix}:
+    3,2
+  BySuggestedCategory{Added,Fixed}:
+    3,2
+```
+
+**Example JSON output (`--format=json`):**
 
 ```json
 {
@@ -82,17 +115,31 @@ sclog parse-commits --since=v0.3.0 --no-merges
 Suggests changelog categories for commit messages based on conventional commit types and keywords.
 
 ```bash
-# Single message
+# Single message (TOON format, default)
 sclog suggest-category "feat(auth): add OAuth2 support"
+
+# Single message with JSON output
+sclog suggest-category --format=json "feat(auth): add OAuth2 support"
 
 # Batch mode from stdin
 git log --format="%s" v0.3.0..HEAD | sclog suggest-category --batch
-
-# Compact JSON output
-sclog suggest-category --compact "fix: resolve memory leak"
 ```
 
-**Example output:**
+**Example TOON output (default):**
+
+```
+Input: "feat(auth): add OAuth2 support"
+Suggestions[2]{Category,Tier,Confidence,Reasoning}:
+  Added,core,0.95,Conventional commit type 'feat' indicates new functionality
+  Security,core,0.6,Feature relates to authentication or security
+ConventionalCommit:
+  Type: feat
+  Scope: auth
+  Subject: add OAuth2 support
+  Breaking: false
+```
+
+**Example JSON output (`--format=json`):**
 
 ```json
 {
@@ -135,19 +182,35 @@ sclog suggest-category --compact "fix: resolve memory leak"
 | `security` | Security | core |
 | `deps` | Dependencies | standard |
 
-### validate --json
+### validate --format
 
 Validates changelog with rich, actionable error messages.
 
 ```bash
+# TOON output with detailed errors
+sclog validate --format=toon CHANGELOG.json
+
 # JSON output with detailed errors
-sclog validate --json CHANGELOG.json
+sclog validate --format=json CHANGELOG.json
 
 # Strict mode (warnings become errors)
-sclog validate --json --strict CHANGELOG.json
+sclog validate --format=toon --strict CHANGELOG.json
 ```
 
-**Example error output:**
+**Example TOON output:**
+
+```
+Valid: false
+Errors[1]{Code,Severity,Path,Message,Actual,Expected,Suggestion}:
+  E001,error,releases[0].date,Invalid date format,January 4 2026,YYYY-MM-DD format (ISO 8601),Convert to ISO 8601 format: YYYY-MM-DD
+Summary:
+  ErrorCount: 1
+  WarningCount: 0
+  ReleaseCount: 3
+  EntriesCount: 15
+```
+
+**Example JSON output (`--format=json`):**
 
 ```json
 {
@@ -193,6 +256,8 @@ sclog validate --json --strict CHANGELOG.json
 | E005 | Invalid severity level |
 | E006 | Invalid CVSS score |
 | E007 | Invalid IR version |
+| E008 | Invalid versioning scheme |
+| E009 | Invalid commit convention |
 | E100 | Missing required field |
 | E101 | Duplicate version |
 | E103 | Empty description |
@@ -214,7 +279,7 @@ Generate changelog entries for v0.5.0 based on commits since v0.4.0.
 2. Review the commits and create appropriate CHANGELOG.json entries
 3. Group related commits into single entries where appropriate
 4. Write descriptions that explain "why" not just "what"
-5. Validate with `sclog validate --json`
+5. Validate with `sclog validate --format=toon`
 ```
 
 ### Review and Categorize Changes
@@ -234,7 +299,7 @@ Use `sclog parse-commits --since=v0.4.0` and then:
 ```
 Validate CHANGELOG.json and fix any issues:
 
-1. Run `sclog validate --json CHANGELOG.json`
+1. Run `sclog validate --format=toon CHANGELOG.json`
 2. For each error, apply the suggested fix
 3. Re-validate until clean
 ```
@@ -246,7 +311,7 @@ Help me prepare the v0.5.0 release:
 
 1. Parse commits: `sclog parse-commits --since=v0.4.0`
 2. Create CHANGELOG.json entries for the new version
-3. Validate: `sclog validate --json CHANGELOG.json`
+3. Validate: `sclog validate --format=toon CHANGELOG.json`
 4. Generate markdown: `sclog generate CHANGELOG.json -o CHANGELOG.md`
 5. Summarize what's in the release
 ```
@@ -266,20 +331,23 @@ Use `sclog parse-commits --since=<from> --until=<to>` for each range.
 
 ## Token Efficiency
 
-Raw `git log` output is verbose. The `parse-commits` tool reduces token usage significantly:
+Raw `git log` output is verbose. The `parse-commits` tool with TOON format reduces token usage significantly:
 
 | Format | Tokens per Commit | 50 Commits |
 |--------|-------------------|------------|
 | Raw `git log --stat` | ~150 | ~7,500 |
 | Parsed JSON | ~30 | ~1,500 |
-| **Savings** | **5x** | **6,000 tokens** |
+| Parsed TOON | ~18 | ~900 |
+| **Total Savings** | **~8x** | **~6,600 tokens** |
 
-Use `--no-files` and `--compact` for further reduction when file lists aren't needed.
+Use `--no-files` for further reduction when file lists aren't needed.
 
 ## Tips
 
 1. **Start with parse-commits** — Get structured data before asking the LLM to categorize
-2. **Use batch mode** — Process multiple commits at once with `suggest-category --batch`
-3. **Validate early** — Run `validate --json` to catch issues before they accumulate
-4. **Trust the suggestions** — The category suggestions are accurate for conventional commits (~95%)
-5. **Override when needed** — The LLM can apply judgment for ambiguous cases
+2. **Use TOON format** — Default format is optimized for LLM token efficiency
+3. **Use batch mode** — Process multiple commits at once with `suggest-category --batch`
+4. **Validate early** — Run `validate --format=toon` to catch issues before they accumulate
+5. **Trust the suggestions** — The category suggestions are accurate for conventional commits (~95%)
+6. **Override when needed** — The LLM can apply judgment for ambiguous cases
+7. **Use JSON for debugging** — Switch to `--format=json` when you need human-readable output

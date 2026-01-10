@@ -162,15 +162,33 @@ sclog version
 
 ### LLM-Assisted Generation
 
-The CLI includes tools optimized for AI-assisted changelog generation, reducing token usage by ~5x:
+The CLI includes tools optimized for AI-assisted changelog generation. Commands default to TOON format (Token-Oriented Object Notation) for ~8x token reduction:
 
 ```bash
-sclog parse-commits --since=v0.3.0     # Structured git history
-sclog suggest-category "feat: ..."     # Category suggestions
-sclog validate --json CHANGELOG.json   # Rich error output
+sclog parse-commits --since=v0.3.0           # Structured git history (TOON)
+sclog parse-commits --since=v0.3.0 --format=json  # JSON output
+sclog suggest-category "feat: ..."           # Category suggestions
+sclog validate --format=toon CHANGELOG.json  # Rich error output
 ```
 
 See the [LLM Guide](https://grokify.github.io/structured-changelog/guides/llm-guide/) for prompts and workflows.
+
+### Reference Linking
+
+When a repository URL is provided, references (issues, PRs, commits) can be automatically linked:
+
+```bash
+# Generate with linked references (full preset)
+sclog generate CHANGELOG.json --full
+```
+
+Example output:
+
+```markdown
+- Add OAuth2 support ([#42](https://github.com/example/repo/issues/42), [`abc123d`](https://github.com/example/repo/commit/abc123def))
+```
+
+Supports GitHub and GitLab URL formats.
 
 ## JSON IR Schema
 

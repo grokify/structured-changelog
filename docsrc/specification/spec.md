@@ -20,9 +20,31 @@ The Structured Changelog IR is a JSON format that serves as the canonical source
 | `ir_version` | string | Yes | IR schema version (currently "1.0") |
 | `project` | string | Yes | Project name |
 | `repository` | string | No | Repository URL |
+| `versioning` | string | No | Versioning scheme (see below) |
+| `commit_convention` | string | No | Commit message convention (see below) |
 | `generated_at` | datetime | No | ISO 8601 timestamp of generation |
 | `unreleased` | Release | No | Unreleased changes |
 | `releases` | Release[] | No | Array of releases (reverse chronological) |
+
+#### Versioning Schemes
+
+The `versioning` field controls what versioning reference appears in the generated header:
+
+| Value | Description | Header Text |
+|-------|-------------|-------------|
+| `semver` | Semantic Versioning (default) | "adheres to Semantic Versioning" |
+| `calver` | Calendar Versioning | "uses Calendar Versioning" |
+| `custom` | Custom versioning | No versioning line |
+| `none` | No versioning scheme | No versioning line |
+
+#### Commit Conventions
+
+The `commit_convention` field adds a reference to the commit message convention:
+
+| Value | Description | Header Text |
+|-------|-------------|-------------|
+| `conventional` | Conventional Commits | "commits follow Conventional Commits" |
+| `none` | No convention (default) | No convention line |
 
 ### Release Object
 
@@ -46,11 +68,23 @@ The Structured Changelog IR is a JSON format that serves as the canonical source
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `description` | string | Yes | Description of the change |
-| `issue` | string | No | Issue reference |
-| `pr` | string | No | Pull request reference |
-| `commit` | string | No | Commit SHA |
+| `issue` | string | No | Issue reference (number or URL) |
+| `pr` | string | No | Pull request reference (number or URL) |
+| `commit` | string | No | Commit SHA (full or short) |
 | `author` | string | No | Author of the change |
 | `breaking` | boolean | No | Breaking change flag |
+
+#### Reference Linking
+
+When a `repository` URL is provided and the renderer is configured with `LinkReferences: true` (enabled in `FullOptions`), references are automatically linked:
+
+| Reference | GitHub URL | GitLab URL |
+|-----------|------------|------------|
+| `issue: "42"` | `/issues/42` | `/-/issues/42` |
+| `pr: "43"` | `/pull/43` | `/-/merge_requests/43` |
+| `commit: "abc123..."` | `/commit/abc123...` | `/-/commit/abc123...` |
+
+Commits are displayed as short hashes (7 characters) in the output, but the full SHA is used in the link URL.
 
 ### Security Metadata (Optional)
 
