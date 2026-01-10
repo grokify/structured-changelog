@@ -61,6 +61,45 @@ Structured Changelog provides a machine-readable JSON Intermediate Representatio
 
 The generated `CHANGELOG.md` conforms to Keep a Changelog 1.1.0 formatting conventions.
 
+### Comparison with Other Tools
+
+Several tools generate changelogs from git history. Here's how Structured Changelog differs:
+
+| Feature | Structured Changelog | [conventional-changelog] | [git-chglog] | [chyle] | [semverbot] |
+|---------|---------------------|-------------------------|--------------|---------|-------------|
+| **GitHub stars** | — | ~8.4k | ~2.9k | ~160 | ~144 |
+| **Source of truth** | JSON IR | Git commits | Git + templates | Git commits | Git tags |
+| **Output format** | JSON → Markdown | Markdown | Markdown | Flexible | Tags only |
+| **Rendering** | Deterministic | Template-based | Template-based | Configurable | N/A |
+| **Machine-readable** | ✓ (JSON IR) | ✗ | ✗ | ✗ | ✗ |
+| **Security metadata** | ✓ (CVE/GHSA/CVSS) | ✗ | ✗ | ✗ | ✗ |
+| **SBOM metadata** | ✓ | ✗ | ✗ | ✗ | ✗ |
+| **LLM optimization** | ✓ (TOON format) | ✗ | ✗ | ✗ | ✗ |
+| **Version bumping** | ✗ | ✓ | ✗ | ✗ | ✓ |
+| **Conventional commits** | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Custom templates** | ✗ (deterministic) | ✓ | ✓ | ✓ | ✗ |
+| **Language** | Go | Node.js | Go | Go | Go |
+
+**When to use Structured Changelog:**
+
+- You need a machine-readable changelog for automation or APIs
+- You want deterministic output (same input → identical output)
+- You track security vulnerabilities with CVE/GHSA identifiers
+- You need SBOM integration for compliance
+- You use LLMs for changelog generation
+
+**When to use other tools:**
+
+- **conventional-changelog**: You're in a Node.js ecosystem and want automatic version bumping
+- **git-chglog**: You want maximum template customization
+- **chyle**: You need to enrich changelog data from external APIs (Jira, GitHub)
+- **semverbot**: You primarily need automated semantic version tagging
+
+[conventional-changelog]: https://github.com/conventional-changelog/conventional-changelog
+[git-chglog]: https://github.com/git-chglog/git-chglog
+[chyle]: https://github.com/antham/chyle
+[semverbot]: https://github.com/restechnica/semverbot
+
 ## Installation
 
 ### Homebrew (macOS/Linux)
