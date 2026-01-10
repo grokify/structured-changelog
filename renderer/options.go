@@ -31,6 +31,11 @@ type Options struct {
 	// IncludeCompareLinks adds version comparison links at the bottom.
 	IncludeCompareLinks bool
 
+	// CompactMaintenanceReleases groups consecutive maintenance-only releases
+	// (those with only dependencies, documentation, build, tests, internal changes)
+	// into a single compact section like "## Versions 0.71.1 - 0.71.10 (Maintenance)".
+	CompactMaintenanceReleases bool
+
 	// MaxTier filters change types to include only those at or above this tier.
 	// Default is TierOptional (include all).
 	MaxTier changelog.Tier
@@ -39,70 +44,75 @@ type Options struct {
 // DefaultOptions returns the default rendering options.
 func DefaultOptions() Options {
 	return Options{
-		IncludeReferences:       true,
-		IncludeCommits:          false,
-		LinkReferences:          false,
-		IncludeAuthors:          true,
-		IncludeSecurityMetadata: true,
-		MarkBreakingChanges:     true,
-		IncludeCompareLinks:     true,
-		MaxTier:                 changelog.TierOptional,
+		IncludeReferences:          true,
+		IncludeCommits:             false,
+		LinkReferences:             false,
+		IncludeAuthors:             true,
+		IncludeSecurityMetadata:    true,
+		MarkBreakingChanges:        true,
+		IncludeCompareLinks:        true,
+		CompactMaintenanceReleases: true,
+		MaxTier:                    changelog.TierOptional,
 	}
 }
 
 // MinimalOptions returns options for minimal output.
 func MinimalOptions() Options {
 	return Options{
-		IncludeReferences:       false,
-		IncludeCommits:          false,
-		LinkReferences:          false,
-		IncludeAuthors:          false,
-		IncludeSecurityMetadata: false,
-		MarkBreakingChanges:     false,
-		IncludeCompareLinks:     false,
-		MaxTier:                 changelog.TierCore,
+		IncludeReferences:          false,
+		IncludeCommits:             false,
+		LinkReferences:             false,
+		IncludeAuthors:             false,
+		IncludeSecurityMetadata:    false,
+		MarkBreakingChanges:        false,
+		IncludeCompareLinks:        false,
+		CompactMaintenanceReleases: true,
+		MaxTier:                    changelog.TierCore,
 	}
 }
 
 // FullOptions returns options for maximum detail.
 func FullOptions() Options {
 	return Options{
-		IncludeReferences:       true,
-		IncludeCommits:          true,
-		LinkReferences:          true,
-		IncludeAuthors:          true,
-		IncludeSecurityMetadata: true,
-		MarkBreakingChanges:     true,
-		IncludeCompareLinks:     true,
-		MaxTier:                 changelog.TierOptional,
+		IncludeReferences:          true,
+		IncludeCommits:             true,
+		LinkReferences:             true,
+		IncludeAuthors:             true,
+		IncludeSecurityMetadata:    true,
+		MarkBreakingChanges:        true,
+		IncludeCompareLinks:        true,
+		CompactMaintenanceReleases: false, // Full detail shows all releases expanded
+		MaxTier:                    changelog.TierOptional,
 	}
 }
 
 // CoreOptions returns options for KACL-compliant core output.
 func CoreOptions() Options {
 	return Options{
-		IncludeReferences:       true,
-		IncludeCommits:          false,
-		LinkReferences:          false,
-		IncludeAuthors:          true,
-		IncludeSecurityMetadata: true,
-		MarkBreakingChanges:     true,
-		IncludeCompareLinks:     true,
-		MaxTier:                 changelog.TierCore,
+		IncludeReferences:          true,
+		IncludeCommits:             false,
+		LinkReferences:             false,
+		IncludeAuthors:             true,
+		IncludeSecurityMetadata:    true,
+		MarkBreakingChanges:        true,
+		IncludeCompareLinks:        true,
+		CompactMaintenanceReleases: true,
+		MaxTier:                    changelog.TierCore,
 	}
 }
 
 // StandardOptions returns options including standard tier types.
 func StandardOptions() Options {
 	return Options{
-		IncludeReferences:       true,
-		IncludeCommits:          false,
-		LinkReferences:          false,
-		IncludeAuthors:          true,
-		IncludeSecurityMetadata: true,
-		MarkBreakingChanges:     true,
-		IncludeCompareLinks:     true,
-		MaxTier:                 changelog.TierStandard,
+		IncludeReferences:          true,
+		IncludeCommits:             false,
+		LinkReferences:             false,
+		IncludeAuthors:             true,
+		IncludeSecurityMetadata:    true,
+		MarkBreakingChanges:        true,
+		IncludeCompareLinks:        true,
+		CompactMaintenanceReleases: true,
+		MaxTier:                    changelog.TierStandard,
 	}
 }
 

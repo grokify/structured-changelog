@@ -108,9 +108,13 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 	}
 
 	// Releases
-	for _, release := range cl.Releases {
-		sb.WriteString("\n")
-		renderRelease(&sb, &release, ctx)
+	if opts.CompactMaintenanceReleases {
+		renderReleasesWithGrouping(&sb, cl.Releases, ctx)
+	} else {
+		for _, release := range cl.Releases {
+			sb.WriteString("\n")
+			renderRelease(&sb, &release, ctx)
+		}
 	}
 
 	// Reference links at bottom (for GitHub repositories)
@@ -133,6 +137,126 @@ func renderRelease(sb *strings.Builder, r *changelog.Release, ctx renderContext)
 	}
 
 	renderReleaseContent(sb, r, ctx)
+}
+
+// renderReleasesWithGrouping renders releases, grouping consecutive maintenance-only
+// releases into a single compact section.
+func renderReleasesWithGrouping(sb *strings.Builder, releases []changelog.Release, ctx renderContext) {
+	i := 0
+	for i < len(releases) {
+		release := &releases[i]
+
+		// Check if this starts a run of maintenance-only releases
+		if release.IsMaintenanceOnly() {
+			// Find the end of the consecutive maintenance releases
+			start := i
+			for i < len(releases) && releases[i].IsMaintenanceOnly() {
+				i++
+			}
+			end := i - 1 // inclusive
+
+			// Render the group
+			if start == end {
+				// Single maintenance release - render normally but compact
+				sb.WriteString("\n")
+				renderMaintenanceRelease(sb, &releases[start], ctx)
+			} else {
+				// Multiple consecutive maintenance releases - group them
+				renderMaintenanceGroup(sb, releases[start:end+1], ctx)
+			}
+		} else {
+			// Regular release - render normally
+			sb.WriteString("\n")
+			renderRelease(sb, release, ctx)
+			i++
+		}
+	}
+}
+
+// renderMaintenanceRelease renders a single maintenance release in compact form.
+func renderMaintenanceRelease(sb *strings.Builder, r *changelog.Release, _ renderContext) {
+	// Compact header with (Maintenance) suffix
+	fmt.Fprintf(sb, "## [%s] - %s (Maintenance)\n\n", r.Version, r.Date)
+
+	// Summarize what changed
+	var types []string
+	if len(r.Dependencies) > 0 {
+		types = append(types, "dependency updates")
+	}
+	if len(r.Documentation) > 0 {
+		types = append(types, "documentation")
+	}
+	if len(r.Build) > 0 {
+		types = append(types, "build")
+	}
+	if len(r.Tests) > 0 {
+		types = append(types, "tests")
+	}
+	if len(r.Internal) > 0 {
+		types = append(types, "internal")
+	}
+	if len(r.Infrastructure) > 0 {
+		types = append(types, "infrastructure")
+	}
+	if len(r.Observability) > 0 {
+		types = append(types, "observability")
+	}
+	if len(r.Compliance) > 0 {
+		types = append(types, "compliance")
+	}
+	if len(r.Contributors) > 0 {
+		types = append(types, "contributors")
+	}
+
+	if len(types) > 0 {
+		sb.WriteString(strings.Join(types, ", "))
+		sb.WriteString("\n")
+	}
+}
+
+// renderMaintenanceGroup renders a group of consecutive maintenance releases.
+func renderMaintenanceGroup(sb *strings.Builder, releases []changelog.Release, _ renderContext) {
+	if len(releases) == 0 {
+		return
+	}
+
+	// releases are in reverse chronological order, so first is newest, last is oldest
+	newest := &releases[0]
+	oldest := &releases[len(releases)-1]
+
+	sb.WriteString("\n")
+	fmt.Fprintf(sb, "## Versions %s - %s (Maintenance)\n\n", oldest.Version, newest.Version)
+
+	// Count total changes and summarize
+	var depsCount, docsCount, buildCount, testsCount, otherCount int
+	for i := range releases {
+		r := &releases[i]
+		depsCount += len(r.Dependencies)
+		docsCount += len(r.Documentation)
+		buildCount += len(r.Build)
+		testsCount += len(r.Tests)
+		otherCount += len(r.Internal) + len(r.Infrastructure) + len(r.Observability) + len(r.Compliance) + len(r.Contributors)
+	}
+
+	// Build summary line
+	var parts []string
+	if depsCount > 0 {
+		parts = append(parts, fmt.Sprintf("%d dependency update(s)", depsCount))
+	}
+	if docsCount > 0 {
+		parts = append(parts, fmt.Sprintf("%d documentation change(s)", docsCount))
+	}
+	if buildCount > 0 {
+		parts = append(parts, fmt.Sprintf("%d build change(s)", buildCount))
+	}
+	if testsCount > 0 {
+		parts = append(parts, fmt.Sprintf("%d test change(s)", testsCount))
+	}
+	if otherCount > 0 {
+		parts = append(parts, fmt.Sprintf("%d other change(s)", otherCount))
+	}
+
+	fmt.Fprintf(sb, "%d releases: %s.\n", len(releases), strings.Join(parts, ", "))
 }
 
 func renderReleaseContent(sb *strings.Builder, r *changelog.Release, ctx renderContext) {
