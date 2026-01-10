@@ -527,6 +527,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Formats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tools" class="md-nav__link">
     <span class="md-ellipsis">
       Tools
@@ -555,9 +564,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#validate-json" class="md-nav__link">
+  <a href="#validate-format" class="md-nav__link">
     <span class="md-ellipsis">
-      validate --json
+      validate --format
     </span>
   </a>
   
@@ -1009,6 +1018,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#output-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Formats
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tools" class="md-nav__link">
     <span class="md-ellipsis">
       Tools
@@ -1037,9 +1055,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#validate-json" class="md-nav__link">
+  <a href="#validate-format" class="md-nav__link">
     <span class="md-ellipsis">
-      validate --json
+      validate --format
     </span>
   </a>
   
@@ -1162,8 +1180,8 @@
 <tbody>
 <tr>
 <td><code>parse-commits</code></td>
-<td>Convert git log to structured JSON</td>
-<td>~5x reduction</td>
+<td>Convert git log to structured output</td>
+<td>~8x reduction (TOON)</td>
 </tr>
 <tr>
 <td><code>suggest-category</code></td>
@@ -1171,29 +1189,64 @@
 <td>Consistent mapping</td>
 </tr>
 <tr>
-<td><code>validate --json</code></td>
+<td><code>validate --format</code></td>
 <td>Rich error output with suggestions</td>
 <td>Actionable fixes</td>
 </tr>
 </tbody>
 </table>
+<h2 id="output-formats">Output Formats<a class="headerlink" href="#output-formats" title="Permanent link">&para;</a></h2>
+<p>All LLM-facing commands default to TOON (Token-Oriented Object Notation) for maximum token efficiency:</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TOON</td>
+<td><code>--format=toon</code> (default)</td>
+<td>~40% fewer tokens than JSON</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td><code>--format=json</code></td>
+<td>Standard JSON with indentation</td>
+</tr>
+<tr>
+<td>JSON Compact</td>
+<td><code>--format=json-compact</code></td>
+<td>Minified JSON</td>
+</tr>
+</tbody>
+</table>
+<p>TOON is a compact, human-readable format optimized for LLM consumption. See <a href="https://toonformat.dev/">toonformat.dev</a> for the specification.</p>
 <h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
 <h3 id="parse-commits">parse-commits<a class="headerlink" href="#parse-commits" title="Permanent link">&para;</a></h3>
-<p>Parses git history into structured JSON optimized for LLM consumption.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Parse commits since a tag</span>
+<p>Parses git history into structured output optimized for LLM consumption.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Parse commits since a tag (TOON format, default)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Parse commits between versions</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.2.0<span class="w"> </span>--until<span class="o">=</span>v0.3.0
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Parse commits with JSON output</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--format<span class="o">=</span>json
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Parse last N commits</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--last<span class="o">=</span><span class="m">20</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Parse commits between versions</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.2.0<span class="w"> </span>--until<span class="o">=</span>v0.3.0
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Compact output without file list</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-files<span class="w"> </span>--compact
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Parse last N commits</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--last<span class="o">=</span><span class="m">20</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Exclude merge commits</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-merges
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Exclude file list from output</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-files
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1"># Exclude merge commits</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-merges
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># Mark external contributors (reads maintainers/bots from CHANGELOG.json)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--changelog<span class="o">=</span>CHANGELOG.json
 </code></pre></div>
 <p><strong>Output includes:</strong></p>
 <ul>
@@ -1203,71 +1256,99 @@
 <li>File statistics (insertions, deletions, files changed)</li>
 <li>Suggested changelog category for each commit</li>
 <li>Summary statistics grouped by type and category</li>
+<li>External contributor marking (with <code>--changelog</code> flag)</li>
+<li>Contributors summary with deduplicated author list</li>
 </ul>
-<p><strong>Example output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;repository&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;github.com/example/project&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;since&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v0.3.0&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">&quot;until&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HEAD&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">&quot;commit_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="nt">&quot;commits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">      </span><span class="nt">&quot;hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123d&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-01-04&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">      </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auth&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">      </span><span class="nt">&quot;subject&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;add OAuth2 support&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">      </span><span class="nt">&quot;breaking&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">      </span><span class="nt">&quot;issue&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">      </span><span class="nt">&quot;files_changed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">      </span><span class="nt">&quot;insertions&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">230</span><span class="p">,</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">      </span><span class="nt">&quot;suggested_category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Added&quot;</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">  </span><span class="p">],</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="nt">&quot;by_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;feat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;fix&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">},</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="nt">&quot;by_suggested_category&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;Added&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="p">}</span>
+<p><strong>Example TOON output (default):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Repository: github.com/example/project
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Range:
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  Since: v0.3.0
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  Until: HEAD
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  CommitCount: 5
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Commits[5]{Hash,Author,Date,Type,Scope,Subject,FilesChanged,Insertions,SuggestedCategory}:
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  abc123d,John Doe,2026-01-04,feat,auth,add OAuth2 support,3,230,Added
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  def456a,Jane Smith,2026-01-03,fix,,resolve memory leak,1,12,Fixed
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Summary:
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  ByType{feat,fix}:
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    3,2
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  BySuggestedCategory{Added,Fixed}:
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    3,2
+</code></pre></div>
+<p><strong>Example JSON output (<code>--format=json</code>):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;repository&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;github.com/example/project&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">&quot;since&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v0.3.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">&quot;until&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HEAD&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">&quot;commit_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="nt">&quot;commits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">&quot;hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123d&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-01-04&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auth&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">      </span><span class="nt">&quot;subject&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;add OAuth2 support&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">      </span><span class="nt">&quot;breaking&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">      </span><span class="nt">&quot;issue&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">      </span><span class="nt">&quot;files_changed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">      </span><span class="nt">&quot;insertions&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">230</span><span class="p">,</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">      </span><span class="nt">&quot;suggested_category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Added&quot;</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">    </span><span class="nt">&quot;by_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;feat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;fix&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">    </span><span class="nt">&quot;by_suggested_category&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;Added&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fixed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="suggest-category">suggest-category<a class="headerlink" href="#suggest-category" title="Permanent link">&para;</a></h3>
 <p>Suggests changelog categories for commit messages based on conventional commit types and keywords.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Single message</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sclog<span class="w"> </span>suggest-category<span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Batch mode from stdin</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>git<span class="w"> </span>log<span class="w"> </span>--format<span class="o">=</span><span class="s2">&quot;%s&quot;</span><span class="w"> </span>v0.3.0..HEAD<span class="w"> </span><span class="p">|</span><span class="w"> </span>sclog<span class="w"> </span>suggest-category<span class="w"> </span>--batch
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Compact JSON output</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>sclog<span class="w"> </span>suggest-category<span class="w"> </span>--compact<span class="w"> </span><span class="s2">&quot;fix: resolve memory leak&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Single message (TOON format, default)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sclog<span class="w"> </span>suggest-category<span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Single message with JSON output</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sclog<span class="w"> </span>suggest-category<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Batch mode from stdin</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>git<span class="w"> </span>log<span class="w"> </span>--format<span class="o">=</span><span class="s2">&quot;%s&quot;</span><span class="w"> </span>v0.3.0..HEAD<span class="w"> </span><span class="p">|</span><span class="w"> </span>sclog<span class="w"> </span>suggest-category<span class="w"> </span>--batch
 </code></pre></div>
-<p><strong>Example output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;suggestions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Added&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;core&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">&quot;reasoning&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Conventional commit type &#39;feat&#39; indicates new functionality&quot;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Security&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;core&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.60</span><span class="p">,</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">      </span><span class="nt">&quot;reasoning&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature relates to authentication or security&quot;</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">  </span><span class="p">],</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">  </span><span class="nt">&quot;conventional_commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auth&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span><span class="nt">&quot;subject&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;add OAuth2 support&quot;</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="p">}</span>
+<p><strong>Example TOON output (default):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Input: &quot;feat(auth): add OAuth2 support&quot;
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Suggestions[2]{Category,Tier,Confidence,Reasoning}:
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  Added,core,0.95,Conventional commit type &#39;feat&#39; indicates new functionality
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  Security,core,0.6,Feature relates to authentication or security
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>ConventionalCommit:
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  Type: feat
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  Scope: auth
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  Subject: add OAuth2 support
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  Breaking: false
+</code></pre></div>
+<p><strong>Example JSON output (<code>--format=json</code>):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;suggestions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Added&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;core&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">      </span><span class="nt">&quot;reasoning&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Conventional commit type &#39;feat&#39; indicates new functionality&quot;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Security&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">      </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;core&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">      </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.60</span><span class="p">,</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">      </span><span class="nt">&quot;reasoning&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature relates to authentication or security&quot;</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">  </span><span class="nt">&quot;conventional_commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="nt">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auth&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="nt">&quot;subject&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;add OAuth2 support&quot;</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">}</span>
 </code></pre></div>
 <p><strong>Category mapping:</strong></p>
 <table>
@@ -1336,45 +1417,58 @@
 </tr>
 </tbody>
 </table>
-<h3 id="validate-json">validate --json<a class="headerlink" href="#validate-json" title="Permanent link">&para;</a></h3>
+<h3 id="validate-format">validate --format<a class="headerlink" href="#validate-format" title="Permanent link">&para;</a></h3>
 <p>Validates changelog with rich, actionable error messages.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># JSON output with detailed errors</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--json<span class="w"> </span>CHANGELOG.json
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Strict mode (warnings become errors)</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--json<span class="w"> </span>--strict<span class="w"> </span>CHANGELOG.json
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># TOON output with detailed errors</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># JSON output with detailed errors</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Strict mode (warnings become errors)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>--strict<span class="w"> </span>CHANGELOG.json
 </code></pre></div>
-<p><strong>Example error output:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;valid&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E001&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;releases[0].date&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">      </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid date format&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="nt">&quot;actual&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;January 4, 2026&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="nt">&quot;expected&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YYYY-MM-DD format (ISO 8601)&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">      </span><span class="nt">&quot;suggestion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Convert to ISO 8601 format: YYYY-MM-DD&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">      </span><span class="nt">&quot;documentation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://keepachangelog.com/en/1.1.0/#how&quot;</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">  </span><span class="p">],</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">  </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">      </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;W001&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">      </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;warning&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;releases[0].security[0]&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">      </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Security entry missing CVE identifier&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">      </span><span class="nt">&quot;suggestion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add &#39;cve&#39; field with format CVE-YYYY-NNNNN&quot;</span>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">  </span><span class="p">],</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="nt">&quot;error_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="nt">&quot;warning_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">    </span><span class="nt">&quot;releases_checked&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">    </span><span class="nt">&quot;entries_checked&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span>
-<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="p">}</span>
+<p><strong>Example TOON output:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Valid: false
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Errors[1]{Code,Severity,Path,Message,Actual,Expected,Suggestion}:
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  E001,error,releases[0].date,Invalid date format,January 4 2026,YYYY-MM-DD format (ISO 8601),Convert to ISO 8601 format: YYYY-MM-DD
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Summary:
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  ErrorCount: 1
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  WarningCount: 0
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  ReleaseCount: 3
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  EntriesCount: 15
+</code></pre></div>
+<p><strong>Example JSON output (<code>--format=json</code>):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;valid&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">      </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E001&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">      </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;releases[0].date&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">      </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid date format&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">      </span><span class="nt">&quot;actual&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;January 4, 2026&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">      </span><span class="nt">&quot;expected&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YYYY-MM-DD format (ISO 8601)&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">      </span><span class="nt">&quot;suggestion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Convert to ISO 8601 format: YYYY-MM-DD&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">      </span><span class="nt">&quot;documentation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://keepachangelog.com/en/1.1.0/#how&quot;</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">  </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">      </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;W001&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">      </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;warning&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;releases[0].security[0]&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">      </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Security entry missing CVE identifier&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">      </span><span class="nt">&quot;suggestion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add &#39;cve&#39; field with format CVE-YYYY-NNNNN&quot;</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">    </span><span class="nt">&quot;error_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">    </span><span class="nt">&quot;warning_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">    </span><span class="nt">&quot;releases_checked&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">    </span><span class="nt">&quot;entries_checked&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="p">}</span>
 </code></pre></div>
 <p><strong>Error codes:</strong></p>
 <table>
@@ -1414,6 +1508,14 @@
 <td>Invalid IR version</td>
 </tr>
 <tr>
+<td>E008</td>
+<td>Invalid versioning scheme</td>
+</tr>
+<tr>
+<td>E009</td>
+<td>Invalid commit convention</td>
+</tr>
+<tr>
 <td>E100</td>
 <td>Missing required field</td>
 </tr>
@@ -1446,51 +1548,51 @@
 <h2 id="example-prompts">Example Prompts<a class="headerlink" href="#example-prompts" title="Permanent link">&para;</a></h2>
 <p>Use these prompts with Claude or other LLMs to generate changelogs.</p>
 <h3 id="generate-a-changelog-release">Generate a Changelog Release<a class="headerlink" href="#generate-a-changelog-release" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Generate changelog entries for v0.5.0 based on commits since v0.4.0.
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>1. Run `sclog parse-commits --since=v0.4.0` to get structured commit data
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>2. Review the commits and create appropriate CHANGELOG.json entries
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>3. Group related commits into single entries where appropriate
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>4. Write descriptions that explain &quot;why&quot; not just &quot;what&quot;
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>5. Validate with `sclog validate --json`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Generate changelog entries for v0.5.0 based on commits since v0.4.0.
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>1. Run `sclog parse-commits --since=v0.4.0` to get structured commit data
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>2. Review the commits and create appropriate CHANGELOG.json entries
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>3. Group related commits into single entries where appropriate
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>4. Write descriptions that explain &quot;why&quot; not just &quot;what&quot;
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>5. Validate with `sclog validate --format=toon`
 </code></pre></div>
 <h3 id="review-and-categorize-changes">Review and Categorize Changes<a class="headerlink" href="#review-and-categorize-changes" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Parse the commits since v0.4.0 and help me categorize them for the changelog.
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Use `sclog parse-commits --since=v0.4.0` and then:
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>- Group related commits together
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>- Identify any breaking changes
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>- Suggest which category each change belongs to
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>- Flag anything that might need security review
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Parse the commits since v0.4.0 and help me categorize them for the changelog.
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Use `sclog parse-commits --since=v0.4.0` and then:
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>- Group related commits together
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>- Identify any breaking changes
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>- Suggest which category each change belongs to
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>- Flag anything that might need security review
 </code></pre></div>
 <h3 id="fix-validation-errors">Fix Validation Errors<a class="headerlink" href="#fix-validation-errors" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Validate CHANGELOG.json and fix any issues:
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>1. Run `sclog validate --json CHANGELOG.json`
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>2. For each error, apply the suggested fix
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>3. Re-validate until clean
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Validate CHANGELOG.json and fix any issues:
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>1. Run `sclog validate --format=toon CHANGELOG.json`
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>2. For each error, apply the suggested fix
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>3. Re-validate until clean
 </code></pre></div>
 <h3 id="complete-release-workflow">Complete Release Workflow<a class="headerlink" href="#complete-release-workflow" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Help me prepare the v0.5.0 release:
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>1. Parse commits: `sclog parse-commits --since=v0.4.0`
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>2. Create CHANGELOG.json entries for the new version
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>3. Validate: `sclog validate --json CHANGELOG.json`
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>4. Generate markdown: `sclog generate CHANGELOG.json -o CHANGELOG.md`
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>5. Summarize what&#39;s in the release
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Help me prepare the v0.5.0 release:
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>1. Parse commits: `sclog parse-commits --since=v0.4.0`
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>2. Create CHANGELOG.json entries for the new version
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>3. Validate: `sclog validate --format=toon CHANGELOG.json`
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>4. Generate markdown: `sclog generate CHANGELOG.json -o CHANGELOG.md`
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>5. Summarize what&#39;s in the release
 </code></pre></div>
 <h3 id="batch-processing">Batch Processing<a class="headerlink" href="#batch-processing" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>I have a backlog of releases to document. For each version tag pair,
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>parse the commits and generate changelog entries:
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>- v0.1.0 to v0.2.0
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>- v0.2.0 to v0.3.0
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>- v0.3.0 to v0.4.0
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>Use `sclog parse-commits --since=&lt;from&gt; --until=&lt;to&gt;` for each range.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>I have a backlog of releases to document. For each version tag pair,
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>parse the commits and generate changelog entries:
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>- v0.1.0 to v0.2.0
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>- v0.2.0 to v0.3.0
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>- v0.3.0 to v0.4.0
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Use `sclog parse-commits --since=&lt;from&gt; --until=&lt;to&gt;` for each range.
 </code></pre></div>
 <h2 id="token-efficiency">Token Efficiency<a class="headerlink" href="#token-efficiency" title="Permanent link">&para;</a></h2>
-<p>Raw <code>git log</code> output is verbose. The <code>parse-commits</code> tool reduces token usage significantly:</p>
+<p>Raw <code>git log</code> output is verbose. The <code>parse-commits</code> tool with TOON format reduces token usage significantly:</p>
 <table>
 <thead>
 <tr>
@@ -1511,20 +1613,27 @@
 <td>~1,500</td>
 </tr>
 <tr>
-<td><strong>Savings</strong></td>
-<td><strong>5x</strong></td>
-<td><strong>6,000 tokens</strong></td>
+<td>Parsed TOON</td>
+<td>~18</td>
+<td>~900</td>
+</tr>
+<tr>
+<td><strong>Total Savings</strong></td>
+<td><strong>~8x</strong></td>
+<td><strong>~6,600 tokens</strong></td>
 </tr>
 </tbody>
 </table>
-<p>Use <code>--no-files</code> and <code>--compact</code> for further reduction when file lists aren't needed.</p>
+<p>Use <code>--no-files</code> for further reduction when file lists aren't needed.</p>
 <h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Start with parse-commits</strong> — Get structured data before asking the LLM to categorize</li>
+<li><strong>Use TOON format</strong> — Default format is optimized for LLM token efficiency</li>
 <li><strong>Use batch mode</strong> — Process multiple commits at once with <code>suggest-category --batch</code></li>
-<li><strong>Validate early</strong> — Run <code>validate --json</code> to catch issues before they accumulate</li>
+<li><strong>Validate early</strong> — Run <code>validate --format=toon</code> to catch issues before they accumulate</li>
 <li><strong>Trust the suggestions</strong> — The category suggestions are accurate for conventional commits (~95%)</li>
 <li><strong>Override when needed</strong> — The LLM can apply judgment for ambiguous cases</li>
+<li><strong>Use JSON for debugging</strong> — Switch to <code>--format=json</code> when you need human-readable output</li>
 </ol>
 
 
