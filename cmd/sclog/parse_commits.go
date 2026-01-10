@@ -7,19 +7,21 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/grokify/structured-changelog/changelog"
 	"github.com/grokify/structured-changelog/format"
 	"github.com/grokify/structured-changelog/gitlog"
 )
 
 var (
-	parseCommitsSince    string
-	parseCommitsUntil    string
-	parseCommitsLast     int
-	parseCommitsPath     string
-	parseCommitsNoFiles  bool
-	parseCommitsNoMerges bool
-	parseCommitsFormat   string
-	parseCommitsRepoURL  string
+	parseCommitsSince     string
+	parseCommitsUntil     string
+	parseCommitsLast      int
+	parseCommitsPath      string
+	parseCommitsNoFiles   bool
+	parseCommitsNoMerges  bool
+	parseCommitsFormat    string
+	parseCommitsRepoURL   string
+	parseCommitsChangelog string
 )
 
 var parseCommitsCmd = &cobra.Command{
@@ -62,7 +64,10 @@ Examples:
   sclog parse-commits --since=v0.3.0 --no-files
 
   # Exclude merge commits
-  sclog parse-commits --since=v0.3.0 --no-merges`,
+  sclog parse-commits --since=v0.3.0 --no-merges
+
+  # Mark external contributors (reads maintainers/bots from CHANGELOG.json)
+  sclog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json`,
 	RunE: runParseCommits,
 }
 
@@ -75,6 +80,7 @@ func init() {
 	parseCommitsCmd.Flags().BoolVar(&parseCommitsNoMerges, "no-merges", false, "Exclude merge commits")
 	parseCommitsCmd.Flags().StringVar(&parseCommitsFormat, "format", "toon", "Output format: toon (default), json, json-compact")
 	parseCommitsCmd.Flags().StringVar(&parseCommitsRepoURL, "repo", "", "Repository URL to include in output")
+	parseCommitsCmd.Flags().StringVar(&parseCommitsChangelog, "changelog", "", "CHANGELOG.json to read maintainers/bots for external contributor detection")
 	rootCmd.AddCommand(parseCommitsCmd)
 }
 
@@ -116,6 +122,27 @@ func runParseCommits(cmd *cobra.Command, args []string) error {
 			result.Commits[i].Files = nil
 		}
 	}
+
+	// Load changelog for external contributor detection
+	var cl *changelog.Changelog
+	if parseCommitsChangelog != "" {
+		cl, err = changelog.LoadFile(parseCommitsChangelog)
+		if err != nil {
+			return fmt.Errorf("failed to load changelog %s: %w", parseCommitsChangelog, err)
+		}
+	}
+
+	// Mark external contributors
+	if cl != nil {
+		for i := range result.Commits {
+			c := &result.Commits[i]
+			// IsExternal = true if author is NOT a team member
+			c.IsExternal = !cl.IsTeamMemberByNameAndEmail(c.Author, c.AuthorEmail)
+		}
+	}
+
+	// Compute contributors summary
+	result.ComputeContributors()
 
 	// Parse output format
 	f, err := format.Parse(parseCommitsFormat)
