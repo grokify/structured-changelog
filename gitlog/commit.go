@@ -26,6 +26,7 @@ type Commit struct {
 	Deletions         int      `json:"deletions,omitempty"`
 	Files             []string `json:"files,omitempty"`
 	SuggestedCategory string   `json:"suggested_category,omitempty"`
+	IsExternal        bool     `json:"is_external,omitempty"`
 }
 
 // Range represents the commit range that was parsed.
@@ -44,13 +45,21 @@ type Summary struct {
 	TotalDeletions      int            `json:"total_deletions,omitempty"`
 }
 
+// Contributor represents an author with commit count.
+type Contributor struct {
+	Name        string `json:"name"`
+	CommitCount int    `json:"commit_count"`
+	IsExternal  bool   `json:"is_external,omitempty"`
+}
+
 // ParseResult is the complete output of parsing git commits.
 type ParseResult struct {
-	Repository  string    `json:"repository,omitempty"`
-	Range       Range     `json:"range"`
-	GeneratedAt time.Time `json:"generated_at"`
-	Commits     []Commit  `json:"commits"`
-	Summary     Summary   `json:"summary"`
+	Repository   string        `json:"repository,omitempty"`
+	Range        Range         `json:"range"`
+	GeneratedAt  time.Time     `json:"generated_at"`
+	Commits      []Commit      `json:"commits"`
+	Summary      Summary       `json:"summary"`
+	Contributors []Contributor `json:"contributors,omitempty"`
 }
 
 // NewParseResult creates a new ParseResult with initialized maps.
@@ -84,4 +93,54 @@ func (pr *ParseResult) AddCommit(c Commit) {
 	pr.Summary.TotalFilesChanged += c.FilesChanged
 	pr.Summary.TotalInsertions += c.Insertions
 	pr.Summary.TotalDeletions += c.Deletions
+}
+
+// ComputeContributors builds the Contributors list from commits.
+// Call this after all commits have been added and IsExternal has been set.
+func (pr *ParseResult) ComputeContributors() {
+	// Count commits per author
+	authorCounts := make(map[string]int)
+	authorExternal := make(map[string]bool)
+
+	for i := range pr.Commits {
+		c := &pr.Commits[i]
+		if c.Author == "" {
+			continue
+		}
+		authorCounts[c.Author]++
+		if c.IsExternal {
+			authorExternal[c.Author] = true
+		}
+	}
+
+	// Build sorted contributor list (external first, then by commit count)
+	var external, internal []Contributor
+	for name, count := range authorCounts {
+		contrib := Contributor{
+			Name:        name,
+			CommitCount: count,
+			IsExternal:  authorExternal[name],
+		}
+		if contrib.IsExternal {
+			external = append(external, contrib)
+		} else {
+			internal = append(internal, contrib)
+		}
+	}
+
+	// Sort each group by commit count (descending)
+	sortByCommitCount := func(contribs []Contributor) {
+		for i := 0; i < len(contribs)-1; i++ {
+			for j := i + 1; j < len(contribs); j++ {
+				if contribs[j].CommitCount > contribs[i].CommitCount {
+					contribs[i], contribs[j] = contribs[j], contribs[i]
+				}
+			}
+		}
+	}
+	sortByCommitCount(external)
+	sortByCommitCount(internal)
+
+	// External contributors first
+	pr.Contributors = append(external, internal...)
 }
