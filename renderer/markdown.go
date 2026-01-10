@@ -158,6 +158,12 @@ func renderEntry(sb *strings.Builder, e *changelog.Entry, ctx renderContext, isS
 
 	// Description (required)
 	desc := e.Description
+
+	// Strip inline attribution if author field is set (to avoid duplication)
+	if e.Author != "" {
+		desc = stripInlineAttribution(desc, e.Author)
+	}
+
 	if e.Breaking && opts.MarkBreakingChanges {
 		desc = "**BREAKING:** " + desc
 	}
@@ -220,6 +226,47 @@ func formatAuthorAttribution(author string, ctx renderContext) string {
 
 	// Fallback: just show the author name with @ prefix
 	return fmt.Sprintf("by @%s", name)
+}
+
+// stripInlineAttribution removes inline attribution patterns from a description
+// when the username matches the author field. This prevents duplicate attribution
+// when the author field is used to generate attribution automatically.
+//
+// Patterns removed (case-insensitive username matching):
+//   - "from [@user](url)"
+//   - "by [@user](url)"
+//   - "from @user"
+//   - "by @user"
+//   - "from user"
+//   - "by user"
+func stripInlineAttribution(desc, author string) string {
+	// Normalize author for comparison
+	authorNorm := author
+	if len(authorNorm) > 0 && authorNorm[0] == '@' {
+		authorNorm = authorNorm[1:]
+	}
+
+	// Build regex patterns for this author
+	// Escape special regex chars in username (though most usernames won't have them)
+	escaped := regexp.QuoteMeta(authorNorm)
+
+	// Pattern for linked attribution: (from|by) \[@username\](url)
+	linkedPattern := regexp.MustCompile(`(?i)\s*(from|by)\s+\[@?` + escaped + `\]\([^)]+\)\s*$`)
+	if linkedPattern.MatchString(desc) {
+		return strings.TrimSpace(linkedPattern.ReplaceAllString(desc, ""))
+	}
+
+	// Pattern for plain attribution: (from|by) @username or (from|by) username
+	plainPattern := regexp.MustCompile(`(?i)\s*(from|by)\s+@?` + escaped + `\s*$`)
+	if plainPattern.MatchString(desc) {
+		return strings.TrimSpace(plainPattern.ReplaceAllString(desc, ""))
+	}
+
+	// Also handle mid-sentence patterns like "fields from [@user](url)"
+	// where the attribution is followed by other content - but only strip if at end
+	// For safety, we only strip trailing attribution to avoid breaking descriptions
+
+	return desc
 }
 
 // formatIssueRef formats an issue reference, optionally with a link.

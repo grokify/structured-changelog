@@ -1175,17 +1175,17 @@ func TestChangelog_IsTeamMember(t *testing.T) {
 		author string
 		want   bool
 	}{
-		{"", true},                  // Empty author = no attribution needed
-		{"grokify", true},           // Maintainer
-		{"GROKIFY", true},           // Case insensitive
-		{"@grokify", true},          // With @ prefix
-		{"JohnDoe", true},           // Another maintainer
-		{"my-bot", true},            // Custom bot
-		{"dependabot", true},        // Common bot
-		{"dependabot[bot]", true},   // Common bot variant
-		{"renovate", true},          // Common bot
-		{"external-user", false},    // External contributor
-		{"random-person", false},    // External contributor
+		{"", true},                // Empty author = no attribution needed
+		{"grokify", true},         // Maintainer
+		{"GROKIFY", true},         // Case insensitive
+		{"@grokify", true},        // With @ prefix
+		{"JohnDoe", true},         // Another maintainer
+		{"my-bot", true},          // Custom bot
+		{"dependabot", true},      // Common bot
+		{"dependabot[bot]", true}, // Common bot variant
+		{"renovate", true},        // Common bot
+		{"external-user", false},  // External contributor
+		{"random-person", false},  // External contributor
 	}
 
 	for _, tt := range tests {
@@ -1194,5 +1194,133 @@ func TestChangelog_IsTeamMember(t *testing.T) {
 				t.Errorf("IsTeamMember(%q) = %v, want %v", tt.author, got, tt.want)
 			}
 		})
+	}
+}
+
+func TestRenderMarkdown_StripInlineAttribution_LinkedMarkdown(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{
+						Description: "Post.Id fields from [@amanessinger](https://github.com/amanessinger)",
+						Author:      "@amanessinger",
+					},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should strip inline attribution and add auto-generated one
+	if strings.Contains(md, "from [@amanessinger]") {
+		t.Error("inline attribution should be stripped when author field is set")
+	}
+	// Should have the auto-generated attribution
+	if !strings.Contains(md, "by [@amanessinger](https://github.com/amanessinger)") {
+		t.Error("should have auto-generated attribution")
+	}
+	// Description content should be preserved
+	if !strings.Contains(md, "Post.Id fields") {
+		t.Error("description content should be preserved")
+	}
+}
+
+func TestRenderMarkdown_StripInlineAttribution_PlainText(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{
+						Description: "New feature by @contributor",
+						Author:      "contributor",
+					},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should strip plain text attribution
+	if strings.Contains(md, "by @contributor by") {
+		t.Error("should not have duplicate attribution")
+	}
+	// Should have exactly one attribution
+	if !strings.Contains(md, "New feature") {
+		t.Error("description content should be preserved")
+	}
+}
+
+func TestRenderMarkdown_StripInlineAttribution_NoMatch(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{
+						Description: "Feature from [@someone-else](https://github.com/someone-else)",
+						Author:      "different-person",
+					},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should NOT strip attribution for different user
+	if !strings.Contains(md, "from [@someone-else]") {
+		t.Error("should preserve attribution for different user")
+	}
+	// Should also have the auto-generated attribution for the actual author
+	if !strings.Contains(md, "by [@different-person]") {
+		t.Error("should have auto-generated attribution for author field")
+	}
+}
+
+func TestRenderMarkdown_StripInlineAttribution_CaseInsensitive(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:   "1.0",
+		Project:     "test",
+		Repository:  "https://github.com/example/repo",
+		Maintainers: []string{"grokify"},
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.0",
+				Date:    "2026-01-03",
+				Added: []changelog.Entry{
+					{
+						Description: "Feature from [@Petess](https://github.com/Petess)",
+						Author:      "petess", // lowercase
+					},
+				},
+			},
+		},
+	}
+
+	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+
+	// Should strip attribution case-insensitively
+	if strings.Contains(md, "from [@Petess]") {
+		t.Error("should strip attribution case-insensitively")
 	}
 }
