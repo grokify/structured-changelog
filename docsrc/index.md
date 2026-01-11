@@ -31,12 +31,12 @@ brew tap grokify/tap
 brew install structured-changelog
 ```
 
-This installs the `sclog` CLI (also available as `structured-changelog`).
+This installs the `schangelog` CLI (also available as `structured-changelog`).
 
 ### Go Install
 
 ```bash
-go install github.com/grokify/structured-changelog/cmd/sclog@latest
+go install github.com/grokify/structured-changelog/cmd/schangelog@latest
 ```
 
 ### Go Library
@@ -91,13 +91,13 @@ func main() {
 
 ```bash
 # Validate a changelog
-sclog validate CHANGELOG.json
+schangelog validate CHANGELOG.json
 
 # Generate Markdown
-sclog generate CHANGELOG.json
+schangelog generate CHANGELOG.json
 
 # Output to file
-sclog generate CHANGELOG.json -o CHANGELOG.md
+schangelog generate CHANGELOG.json -o CHANGELOG.md
 ```
 
 ## Documentation

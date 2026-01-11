@@ -213,8 +213,8 @@ type RenderOptions struct {
 #### CLI Flag
 
 ```bash
-sclog generate --locale fr changelog.json
-sclog generate -l zh-CN changelog.json
+schangelog generate --locale fr changelog.json
+schangelog generate -l zh-CN changelog.json
 ```
 
 #### Default Behavior

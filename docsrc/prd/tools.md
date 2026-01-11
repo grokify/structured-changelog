@@ -15,7 +15,7 @@ When using LLMs (like Claude) to analyze git history and generate changelogs:
 
 ## Proposed Tools
 
-### 1. `sclog parse-commits`
+### 1. `schangelog parse-commits`
 
 Parse git commits into structured JSON optimized for LLM consumption.
 
@@ -29,16 +29,16 @@ Parse git commits into structured JSON optimized for LLM consumption.
 
 ```bash
 # Parse commits since a tag
-sclog parse-commits --since=v0.3.0
+schangelog parse-commits --since=v0.3.0
 
 # Parse commits between two refs
-sclog parse-commits --since=v0.2.0 --until=v0.3.0
+schangelog parse-commits --since=v0.2.0 --until=v0.3.0
 
 # Parse last N commits
-sclog parse-commits --last=20
+schangelog parse-commits --last=20
 
 # Filter by path
-sclog parse-commits --since=v0.3.0 --path=src/
+schangelog parse-commits --since=v0.3.0 --path=src/
 ```
 
 #### Output
@@ -115,7 +115,7 @@ Automatically extracts structured data from conventional commits:
 | `Fixes #456` | issue=456 |
 | `(#789)` in subject | pr=789 |
 
-### 2. `sclog suggest-category`
+### 2. `schangelog suggest-category`
 
 Suggest appropriate changelog categories for commit messages or descriptions.
 
@@ -129,13 +129,13 @@ Suggest appropriate changelog categories for commit messages or descriptions.
 
 ```bash
 # Suggest category for a commit message
-sclog suggest-category "feat(auth): add OAuth2 support"
+schangelog suggest-category "feat(auth): add OAuth2 support"
 
 # Suggest with context
-sclog suggest-category --context="security-related" "add input validation"
+schangelog suggest-category --context="security-related" "add input validation"
 
 # Batch mode from stdin
-echo "fix memory leak\nadd dark mode\nupdate README" | sclog suggest-category --batch
+echo "fix memory leak\nadd dark mode\nupdate README" | schangelog suggest-category --batch
 ```
 
 #### Output
@@ -189,7 +189,7 @@ echo "fix memory leak\nadd dark mode\nupdate README" | sclog suggest-category --
 2. **Explainability**: LLM receives reasoning to validate or override
 3. **Tier awareness**: Helps meet minimum tier coverage requirements
 
-### 3. `sclog validate` (Enhanced)
+### 3. `schangelog validate` (Enhanced)
 
 Enhanced validation with rich, actionable error messages.
 
@@ -343,10 +343,10 @@ Benefits of MCP vs CLI:
 
 ### Interactive Mode
 
-Future `sclog` could offer an interactive mode for LLM-assisted changelog creation:
+Future `schangelog` could offer an interactive mode for LLM-assisted changelog creation:
 
 ```bash
-sclog generate --interactive --since=v0.3.0
+schangelog generate --interactive --since=v0.3.0
 ```
 
 This would:

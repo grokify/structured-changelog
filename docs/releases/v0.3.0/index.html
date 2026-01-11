@@ -1186,9 +1186,9 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>brew<span class="w"> </span>tap<span class="w"> </span>grokify/tap
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>brew<span class="w"> </span>install<span class="w"> </span>structured-changelog
 </code></pre></div>
-<p>Both <code>sclog</code> and <code>structured-changelog</code> commands are available after installation.</p>
+<p>Both <code>schangelog</code> and <code>structured-changelog</code> commands are available after installation.</p>
 <h3 id="go-install">Go Install<a class="headerlink" href="#go-install" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/sclog@v0.3.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/schangelog@v0.3.0
 </code></pre></div>
 <h3 id="direct-download">Direct Download<a class="headerlink" href="#direct-download" title="Permanent link">&para;</a></h3>
 <p>Pre-built binaries are available on the <a href="https://github.com/grokify/structured-changelog/releases/tag/v0.3.0">GitHub Releases</a> page for:</p>
@@ -1216,17 +1216,17 @@
 </table>
 <h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h2>
 <h3 id="homebrew-distribution">Homebrew Distribution<a class="headerlink" href="#homebrew-distribution" title="Permanent link">&para;</a></h3>
-<p>Install <code>sclog</code> via Homebrew with a single command:</p>
+<p>Install <code>schangelog</code> via Homebrew with a single command:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>brew<span class="w"> </span>tap<span class="w"> </span>grokify/tap
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>brew<span class="w"> </span>install<span class="w"> </span>structured-changelog
 </code></pre></div>
 <p>The formula installs both command names:</p>
 <ul>
-<li><code>sclog</code> - Short form for daily use</li>
+<li><code>schangelog</code> - Short form for daily use</li>
 <li><code>structured-changelog</code> - Long form matching the project name</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Both work identically</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sclog<span class="w"> </span>version
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>schangelog<span class="w"> </span>version
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>structured-changelog<span class="w"> </span>version
 </code></pre></div>
 <h3 id="multi-platform-binary-releases">Multi-Platform Binary Releases<a class="headerlink" href="#multi-platform-binary-releases" title="Permanent link">&para;</a></h3>
@@ -1295,15 +1295,15 @@
 </ul>
 <h3 id="version-information">Version Information<a class="headerlink" href="#version-information" title="Permanent link">&para;</a></h3>
 <p>The CLI now displays build metadata:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>sclog<span class="w"> </span>version
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sclog<span class="w"> </span><span class="m">0</span>.3.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>schangelog<span class="w"> </span>version
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>schangelog<span class="w"> </span><span class="m">0</span>.3.0
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>commit:<span class="w"> </span>abc1234
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>built:<span class="w">  </span><span class="m">2026</span>-01-04T12:00:00Z
 </code></pre></div>
 <h2 id="migration-from-v020">Migration from v0.2.0<a class="headerlink" href="#migration-from-v020" title="Permanent link">&para;</a></h2>
 <p>No breaking changes. Existing <code>go install</code> users can continue using that method, or switch to Homebrew:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Remove Go-installed binary (optional)</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>rm<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>sclog<span class="k">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>rm<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>schangelog<span class="k">)</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Install via Homebrew</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>brew<span class="w"> </span>tap<span class="w"> </span>grokify/tap
@@ -1312,9 +1312,9 @@
 <h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <p>Planned for future releases:</p>
 <ul>
-<li><code>sclog init</code> - Create empty CHANGELOG.json</li>
-<li><code>sclog add --type=fixed "Description"</code> - Add entry to unreleased</li>
-<li><code>sclog release 1.2.0</code> - Promote unreleased to new version</li>
+<li><code>schangelog init</code> - Create empty CHANGELOG.json</li>
+<li><code>schangelog add --type=fixed "Description"</code> - Add entry to unreleased</li>
+<li><code>schangelog release 1.2.0</code> - Promote unreleased to new version</li>
 <li>GitLab/Bitbucket link support</li>
 </ul>
 

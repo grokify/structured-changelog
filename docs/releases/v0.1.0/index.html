@@ -906,9 +906,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cli-tool-sclog" class="md-nav__link">
+  <a href="#cli-tool-schangelog" class="md-nav__link">
     <span class="md-ellipsis">
-      CLI Tool (sclog)
+      CLI Tool (schangelog)
     </span>
   </a>
   
@@ -1131,9 +1131,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cli-tool-sclog" class="md-nav__link">
+  <a href="#cli-tool-schangelog" class="md-nav__link">
     <span class="md-ellipsis">
-      CLI Tool (sclog)
+      CLI Tool (schangelog)
     </span>
   </a>
   
@@ -1260,7 +1260,7 @@
 <p>Structured Changelog provides a machine-readable JSON Intermediate Representation (IR) as the source of truth for your changelog, with deterministic Markdown generation following the <a href="https://keepachangelog.com/">Keep a Changelog</a> format.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <h3 id="cli-tool">CLI Tool<a class="headerlink" href="#cli-tool" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/sclog@v0.1.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/schangelog@v0.1.0
 </code></pre></div>
 <h3 id="library">Library<a class="headerlink" href="#library" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/grokify/structured-changelog@v0.1.0
@@ -1369,10 +1369,10 @@
 </tr>
 </tbody>
 </table>
-<h3 id="cli-tool-sclog">CLI Tool (<code>sclog</code>)<a class="headerlink" href="#cli-tool-sclog" title="Permanent link">&para;</a></h3>
+<h3 id="cli-tool-schangelog">CLI Tool (<code>schangelog</code>)<a class="headerlink" href="#cli-tool-schangelog" title="Permanent link">&para;</a></h3>
 <p>Cobra-based CLI with subcommands:</p>
 <p><strong>Validate a changelog:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sclog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json
 </code></pre></div>
 <p>Output:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>✓ CHANGELOG.json is valid
@@ -1385,19 +1385,19 @@
 </code></pre></div>
 <p><strong>Generate Markdown:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># To stdout</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sclog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># To file</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sclog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
 <a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Minimal (no metadata)</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>sclog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--minimal
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--minimal
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># Full (include commits)</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>sclog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--full
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--full
 </code></pre></div>
 <p><strong>Version info:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sclog<span class="w"> </span>version
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>schangelog<span class="w"> </span>version
 </code></pre></div>
 <h3 id="go-library">Go Library<a class="headerlink" href="#go-library" title="Permanent link">&para;</a></h3>
 <p><strong>Load and validate:</strong></p>
@@ -1500,7 +1500,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>structured-changelog/
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├── changelog/          # IR types + validation
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>├── renderer/           # Markdown generation
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>├── cmd/sclog/          # CLI tool
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>├── cmd/schangelog/          # CLI tool
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>├── schema/             # JSON Schema
 <a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>├── docs/               # Specification
 <a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>└── examples/           # Example changelogs
@@ -1531,9 +1531,9 @@
 <h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <p>Planned for future releases:</p>
 <ul>
-<li><code>sclog init</code> - Create empty CHANGELOG.json</li>
-<li><code>sclog add --type=fixed "Description"</code> - Add entry to unreleased</li>
-<li><code>sclog release 1.2.0</code> - Promote unreleased to new version</li>
+<li><code>schangelog init</code> - Create empty CHANGELOG.json</li>
+<li><code>schangelog add --type=fixed "Description"</code> - Add entry to unreleased</li>
+<li><code>schangelog release 1.2.0</code> - Promote unreleased to new version</li>
 <li>Compare link generation</li>
 <li>GitHub Actions integration</li>
 <li>MkDocs/Hugo theme support</li>

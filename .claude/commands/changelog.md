@@ -6,7 +6,7 @@ argument-hint: <since-tag> [version]
 
 # Structured Changelog Generator
 
-Generate a structured changelog from git commits using the sclog CLI.
+Generate a structured changelog from git commits using the schangelog CLI.
 
 ## Arguments
 
@@ -22,7 +22,7 @@ Generate a structured changelog from git commits using the sclog CLI.
 
 ## Instructions
 
-Run `sclog parse-commits --since=<tag>` to get structured commit data, then:
+Run `schangelog parse-commits --since=<tag>` to get structured commit data, then:
 
 - Group related commits into single changelog entries
 - Use descriptions that explain "why" not just "what"
@@ -32,8 +32,8 @@ Run `sclog parse-commits --since=<tag>` to get structured commit data, then:
 
 After creating/updating CHANGELOG.json:
 
-1. Validate: `sclog validate CHANGELOG.json`
-2. Generate: `sclog generate CHANGELOG.json -o CHANGELOG.md`
+1. Validate: `schangelog validate CHANGELOG.json`
+2. Generate: `schangelog generate CHANGELOG.json -o CHANGELOG.md`
 
 ## JSON Entry Format
 

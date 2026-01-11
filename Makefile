@@ -5,7 +5,7 @@ all: sync-check lint test build
 
 # Build the CLI
 build:
-	go build -o bin/sclog ./cmd/sclog
+	go build -o bin/schangelog ./cmd/schangelog
 
 # Run tests
 test:
@@ -42,10 +42,10 @@ sync:
 
 # Generate example markdown files
 examples:
-	./bin/sclog generate examples/basic/CHANGELOG.json -o examples/basic/CHANGELOG.md
-	./bin/sclog generate examples/security/CHANGELOG.json -o examples/security/CHANGELOG.md
-	./bin/sclog generate examples/full/CHANGELOG.json -o examples/full/CHANGELOG.md
-	./bin/sclog generate examples/extended/CHANGELOG.json -o examples/extended/CHANGELOG.md
+	./bin/schangelog generate examples/basic/CHANGELOG.json -o examples/basic/CHANGELOG.md
+	./bin/schangelog generate examples/security/CHANGELOG.json -o examples/security/CHANGELOG.md
+	./bin/schangelog generate examples/full/CHANGELOG.json -o examples/full/CHANGELOG.md
+	./bin/schangelog generate examples/extended/CHANGELOG.json -o examples/extended/CHANGELOG.md
 
 # Build documentation (MkDocs)
 docs:
@@ -59,7 +59,7 @@ docs-serve:
 help:
 	@echo "Available targets:"
 	@echo "  all         - Run sync-check, lint, test, and build (default)"
-	@echo "  build       - Build the sclog CLI"
+	@echo "  build       - Build the schangelog CLI"
 	@echo "  test        - Run tests"
 	@echo "  coverage    - Run tests with coverage report"
 	@echo "  lint        - Run golangci-lint"

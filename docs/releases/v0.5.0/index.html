@@ -1141,7 +1141,7 @@
 <h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h2>
 <h3 id="llm-optimized-git-parsing">LLM-Optimized Git Parsing<a class="headerlink" href="#llm-optimized-git-parsing" title="Permanent link">&para;</a></h3>
 <p>New <code>parse-commits</code> command provides structured, token-efficient git history:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0
 </code></pre></div>
 <p>Output is designed for LLM consumption:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>abc1234 feat(auth): add OAuth2 support
@@ -1149,12 +1149,12 @@
 </code></pre></div>
 <h3 id="category-suggestions">Category Suggestions<a class="headerlink" href="#category-suggestions" title="Permanent link">&para;</a></h3>
 <p>New <code>suggest-category</code> command helps classify commits:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sclog<span class="w"> </span>suggest-category<span class="w"> </span><span class="s2">&quot;feat(api): add rate limiting endpoint&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>schangelog<span class="w"> </span>suggest-category<span class="w"> </span><span class="s2">&quot;feat(api): add rate limiting endpoint&quot;</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># Output: added (confidence: high)</span>
 </code></pre></div>
 <h3 id="rich-validation-output">Rich Validation Output<a class="headerlink" href="#rich-validation-output" title="Permanent link">&para;</a></h3>
 <p>Validation now provides actionable JSON output for programmatic use:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--json<span class="w"> </span>CHANGELOG.json
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>--json<span class="w"> </span>CHANGELOG.json
 </code></pre></div>
 <p>Returns structured errors with line numbers, field paths, and fix suggestions.</p>
 <h3 id="mkdocs-documentation-site">MkDocs Documentation Site<a class="headerlink" href="#mkdocs-documentation-site" title="Permanent link">&para;</a></h3>
@@ -1175,11 +1175,11 @@
 </thead>
 <tbody>
 <tr>
-<td><code>sclog parse-commits</code></td>
+<td><code>schangelog parse-commits</code></td>
 <td>Parse git history in LLM-optimized format</td>
 </tr>
 <tr>
-<td><code>sclog suggest-category</code></td>
+<td><code>schangelog suggest-category</code></td>
 <td>Suggest changelog category for a commit</td>
 </tr>
 </tbody>
@@ -1228,7 +1228,7 @@
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Via Go</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/sclog@v0.5.0
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/schangelog@v0.5.0
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Via Homebrew</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>brew<span class="w"> </span>install<span class="w"> </span>grokify/tap/structured-changelog

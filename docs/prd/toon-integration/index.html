@@ -1106,7 +1106,7 @@
 
 <h1 id="toon-integration-design-doc">TOON Integration Design Doc<a class="headerlink" href="#toon-integration-design-doc" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This document describes the integration of TOON (Token-Oriented Object Notation) as the default output format for LLM-facing commands in sclog.</p>
+<p>This document describes the integration of TOON (Token-Oriented Object Notation) as the default output format for LLM-facing commands in schangelog.</p>
 <p><strong>Goal:</strong> Reduce token usage by ~40% for LLM-assisted changelog generation workflows.</p>
 <p><strong>Breaking Change:</strong> Yes (pre-1.0, acceptable per semver)</p>
 <h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">&para;</a></h2>
@@ -1133,10 +1133,10 @@
 <h3 id="format-flag">Format Flag<a class="headerlink" href="#format-flag" title="Permanent link">&para;</a></h3>
 <p>Add <code>--format</code> flag to LLM-facing commands:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Default: TOON (optimized for LLMs)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Explicit JSON for tooling/debugging</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0<span class="w"> </span>--format<span class="o">=</span>json
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0<span class="w"> </span>--format<span class="o">=</span>json
 </code></pre></div>
 <h3 id="supported-values">Supported Values<a class="headerlink" href="#supported-values" title="Permanent link">&para;</a></h3>
 <table>
@@ -1401,15 +1401,15 @@
 <td>New - format tests</td>
 </tr>
 <tr>
-<td><code>cmd/sclog/parse_commits.go</code></td>
+<td><code>cmd/schangelog/parse_commits.go</code></td>
 <td>Add --format flag, use format.Marshal</td>
 </tr>
 <tr>
-<td><code>cmd/sclog/suggest_category.go</code></td>
+<td><code>cmd/schangelog/suggest_category.go</code></td>
 <td>Add --format flag, use format.Marshal</td>
 </tr>
 <tr>
-<td><code>cmd/sclog/validate.go</code></td>
+<td><code>cmd/schangelog/validate.go</code></td>
 <td>Add --format flag for JSON output</td>
 </tr>
 <tr>
@@ -1446,10 +1446,10 @@
 <h3 id="user-migration">User Migration<a class="headerlink" href="#user-migration" title="Permanent link">&para;</a></h3>
 <p>Scripts using JSON output add <code>--format=json</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Before</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.commits&#39;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.commits&#39;</span>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># After</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.commits&#39;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.4.0<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.commits&#39;</span>
 </code></pre></div>
 <h2 id="rollout">Rollout<a class="headerlink" href="#rollout" title="Permanent link">&para;</a></h2>
 <ol>

@@ -229,7 +229,7 @@ While CHANGELOG.md is generated from CHANGELOG.json, release notes are typically
 
 ```bash
 # Generate a starting point from changelog
-sclog generate CHANGELOG.json --format=release-notes --version=1.0.0 > RELEASE_NOTES_v1.0.0.md
+schangelog generate CHANGELOG.json --format=release-notes --version=1.0.0 > RELEASE_NOTES_v1.0.0.md
 ```
 
 Then expand with migration guides, code examples, and context.

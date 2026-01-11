@@ -1168,7 +1168,7 @@
 <h1 id="llm-assisted-changelog-generation">LLM-Assisted Changelog Generation<a class="headerlink" href="#llm-assisted-changelog-generation" title="Permanent link">&para;</a></h1>
 <p>This guide covers tools and prompts for using LLMs (like Claude) to generate changelogs from git history.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>The <code>sclog</code> CLI includes tools optimized for LLM-assisted workflows:</p>
+<p>The <code>schangelog</code> CLI includes tools optimized for LLM-assisted workflows:</p>
 <table>
 <thead>
 <tr>
@@ -1228,25 +1228,25 @@
 <h3 id="parse-commits">parse-commits<a class="headerlink" href="#parse-commits" title="Permanent link">&para;</a></h3>
 <p>Parses git history into structured output optimized for LLM consumption.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Parse commits since a tag (TOON format, default)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Parse commits with JSON output</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--format<span class="o">=</span>json
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--format<span class="o">=</span>json
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Parse commits between versions</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.2.0<span class="w"> </span>--until<span class="o">=</span>v0.3.0
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.2.0<span class="w"> </span>--until<span class="o">=</span>v0.3.0
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Parse last N commits</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--last<span class="o">=</span><span class="m">20</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--last<span class="o">=</span><span class="m">20</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Exclude file list from output</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-files
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-files
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1"># Exclude merge commits</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-merges
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--no-merges
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># Mark external contributors (reads maintainers/bots from CHANGELOG.json)</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>sclog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--changelog<span class="o">=</span>CHANGELOG.json
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v0.3.0<span class="w"> </span>--changelog<span class="o">=</span>CHANGELOG.json
 </code></pre></div>
 <p><strong>Output includes:</strong></p>
 <ul>
@@ -1307,13 +1307,13 @@
 <h3 id="suggest-category">suggest-category<a class="headerlink" href="#suggest-category" title="Permanent link">&para;</a></h3>
 <p>Suggests changelog categories for commit messages based on conventional commit types and keywords.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Single message (TOON format, default)</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sclog<span class="w"> </span>suggest-category<span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>schangelog<span class="w"> </span>suggest-category<span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Single message with JSON output</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sclog<span class="w"> </span>suggest-category<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>schangelog<span class="w"> </span>suggest-category<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span><span class="s2">&quot;feat(auth): add OAuth2 support&quot;</span>
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Batch mode from stdin</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>git<span class="w"> </span>log<span class="w"> </span>--format<span class="o">=</span><span class="s2">&quot;%s&quot;</span><span class="w"> </span>v0.3.0..HEAD<span class="w"> </span><span class="p">|</span><span class="w"> </span>sclog<span class="w"> </span>suggest-category<span class="w"> </span>--batch
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>git<span class="w"> </span>log<span class="w"> </span>--format<span class="o">=</span><span class="s2">&quot;%s&quot;</span><span class="w"> </span>v0.3.0..HEAD<span class="w"> </span><span class="p">|</span><span class="w"> </span>schangelog<span class="w"> </span>suggest-category<span class="w"> </span>--batch
 </code></pre></div>
 <p><strong>Example TOON output (default):</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Input: &quot;feat(auth): add OAuth2 support&quot;
@@ -1420,13 +1420,13 @@
 <h3 id="validate-format">validate --format<a class="headerlink" href="#validate-format" title="Permanent link">&para;</a></h3>
 <p>Validates changelog with rich, actionable error messages.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># TOON output with detailed errors</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>CHANGELOG.json
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># JSON output with detailed errors</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span>CHANGELOG.json
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
 <a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Strict mode (warnings become errors)</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>sclog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>--strict<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>--strict<span class="w"> </span>CHANGELOG.json
 </code></pre></div>
 <p><strong>Example TOON output:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Valid: false
@@ -1550,16 +1550,16 @@
 <h3 id="generate-a-changelog-release">Generate a Changelog Release<a class="headerlink" href="#generate-a-changelog-release" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Generate changelog entries for v0.5.0 based on commits since v0.4.0.
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>1. Run `sclog parse-commits --since=v0.4.0` to get structured commit data
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>1. Run `schangelog parse-commits --since=v0.4.0` to get structured commit data
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>2. Review the commits and create appropriate CHANGELOG.json entries
 <a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>3. Group related commits into single entries where appropriate
 <a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>4. Write descriptions that explain &quot;why&quot; not just &quot;what&quot;
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>5. Validate with `sclog validate --format=toon`
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>5. Validate with `schangelog validate --format=toon`
 </code></pre></div>
 <h3 id="review-and-categorize-changes">Review and Categorize Changes<a class="headerlink" href="#review-and-categorize-changes" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Parse the commits since v0.4.0 and help me categorize them for the changelog.
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Use `sclog parse-commits --since=v0.4.0` and then:
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Use `schangelog parse-commits --since=v0.4.0` and then:
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>- Group related commits together
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>- Identify any breaking changes
 <a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>- Suggest which category each change belongs to
@@ -1568,17 +1568,17 @@
 <h3 id="fix-validation-errors">Fix Validation Errors<a class="headerlink" href="#fix-validation-errors" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Validate CHANGELOG.json and fix any issues:
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>1. Run `sclog validate --format=toon CHANGELOG.json`
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>1. Run `schangelog validate --format=toon CHANGELOG.json`
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>2. For each error, apply the suggested fix
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>3. Re-validate until clean
 </code></pre></div>
 <h3 id="complete-release-workflow">Complete Release Workflow<a class="headerlink" href="#complete-release-workflow" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Help me prepare the v0.5.0 release:
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>1. Parse commits: `sclog parse-commits --since=v0.4.0`
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>1. Parse commits: `schangelog parse-commits --since=v0.4.0`
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>2. Create CHANGELOG.json entries for the new version
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>3. Validate: `sclog validate --format=toon CHANGELOG.json`
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>4. Generate markdown: `sclog generate CHANGELOG.json -o CHANGELOG.md`
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>3. Validate: `schangelog validate --format=toon CHANGELOG.json`
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>4. Generate markdown: `schangelog generate CHANGELOG.json -o CHANGELOG.md`
 <a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>5. Summarize what&#39;s in the release
 </code></pre></div>
 <h3 id="batch-processing">Batch Processing<a class="headerlink" href="#batch-processing" title="Permanent link">&para;</a></h3>
@@ -1589,7 +1589,7 @@
 <a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>- v0.2.0 to v0.3.0
 <a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>- v0.3.0 to v0.4.0
 <a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Use `sclog parse-commits --since=&lt;from&gt; --until=&lt;to&gt;` for each range.
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Use `schangelog parse-commits --since=&lt;from&gt; --until=&lt;to&gt;` for each range.
 </code></pre></div>
 <h2 id="token-efficiency">Token Efficiency<a class="headerlink" href="#token-efficiency" title="Permanent link">&para;</a></h2>
 <p>Raw <code>git log</code> output is verbose. The <code>parse-commits</code> tool with TOON format reduces token usage significantly:</p>

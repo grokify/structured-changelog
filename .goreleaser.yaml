@@ -11,9 +11,9 @@ before:
     - go generate ./...
 
 builds:
-  - id: sclog
-    binary: sclog
-    main: ./cmd/sclog
+  - id: schangelog
+    binary: schangelog
+    main: ./cmd/schangelog
     env:
       - CGO_ENABLED=0
     goos:
@@ -82,10 +82,10 @@ brews:
     description: "CLI for canonical, deterministic changelogs using JSON IR"
     license: "MIT"
     install: |
-      bin.install "sclog"
-      bin.install_symlink "sclog" => "structured-changelog"
+      bin.install "schangelog"
+      bin.install_symlink "schangelog" => "structured-changelog"
     test: |
-      system "#{bin}/sclog", "version"
+      system "#{bin}/schangelog", "version"
     commit_author:
       name: goreleaserbot
       email: bot@goreleaser.com

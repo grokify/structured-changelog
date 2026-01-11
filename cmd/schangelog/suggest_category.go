@@ -44,13 +44,13 @@ The output includes:
 
 Examples:
   # Suggest category for a single message (TOON format, default)
-  sclog suggest-category "feat(auth): add OAuth2 support"
+  schangelog suggest-category "feat(auth): add OAuth2 support"
 
   # Suggest category with JSON output
-  sclog suggest-category --format=json "feat(auth): add OAuth2 support"
+  schangelog suggest-category --format=json "feat(auth): add OAuth2 support"
 
   # Batch mode from stdin (one message per line)
-  echo -e "feat: add feature\nfix: resolve bug" | sclog suggest-category --batch`,
+  echo -e "feat: add feature\nfix: resolve bug" | schangelog suggest-category --batch`,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if suggestCategoryBatch {
 			return nil // No args required in batch mode

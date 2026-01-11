@@ -4,7 +4,7 @@ This guide covers tools and prompts for using LLMs (like Claude) to generate cha
 
 ## Overview
 
-The `sclog` CLI includes tools optimized for LLM-assisted workflows:
+The `schangelog` CLI includes tools optimized for LLM-assisted workflows:
 
 | Tool | Purpose | Token Savings |
 |------|---------|---------------|
@@ -32,25 +32,25 @@ Parses git history into structured output optimized for LLM consumption.
 
 ```bash
 # Parse commits since a tag (TOON format, default)
-sclog parse-commits --since=v0.3.0
+schangelog parse-commits --since=v0.3.0
 
 # Parse commits with JSON output
-sclog parse-commits --since=v0.3.0 --format=json
+schangelog parse-commits --since=v0.3.0 --format=json
 
 # Parse commits between versions
-sclog parse-commits --since=v0.2.0 --until=v0.3.0
+schangelog parse-commits --since=v0.2.0 --until=v0.3.0
 
 # Parse last N commits
-sclog parse-commits --last=20
+schangelog parse-commits --last=20
 
 # Exclude file list from output
-sclog parse-commits --since=v0.3.0 --no-files
+schangelog parse-commits --since=v0.3.0 --no-files
 
 # Exclude merge commits
-sclog parse-commits --since=v0.3.0 --no-merges
+schangelog parse-commits --since=v0.3.0 --no-merges
 
 # Mark external contributors (reads maintainers/bots from CHANGELOG.json)
-sclog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json
+schangelog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json
 ```
 
 **Output includes:**
@@ -121,13 +121,13 @@ Suggests changelog categories for commit messages based on conventional commit t
 
 ```bash
 # Single message (TOON format, default)
-sclog suggest-category "feat(auth): add OAuth2 support"
+schangelog suggest-category "feat(auth): add OAuth2 support"
 
 # Single message with JSON output
-sclog suggest-category --format=json "feat(auth): add OAuth2 support"
+schangelog suggest-category --format=json "feat(auth): add OAuth2 support"
 
 # Batch mode from stdin
-git log --format="%s" v0.3.0..HEAD | sclog suggest-category --batch
+git log --format="%s" v0.3.0..HEAD | schangelog suggest-category --batch
 ```
 
 **Example TOON output (default):**
@@ -193,13 +193,13 @@ Validates changelog with rich, actionable error messages.
 
 ```bash
 # TOON output with detailed errors
-sclog validate --format=toon CHANGELOG.json
+schangelog validate --format=toon CHANGELOG.json
 
 # JSON output with detailed errors
-sclog validate --format=json CHANGELOG.json
+schangelog validate --format=json CHANGELOG.json
 
 # Strict mode (warnings become errors)
-sclog validate --format=toon --strict CHANGELOG.json
+schangelog validate --format=toon --strict CHANGELOG.json
 ```
 
 **Example TOON output:**
@@ -280,11 +280,11 @@ Use these prompts with Claude or other LLMs to generate changelogs.
 ```
 Generate changelog entries for v0.5.0 based on commits since v0.4.0.
 
-1. Run `sclog parse-commits --since=v0.4.0` to get structured commit data
+1. Run `schangelog parse-commits --since=v0.4.0` to get structured commit data
 2. Review the commits and create appropriate CHANGELOG.json entries
 3. Group related commits into single entries where appropriate
 4. Write descriptions that explain "why" not just "what"
-5. Validate with `sclog validate --format=toon`
+5. Validate with `schangelog validate --format=toon`
 ```
 
 ### Review and Categorize Changes
@@ -292,7 +292,7 @@ Generate changelog entries for v0.5.0 based on commits since v0.4.0.
 ```
 Parse the commits since v0.4.0 and help me categorize them for the changelog.
 
-Use `sclog parse-commits --since=v0.4.0` and then:
+Use `schangelog parse-commits --since=v0.4.0` and then:
 - Group related commits together
 - Identify any breaking changes
 - Suggest which category each change belongs to
@@ -304,7 +304,7 @@ Use `sclog parse-commits --since=v0.4.0` and then:
 ```
 Validate CHANGELOG.json and fix any issues:
 
-1. Run `sclog validate --format=toon CHANGELOG.json`
+1. Run `schangelog validate --format=toon CHANGELOG.json`
 2. For each error, apply the suggested fix
 3. Re-validate until clean
 ```
@@ -314,10 +314,10 @@ Validate CHANGELOG.json and fix any issues:
 ```
 Help me prepare the v0.5.0 release:
 
-1. Parse commits: `sclog parse-commits --since=v0.4.0`
+1. Parse commits: `schangelog parse-commits --since=v0.4.0`
 2. Create CHANGELOG.json entries for the new version
-3. Validate: `sclog validate --format=toon CHANGELOG.json`
-4. Generate markdown: `sclog generate CHANGELOG.json -o CHANGELOG.md`
+3. Validate: `schangelog validate --format=toon CHANGELOG.json`
+4. Generate markdown: `schangelog generate CHANGELOG.json -o CHANGELOG.md`
 5. Summarize what's in the release
 ```
 
@@ -331,7 +331,7 @@ parse the commits and generate changelog entries:
 - v0.2.0 to v0.3.0
 - v0.3.0 to v0.4.0
 
-Use `sclog parse-commits --since=<from> --until=<to>` for each range.
+Use `schangelog parse-commits --since=<from> --until=<to>` for each range.
 ```
 
 ## Token Efficiency

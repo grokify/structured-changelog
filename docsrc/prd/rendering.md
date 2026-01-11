@@ -40,8 +40,8 @@ Current formatting uses only universally supported constructs.
 If divergence becomes necessary, add a `--markdown-flavor` flag:
 
 ```bash
-sclog generate --markdown-flavor github changelog.json
-sclog generate --markdown-flavor pandoc changelog.json
+schangelog generate --markdown-flavor github changelog.json
+schangelog generate --markdown-flavor pandoc changelog.json
 ```
 
 **Current assessment:** Not needed — simple formatting works universally.
@@ -108,7 +108,7 @@ Empty sections are omitted.
 Rendering respects the `--locale` flag (see `PRD_LOCALIZATION.md`):
 
 ```bash
-sclog generate --locale fr changelog.json
+schangelog generate --locale fr changelog.json
 ```
 
 Localization affects only **labels** (section headers), not structure or user content.

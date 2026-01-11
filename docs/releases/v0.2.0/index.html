@@ -1201,7 +1201,7 @@
 <p>This release adds GitHub version reference links to rendered Markdown, completing Keep a Changelog format compliance. The generated <code>CHANGELOG.md</code> now includes clickable version links at the bottom that point to GitHub release tags and comparison pages.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <h3 id="cli-tool">CLI Tool<a class="headerlink" href="#cli-tool" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/sclog@v0.2.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/grokify/structured-changelog/cmd/schangelog@v0.2.0
 </code></pre></div>
 <h3 id="library">Library<a class="headerlink" href="#library" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/grokify/structured-changelog@v0.2.0
@@ -1301,10 +1301,10 @@
 </code></pre></div>
 <p>Or via CLI:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Include links (default)</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sclog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Exclude links</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>sclog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--minimal
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--minimal
 </code></pre></div>
 <h2 id="migration-from-v010">Migration from v0.1.0<a class="headerlink" href="#migration-from-v010" title="Permanent link">&para;</a></h2>
 <p>This release is fully backward compatible. To take advantage of the new features:</p>
@@ -1321,7 +1321,7 @@
 <ol>
 <li>Regenerate your <code>CHANGELOG.md</code>:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sclog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
 </code></pre></div>
 <p>The version reference links will be automatically appended.</p>
 <h2 id="known-limitations-resolved">Known Limitations Resolved<a class="headerlink" href="#known-limitations-resolved" title="Permanent link">&para;</a></h2>
@@ -1343,9 +1343,9 @@
 <h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <p>Planned for future releases:</p>
 <ul>
-<li><code>sclog init</code> - Create empty CHANGELOG.json</li>
-<li><code>sclog add --type=fixed "Description"</code> - Add entry to unreleased</li>
-<li><code>sclog release 1.2.0</code> - Promote unreleased to new version</li>
+<li><code>schangelog init</code> - Create empty CHANGELOG.json</li>
+<li><code>schangelog add --type=fixed "Description"</code> - Add entry to unreleased</li>
+<li><code>schangelog release 1.2.0</code> - Promote unreleased to new version</li>
 <li>GitLab/Bitbucket link support</li>
 <li>MkDocs/Hugo theme support</li>
 </ul>

@@ -37,11 +37,11 @@ Tiers:
   optional   All types (extended + Infrastructure, Observability, Compliance, Internal)
 
 Examples:
-  sclog generate CHANGELOG.json
-  sclog generate CHANGELOG.json -o CHANGELOG.md
-  sclog generate CHANGELOG.json --minimal
-  sclog generate CHANGELOG.json --max-tier standard
-  sclog generate CHANGELOG.json --full -o docs/CHANGELOG.md`,
+  schangelog generate CHANGELOG.json
+  schangelog generate CHANGELOG.json -o CHANGELOG.md
+  schangelog generate CHANGELOG.json --minimal
+  schangelog generate CHANGELOG.json --max-tier standard
+  schangelog generate CHANGELOG.json --full -o docs/CHANGELOG.md`,
 	Args: cobra.ExactArgs(1),
 	RunE: runGenerate,
 }

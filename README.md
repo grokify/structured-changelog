@@ -88,12 +88,12 @@ brew tap grokify/tap
 brew install structured-changelog
 ```
 
-This installs the `sclog` CLI (also available as `structured-changelog`).
+This installs the `schangelog` CLI (also available as `structured-changelog`).
 
 ### Go Install
 
 ```bash
-go install github.com/grokify/structured-changelog/cmd/sclog@latest
+go install github.com/grokify/structured-changelog/cmd/schangelog@latest
 ```
 
 ### Go Library
@@ -153,29 +153,29 @@ func main() {
 Validate a changelog:
 
 ```bash
-sclog validate CHANGELOG.json
+schangelog validate CHANGELOG.json
 ```
 
 Generate Markdown:
 
 ```bash
 # Output to stdout
-sclog generate CHANGELOG.json
+schangelog generate CHANGELOG.json
 
 # Output to file
-sclog generate CHANGELOG.json -o CHANGELOG.md
+schangelog generate CHANGELOG.json -o CHANGELOG.md
 
 # Full output (default: includes commit links and reference linking)
-sclog generate CHANGELOG.json
+schangelog generate CHANGELOG.json
 
 # Minimal output (no references/metadata/commit links)
-sclog generate CHANGELOG.json --minimal
+schangelog generate CHANGELOG.json --minimal
 ```
 
 Show version:
 
 ```bash
-sclog version
+schangelog version
 ```
 
 ### LLM-Assisted Generation
@@ -183,11 +183,11 @@ sclog version
 The CLI includes tools optimized for AI-assisted changelog generation. Commands default to TOON format (Token-Oriented Object Notation) for ~8x token reduction:
 
 ```bash
-sclog parse-commits --since=v0.3.0           # Structured git history (TOON)
-sclog parse-commits --since=v0.3.0 --format=json  # JSON output
-sclog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json  # Mark external contributors
-sclog suggest-category "feat: ..."           # Category suggestions
-sclog validate --format=toon CHANGELOG.json  # Rich error output
+schangelog parse-commits --since=v0.3.0           # Structured git history (TOON)
+schangelog parse-commits --since=v0.3.0 --format=json  # JSON output
+schangelog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json  # Mark external contributors
+schangelog suggest-category "feat: ..."           # Category suggestions
+schangelog validate --format=toon CHANGELOG.json  # Rich error output
 ```
 
 See the [LLM Guide](https://grokify.github.io/structured-changelog/guides/llm-guide/) for prompts and workflows.
@@ -198,7 +198,7 @@ When a repository URL is provided, references (issues, PRs, commits) are automat
 
 ```bash
 # Generate with linked references (default behavior)
-sclog generate CHANGELOG.json
+schangelog generate CHANGELOG.json
 ```
 
 Example output:
@@ -294,16 +294,16 @@ Use tiers to control which change types to include:
 
 ```bash
 # Validate: ensure changelog covers at least core types
-sclog validate --min-tier core
+schangelog validate --min-tier core
 
 # Validate: require core + standard coverage
-sclog validate --min-tier standard
+schangelog validate --min-tier standard
 
 # Generate: output only core types (KACL-compliant)
-sclog generate --max-tier core
+schangelog generate --max-tier core
 
 # Generate: include everything up to extended
-sclog generate --max-tier extended
+schangelog generate --max-tier extended
 ```
 
 ### Optional Security Metadata
@@ -421,7 +421,7 @@ structured-changelog/
 ├── renderer/           # Deterministic Markdown renderer
 │   ├── markdown.go
 │   └── options.go
-├── cmd/sclog/          # CLI tool (Cobra-based)
+├── cmd/schangelog/     # CLI tool (Cobra-based)
 │   ├── main.go
 │   ├── root.go
 │   ├── validate.go

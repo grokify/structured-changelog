@@ -46,10 +46,10 @@ Tiers:
   optional   All types (extended + Infrastructure, Observability, Compliance, Internal)
 
 Examples:
-  sclog validate CHANGELOG.json
-  sclog validate CHANGELOG.json --strict
-  sclog validate CHANGELOG.json --min-tier core
-  sclog validate CHANGELOG.json --format=toon`,
+  schangelog validate CHANGELOG.json
+  schangelog validate CHANGELOG.json --strict
+  schangelog validate CHANGELOG.json --min-tier core
+  schangelog validate CHANGELOG.json --format=toon`,
 	Args: cobra.ExactArgs(1),
 	RunE: runValidate,
 }

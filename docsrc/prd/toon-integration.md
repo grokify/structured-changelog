@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the integration of TOON (Token-Oriented Object Notation) as the default output format for LLM-facing commands in sclog.
+This document describes the integration of TOON (Token-Oriented Object Notation) as the default output format for LLM-facing commands in schangelog.
 
 **Goal:** Reduce token usage by ~40% for LLM-assisted changelog generation workflows.
 
@@ -42,10 +42,10 @@ Add `--format` flag to LLM-facing commands:
 
 ```bash
 # Default: TOON (optimized for LLMs)
-sclog parse-commits --since=v0.4.0
+schangelog parse-commits --since=v0.4.0
 
 # Explicit JSON for tooling/debugging
-sclog parse-commits --since=v0.4.0 --format=json
+schangelog parse-commits --since=v0.4.0 --format=json
 ```
 
 ### Supported Values
@@ -299,9 +299,9 @@ type Commit struct {
 | `go.mod` | Add toon-go dependency |
 | `format/format.go` | New - format abstraction |
 | `format/format_test.go` | New - format tests |
-| `cmd/sclog/parse_commits.go` | Add --format flag, use format.Marshal |
-| `cmd/sclog/suggest_category.go` | Add --format flag, use format.Marshal |
-| `cmd/sclog/validate.go` | Add --format flag for JSON output |
+| `cmd/schangelog/parse_commits.go` | Add --format flag, use format.Marshal |
+| `cmd/schangelog/suggest_category.go` | Add --format flag, use format.Marshal |
+| `cmd/schangelog/validate.go` | Add --format flag for JSON output |
 | `gitlog/commit.go` | Add toon struct tags |
 | `changelog/validate_rich.go` | Add toon struct tags |
 
@@ -337,10 +337,10 @@ Scripts using JSON output add `--format=json`:
 
 ```bash
 # Before
-sclog parse-commits --since=v0.4.0 | jq '.commits'
+schangelog parse-commits --since=v0.4.0 | jq '.commits'
 
 # After
-sclog parse-commits --since=v0.4.0 --format=json | jq '.commits'
+schangelog parse-commits --since=v0.4.0 --format=json | jq '.commits'
 ```
 
 ## Rollout

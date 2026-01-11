@@ -46,28 +46,28 @@ The output includes:
 
 Examples:
   # Parse commits since a tag (TOON format, default)
-  sclog parse-commits --since=v0.3.0
+  schangelog parse-commits --since=v0.3.0
 
   # Parse commits with JSON output
-  sclog parse-commits --since=v0.3.0 --format=json
+  schangelog parse-commits --since=v0.3.0 --format=json
 
   # Parse commits between two refs
-  sclog parse-commits --since=v0.2.0 --until=v0.3.0
+  schangelog parse-commits --since=v0.2.0 --until=v0.3.0
 
   # Parse last 20 commits
-  sclog parse-commits --last=20
+  schangelog parse-commits --last=20
 
   # Parse commits for specific path
-  sclog parse-commits --since=v0.3.0 --path=src/
+  schangelog parse-commits --since=v0.3.0 --path=src/
 
   # Exclude file list from output
-  sclog parse-commits --since=v0.3.0 --no-files
+  schangelog parse-commits --since=v0.3.0 --no-files
 
   # Exclude merge commits
-  sclog parse-commits --since=v0.3.0 --no-merges
+  schangelog parse-commits --since=v0.3.0 --no-merges
 
   # Mark external contributors (reads maintainers/bots from CHANGELOG.json)
-  sclog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json`,
+  schangelog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json`,
 	RunE: runParseCommits,
 }
 
