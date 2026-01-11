@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://grokify.github.io/structured-changelog/prd/toon-integration/">
       
       
+        <link rel="prev" href="../tools/">
+      
+      
+        <link rel="next" href="../localization/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +24,7 @@
     
     
       
-        <title>TOON Integration Design Doc - Structured Changelog</title>
+        <title>TOON Integration - Structured Changelog</title>
       
     
     
@@ -108,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              TOON Integration Design Doc
+              TOON Integration
             
           </span>
         </div>
@@ -514,8 +518,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -526,13 +532,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
@@ -548,7 +552,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             PRDs
@@ -573,6 +577,332 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    TOON Integration
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    TOON Integration
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Background">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current State
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-toon" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is TOON?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format Flag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands-affected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commands Affected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse-commits" class="md-nav__link">
+    <span class="md-ellipsis">
+      parse-commits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#suggest-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      suggest-category
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate-with-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      validate (with errors)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-add-format-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Add format package
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-update-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Update commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-add-toon-struct-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Add TOON struct tags
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breaking-change-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Change Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Migration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decisions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -675,6 +1005,52 @@
             Releases
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/v0.7.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v0.7.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/v0.6.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v0.6.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
