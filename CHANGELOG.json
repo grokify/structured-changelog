@@ -7,6 +7,20 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.7.0",
+      "date": "2026-01-11",
+      "highlights": [
+        { "description": "CLI renamed from `sclog` to `schangelog` for naming consistency with sibling tools (sroadmap, sprd, strd)" }
+      ],
+      "changed": [
+        { "description": "CLI binary renamed from `sclog` to `schangelog` for consistency with sibling structured document tools", "breaking": true, "commit": "e58d452" }
+      ],
+      "documentation": [
+        { "description": "Updated all documentation, examples, and help text to use `schangelog`", "commit": "e58d452" },
+        { "description": "Added git log alternatives section to project CLAUDE.md recommending `schangelog` over raw git commands", "commit": "e58d452" }
+      ]
+    },
+    {
       "version": "v0.6.0",
       "date": "2026-01-10",
       "highlights": [
