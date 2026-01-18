@@ -1678,3 +1678,121 @@ func TestRenderMarkdown_MaintenanceGroupEmpty(t *testing.T) {
 		t.Error("should not have maintenance suffix for non-maintenance release")
 	}
 }
+
+func TestRenderMarkdown_ReferenceLinks_WithTagPath(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "multi-agent-spec/sdk/go",
+		Repository: "https://github.com/agentplexus/multi-agent-spec",
+		TagPath:    "sdk/go",
+		Releases: []changelog.Release{
+			{Version: "v0.3.0", Date: "2026-01-17", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "v0.2.0", Date: "2026-01-16", Added: []changelog.Entry{{Description: "Prior"}}},
+			{Version: "v0.1.0", Date: "2026-01-15", Added: []changelog.Entry{{Description: "Initial"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Check for compare links with tag path
+	if !strings.Contains(md, "[v0.3.0]: https://github.com/agentplexus/multi-agent-spec/compare/sdk/go/v0.2.0...sdk/go/v0.3.0") {
+		t.Error("missing compare link with tag path for v0.3.0")
+	}
+	if !strings.Contains(md, "[v0.2.0]: https://github.com/agentplexus/multi-agent-spec/compare/sdk/go/v0.1.0...sdk/go/v0.2.0") {
+		t.Error("missing compare link with tag path for v0.2.0")
+	}
+	// Check for tag link with tag path for first release
+	if !strings.Contains(md, "[v0.1.0]: https://github.com/agentplexus/multi-agent-spec/releases/tag/sdk/go/v0.1.0") {
+		t.Error("missing tag link with tag path for v0.1.0")
+	}
+}
+
+func TestRenderMarkdown_ReferenceLinks_WithTagPath_Unreleased(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "multi-agent-spec/sdk/go",
+		Repository: "https://github.com/agentplexus/multi-agent-spec",
+		TagPath:    "sdk/go",
+		Unreleased: &changelog.Release{
+			Added: []changelog.Entry{{Description: "WIP"}},
+		},
+		Releases: []changelog.Release{
+			{Version: "v0.3.0", Date: "2026-01-17", Added: []changelog.Entry{{Description: "Latest"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Check for unreleased link with tag path
+	if !strings.Contains(md, "[unreleased]: https://github.com/agentplexus/multi-agent-spec/compare/sdk/go/v0.3.0...HEAD") {
+		t.Error("missing unreleased compare link with tag path")
+	}
+}
+
+func TestRenderMarkdown_ReferenceLinks_WithTagPath_GitLab(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "sdk/go",
+		Repository: "https://gitlab.com/example/repo",
+		TagPath:    "sdk/go",
+		Releases: []changelog.Release{
+			{Version: "v1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Check for GitLab-style reference links with tag path
+	if !strings.Contains(md, "[v1.1.0]: https://gitlab.com/example/repo/-/compare/sdk/go/v1.0.0...sdk/go/v1.1.0") {
+		t.Error("missing GitLab compare link with tag path for v1.1.0")
+	}
+	if !strings.Contains(md, "[v1.0.0]: https://gitlab.com/example/repo/-/releases/sdk/go/v1.0.0") {
+		t.Error("missing GitLab release link with tag path for v1.0.0")
+	}
+}
+
+func TestRenderMarkdown_ReferenceLinks_WithTagPath_TrailingSlash(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "sdk/go",
+		Repository: "https://github.com/example/repo",
+		TagPath:    "sdk/go/", // trailing slash should be handled
+		Releases: []changelog.Release{
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Should not have double slashes
+	if strings.Contains(md, "sdk/go//v1.0.0") {
+		t.Error("should not have double slashes in tag URL")
+	}
+	if !strings.Contains(md, "sdk/go/v1.0.0") {
+		t.Error("should have correct tag path in URL")
+	}
+}
+
+func TestRenderMarkdown_ReferenceLinks_NoTagPath(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		// No TagPath - should work as before
+		Releases: []changelog.Release{
+			{Version: "v1.1.0", Date: "2026-01-04", Added: []changelog.Entry{{Description: "New"}}},
+			{Version: "v1.0.0", Date: "2026-01-03", Added: []changelog.Entry{{Description: "Initial"}}},
+		},
+	}
+
+	md := RenderMarkdown(cl)
+
+	// Check that without TagPath, versions are used directly
+	if !strings.Contains(md, "[v1.1.0]: https://github.com/example/repo/compare/v1.0.0...v1.1.0") {
+		t.Error("missing compare link (no tag path)")
+	}
+	if !strings.Contains(md, "[v1.0.0]: https://github.com/example/repo/releases/tag/v1.0.0") {
+		t.Error("missing tag link (no tag path)")
+	}
+}
