@@ -20,6 +20,10 @@
       "format": "uri",
       "description": "URL of the project repository"
     },
+    "tag_path": {
+      "type": "string",
+      "description": "Path prefix for version tags (e.g., 'sdk/go' for nested Go modules where tags are 'sdk/go/v1.0.0')"
+    },
     "generated_at": {
       "type": "string",
       "format": "date-time",

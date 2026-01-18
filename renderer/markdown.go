@@ -519,6 +519,7 @@ func parseRepository(repoURL string) (baseURL string, host repoHost) {
 // - Compare links for subsequent releases: /-/compare/v0.1.0...v0.2.0
 // - Tag links for the first release: /-/tags/v0.1.0
 // - Compare to HEAD for unreleased: /-/compare/v0.2.0...HEAD
+// If TagPath is set (e.g., "sdk/go"), tags are prefixed: sdk/go/v0.1.0
 func renderReferenceLinks(cl *changelog.Changelog, includeUnreleasedLink bool) string {
 	baseURL, host := parseRepository(cl.Repository)
 	if host == hostUnknown {
@@ -531,18 +532,18 @@ func renderReferenceLinks(cl *changelog.Changelog, includeUnreleasedLink bool) s
 	// This lets users see what's been merged since the last release
 	if includeUnreleasedLink && len(cl.Releases) > 0 {
 		latestVersion := cl.Releases[0].Version
-		fmt.Fprintf(&sb, "[unreleased]: %s\n", formatCompareLink(baseURL, host, latestVersion, "HEAD"))
+		fmt.Fprintf(&sb, "[unreleased]: %s\n", formatCompareLink(baseURL, host, cl.TagPath, latestVersion, "HEAD"))
 	}
 
 	// Release links
 	for i, release := range cl.Releases {
 		if i == len(cl.Releases)-1 {
 			// First/oldest release - link to tag
-			fmt.Fprintf(&sb, "[%s]: %s\n", release.Version, formatTagLink(baseURL, host, release.Version))
+			fmt.Fprintf(&sb, "[%s]: %s\n", release.Version, formatTagLink(baseURL, host, cl.TagPath, release.Version))
 		} else {
 			// Subsequent releases - link to compare with previous
 			prevVersion := cl.Releases[i+1].Version
-			fmt.Fprintf(&sb, "[%s]: %s\n", release.Version, formatCompareLink(baseURL, host, prevVersion, release.Version))
+			fmt.Fprintf(&sb, "[%s]: %s\n", release.Version, formatCompareLink(baseURL, host, cl.TagPath, prevVersion, release.Version))
 		}
 	}
 
@@ -551,22 +552,40 @@ func renderReferenceLinks(cl *changelog.Changelog, includeUnreleasedLink bool) s
 
 // formatCompareLink generates a comparison URL for the given host.
 // Versions are used as-is (no automatic v prefix added).
-func formatCompareLink(baseURL string, host repoHost, fromVersion, toVersion string) string {
+// If tagPath is non-empty, it's prepended to version tags (e.g., "sdk/go" + "v1.0.0" = "sdk/go/v1.0.0").
+func formatCompareLink(baseURL string, host repoHost, tagPath, fromVersion, toVersion string) string {
+	fromTag := formatVersionTag(tagPath, fromVersion)
+	toTag := formatVersionTag(tagPath, toVersion)
 	switch host {
 	case hostGitLab:
-		return fmt.Sprintf("%s/-/compare/%s...%s", baseURL, fromVersion, toVersion)
+		return fmt.Sprintf("%s/-/compare/%s...%s", baseURL, fromTag, toTag)
 	default: // hostGitHub
-		return fmt.Sprintf("%s/compare/%s...%s", baseURL, fromVersion, toVersion)
+		return fmt.Sprintf("%s/compare/%s...%s", baseURL, fromTag, toTag)
 	}
 }
 
 // formatTagLink generates a tag URL for the given host.
 // Versions are used as-is (no automatic v prefix added).
-func formatTagLink(baseURL string, host repoHost, version string) string {
+// If tagPath is non-empty, it's prepended to version tags (e.g., "sdk/go" + "v1.0.0" = "sdk/go/v1.0.0").
+func formatTagLink(baseURL string, host repoHost, tagPath, version string) string {
+	tag := formatVersionTag(tagPath, version)
 	switch host {
 	case hostGitLab:
-		return fmt.Sprintf("%s/-/releases/%s", baseURL, version)
+		return fmt.Sprintf("%s/-/releases/%s", baseURL, tag)
 	default: // hostGitHub
-		return fmt.Sprintf("%s/releases/tag/%s", baseURL, version)
+		return fmt.Sprintf("%s/releases/tag/%s", baseURL, tag)
 	}
+}
+
+// formatVersionTag formats a version with an optional tag path prefix.
+// For example, with tagPath="sdk/go" and version="v1.0.0", returns "sdk/go/v1.0.0".
+// If tagPath is empty, returns the version unchanged.
+// Special case: "HEAD" is never prefixed as it's a git ref, not a version tag.
+func formatVersionTag(tagPath, version string) string {
+	if tagPath == "" || version == "HEAD" {
+		return version
+	}
+	// Ensure no double slashes
+	tagPath = strings.TrimSuffix(tagPath, "/")
+	return tagPath + "/" + version
 }

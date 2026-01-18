@@ -30,6 +30,7 @@ type Changelog struct {
 	IRVersion        string     `json:"ir_version"`
 	Project          string     `json:"project"`
 	Repository       string     `json:"repository,omitempty"`
+	TagPath          string     `json:"tag_path,omitempty"`
 	Versioning       string     `json:"versioning,omitempty"`
 	CommitConvention string     `json:"commit_convention,omitempty"`
 	Maintainers      []string   `json:"maintainers,omitempty"`
