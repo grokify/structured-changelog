@@ -7,6 +7,21 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.8.0",
+      "date": "2026-01-18",
+      "highlights": [
+        { "description": "Monorepo tag path support for repositories using path-prefixed version tags (e.g., `sdk/go/v1.0.0`)" }
+      ],
+      "added": [
+        { "description": "`tag_path` field in changelog IR for specifying version tag prefixes in monorepos" },
+        { "description": "Automatic path prefixing for compare and tag links when `tag_path` is set" },
+        { "description": "`tag_path` property in JSON schema with documentation" }
+      ],
+      "tests": [
+        { "description": "Comprehensive tests for tag path functionality including GitHub, GitLab, unreleased links, and edge cases" }
+      ]
+    },
+    {
       "version": "v0.7.0",
       "date": "2026-01-11",
       "highlights": [
