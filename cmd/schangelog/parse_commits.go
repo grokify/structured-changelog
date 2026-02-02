@@ -237,20 +237,20 @@ func getRepositoryURL() (string, error) {
 
 // AllVersionsResult contains parse results for all version ranges.
 type AllVersionsResult struct {
-	Repository  string                 `json:"repository,omitempty"`
-	Versions    []VersionParseResult   `json:"versions"`
-	TotalCount  int                    `json:"total_count"`
-	GeneratedAt string                 `json:"generated_at"`
+	Repository  string               `json:"repository,omitempty"`
+	Versions    []VersionParseResult `json:"versions"`
+	TotalCount  int                  `json:"total_count"`
+	GeneratedAt string               `json:"generated_at"`
 }
 
 // VersionParseResult contains parse result for a single version.
 type VersionParseResult struct {
-	Version     string              `json:"version"`
-	Date        string              `json:"date"`
-	Since       string              `json:"since,omitempty"`
-	CommitCount int                 `json:"commit_count"`
-	Commits     []gitlog.Commit     `json:"commits"`
-	Summary     gitlog.Summary      `json:"summary"`
+	Version     string          `json:"version"`
+	Date        string          `json:"date"`
+	Since       string          `json:"since,omitempty"`
+	CommitCount int             `json:"commit_count"`
+	Commits     []gitlog.Commit `json:"commits"`
+	Summary     gitlog.Summary  `json:"summary"`
 }
 
 // runParseAllVersions parses commits for all version ranges at once.

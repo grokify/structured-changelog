@@ -137,7 +137,7 @@ func runInitFromTags() error {
 
 	// Write output
 	if initOutput != "" {
-		if err := os.WriteFile(initOutput, output, 0644); err != nil {
+		if err := os.WriteFile(initOutput, output, 0600); err != nil {
 			return fmt.Errorf("failed to write output file: %w", err)
 		}
 		fmt.Fprintf(os.Stderr, "Created %s with %d releases\n", initOutput, len(cl.Releases))
@@ -225,11 +225,12 @@ func buildReleaseFromCommits(version, date string, commits []gitlog.Commit) chan
 			release.Infrastructure = append(release.Infrastructure, entry)
 		default:
 			// Default to Changed if no category
-			if commit.Type == "feat" {
+			switch commit.Type {
+			case "feat":
 				release.Added = append(release.Added, entry)
-			} else if commit.Type == "fix" {
+			case "fix":
 				release.Fixed = append(release.Fixed, entry)
-			} else {
+			default:
 				release.Changed = append(release.Changed, entry)
 			}
 		}

@@ -190,11 +190,11 @@ func GetFirstCommit() (string, error) {
 
 // VersionRange represents a range between two versions for parsing.
 type VersionRange struct {
-	Version  string `json:"version"`
-	Since    string `json:"since"`    // Previous version (empty for first)
-	Until    string `json:"until"`    // This version
-	Date     string `json:"date"`     // Release date
-	Commits  int    `json:"commits"`  // Commit count in range
+	Version string `json:"version"`
+	Since   string `json:"since"`   // Previous version (empty for first)
+	Until   string `json:"until"`   // This version
+	Date    string `json:"date"`    // Release date
+	Commits int    `json:"commits"` // Commit count in range
 }
 
 // GetAllVersionRanges returns all version ranges for parsing commits.
