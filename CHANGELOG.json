@@ -7,6 +7,25 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.9.0",
+      "date": "2026-02-02",
+      "highlights": [
+        { "description": "New CLI commands for changelog backfilling: `list-tags`, `init --from-tags`, and `parse-commits --all-versions`" }
+      ],
+      "added": [
+        { "description": "`list-tags` command to list semver tags with dates and commit counts between versions", "commit": "e0ff0e0" },
+        { "description": "`init --from-tags` command to generate skeleton CHANGELOG.json from git tag history", "commit": "e0ff0e0" },
+        { "description": "`--all-versions` flag for `parse-commits` to parse all version ranges at once for backfilling", "commit": "c293a4d" },
+        { "description": "`parse-commits --until` without `--since` to parse from first commit to specified ref", "commit": "c293a4d" },
+        { "description": "`gitlog.GetTags()` function returning semver tags sorted by version with dates and commit counts", "commit": "460bc6f" },
+        { "description": "`gitlog.GetAllVersionRanges()` function for retrieving version ranges for parsing", "commit": "460bc6f" },
+        { "description": "`gitlog.GetFirstCommit()` function to get the initial commit hash", "commit": "460bc6f" }
+      ],
+      "documentation": [
+        { "description": "Moved MkDocs source from `docsrc/` to `docs/`, HTML now published to `gh-pages` branch", "commit": "9df3505" }
+      ]
+    },
+    {
       "version": "v0.8.0",
       "date": "2026-01-18",
       "highlights": [

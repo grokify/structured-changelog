@@ -31,3 +31,4 @@ Thumbs.db
 
 # Local testing
 *.local.json
+site/

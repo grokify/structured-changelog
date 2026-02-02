@@ -399,7 +399,7 @@ import opik "github.com/example/go-opik"
 - Dependency change implications
 - File-level change lists for major releases
 
-See [docsrc/guides/release-notes-guide.md](docsrc/guides/release-notes-guide.md) for recommended release notes structure.
+See [docs/guides/release-notes-guide.md](docs/guides/release-notes-guide.md) for recommended release notes structure.
 
 ## Project Structure
 
@@ -417,7 +417,8 @@ structured-changelog/
 │   ├── commit.go
 │   ├── conventional.go
 │   ├── category.go
-│   └── parser.go
+│   ├── parser.go
+│   └── tags.go
 ├── renderer/           # Deterministic Markdown renderer
 │   ├── markdown.go
 │   └── options.go
@@ -427,16 +428,18 @@ structured-changelog/
 │   ├── validate.go
 │   ├── generate.go
 │   ├── parse_commits.go
-│   └── suggest_category.go
+│   ├── suggest_category.go
+│   ├── list_tags.go
+│   └── init.go
 ├── schema/             # JSON Schema definitions
 │   └── changelog-v1.schema.json
-├── docsrc/             # Documentation source (MkDocs)
+├── docs/               # Documentation source (MkDocs)
 │   ├── index.md
+│   ├── changelog.md
 │   ├── specification/
 │   ├── guides/
 │   ├── prd/
 │   └── releases/
-├── docs/               # Generated documentation (GitHub Pages)
 └── examples/           # Example changelogs
     ├── basic/
     ├── security/
