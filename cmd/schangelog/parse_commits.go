@@ -13,15 +13,16 @@ import (
 )
 
 var (
-	parseCommitsSince     string
-	parseCommitsUntil     string
-	parseCommitsLast      int
-	parseCommitsPath      string
-	parseCommitsNoFiles   bool
-	parseCommitsNoMerges  bool
-	parseCommitsFormat    string
-	parseCommitsRepoURL   string
-	parseCommitsChangelog string
+	parseCommitsSince       string
+	parseCommitsUntil       string
+	parseCommitsLast        int
+	parseCommitsPath        string
+	parseCommitsNoFiles     bool
+	parseCommitsNoMerges    bool
+	parseCommitsFormat      string
+	parseCommitsRepoURL     string
+	parseCommitsChangelog   string
+	parseCommitsAllVersions bool
 )
 
 var parseCommitsCmd = &cobra.Command{
@@ -67,7 +68,13 @@ Examples:
   schangelog parse-commits --since=v0.3.0 --no-merges
 
   # Mark external contributors (reads maintainers/bots from CHANGELOG.json)
-  schangelog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json`,
+  schangelog parse-commits --since=v0.3.0 --changelog=CHANGELOG.json
+
+  # Parse all commits from the beginning of the repository to a tag
+  schangelog parse-commits --until=v0.1.0
+
+  # Parse commits for ALL version ranges at once (useful for backfilling)
+  schangelog parse-commits --all-versions`,
 	RunE: runParseCommits,
 }
 
@@ -81,10 +88,16 @@ func init() {
 	parseCommitsCmd.Flags().StringVar(&parseCommitsFormat, "format", "toon", "Output format: toon (default), json, json-compact")
 	parseCommitsCmd.Flags().StringVar(&parseCommitsRepoURL, "repo", "", "Repository URL to include in output")
 	parseCommitsCmd.Flags().StringVar(&parseCommitsChangelog, "changelog", "", "CHANGELOG.json to read maintainers/bots for external contributor detection")
+	parseCommitsCmd.Flags().BoolVar(&parseCommitsAllVersions, "all-versions", false, "Parse commits for all version ranges (outputs array of results)")
 	rootCmd.AddCommand(parseCommitsCmd)
 }
 
 func runParseCommits(cmd *cobra.Command, args []string) error {
+	// Handle --all-versions mode
+	if parseCommitsAllVersions {
+		return runParseAllVersions()
+	}
+
 	// Build git log command
 	gitArgs := buildGitLogArgs()
 
@@ -175,6 +188,9 @@ func buildGitLogArgs() []string {
 		args = append(args, fmt.Sprintf("-n%d", parseCommitsLast))
 	} else if parseCommitsSince != "" {
 		args = append(args, fmt.Sprintf("%s..%s", parseCommitsSince, parseCommitsUntil))
+	} else if parseCommitsUntil != "" && parseCommitsUntil != "HEAD" {
+		// If only --until is specified (no --since), get all commits up to that ref
+		args = append(args, parseCommitsUntil)
 	}
 
 	if parseCommitsPath != "" {
@@ -217,4 +233,132 @@ func getRepositoryURL() (string, error) {
 	}
 
 	return url, nil
+}
+
+// AllVersionsResult contains parse results for all version ranges.
+type AllVersionsResult struct {
+	Repository  string                 `json:"repository,omitempty"`
+	Versions    []VersionParseResult   `json:"versions"`
+	TotalCount  int                    `json:"total_count"`
+	GeneratedAt string                 `json:"generated_at"`
+}
+
+// VersionParseResult contains parse result for a single version.
+type VersionParseResult struct {
+	Version     string              `json:"version"`
+	Date        string              `json:"date"`
+	Since       string              `json:"since,omitempty"`
+	CommitCount int                 `json:"commit_count"`
+	Commits     []gitlog.Commit     `json:"commits"`
+	Summary     gitlog.Summary      `json:"summary"`
+}
+
+// runParseAllVersions parses commits for all version ranges at once.
+func runParseAllVersions() error {
+	// Get all version ranges
+	ranges, err := gitlog.GetAllVersionRanges()
+	if err != nil {
+		return fmt.Errorf("failed to get version ranges: %w", err)
+	}
+
+	if len(ranges) == 0 {
+		return fmt.Errorf("no semver tags found in repository")
+	}
+
+	// Get repository URL
+	repoURL := parseCommitsRepoURL
+	if repoURL == "" {
+		if url, err := getRepositoryURL(); err == nil {
+			repoURL = url
+		}
+	}
+
+	// Load changelog for external contributor detection
+	var cl *changelog.Changelog
+	if parseCommitsChangelog != "" {
+		cl, err = changelog.LoadFile(parseCommitsChangelog)
+		if err != nil {
+			return fmt.Errorf("failed to load changelog %s: %w", parseCommitsChangelog, err)
+		}
+	}
+
+	// Parse commits for each version
+	result := AllVersionsResult{
+		Repository:  repoURL,
+		Versions:    make([]VersionParseResult, 0, len(ranges)),
+		GeneratedAt: gitlog.NewParseResult().GeneratedAt.Format("2006-01-02T15:04:05.999999Z07:00"),
+	}
+
+	totalCommits := 0
+	for _, vr := range ranges {
+		// Build git args for this range
+		var args []string
+		if vr.Since == "" {
+			args = []string{"log", "--format=" + gitlog.GitLogFormat, "--numstat", vr.Until}
+		} else {
+			args = []string{"log", "--format=" + gitlog.GitLogFormat, "--numstat", fmt.Sprintf("%s..%s", vr.Since, vr.Until)}
+		}
+
+		if parseCommitsNoMerges {
+			args = append(args, "--no-merges")
+		}
+
+		output, err := runGitLog(args)
+		if err != nil {
+			// Skip versions we can't parse
+			continue
+		}
+
+		parser := gitlog.NewParser()
+		parser.IncludeFiles = !parseCommitsNoFiles
+
+		parseResult, err := parser.Parse(output)
+		if err != nil {
+			continue
+		}
+
+		// Mark external contributors
+		if cl != nil {
+			for i := range parseResult.Commits {
+				c := &parseResult.Commits[i]
+				c.IsExternal = !cl.IsTeamMemberByNameAndEmail(c.Author, c.AuthorEmail)
+			}
+		}
+
+		// Clear file lists if requested
+		if parseCommitsNoFiles {
+			for i := range parseResult.Commits {
+				parseResult.Commits[i].Files = nil
+			}
+		}
+
+		vpr := VersionParseResult{
+			Version:     vr.Version,
+			Date:        vr.Date,
+			Since:       vr.Since,
+			CommitCount: len(parseResult.Commits),
+			Commits:     parseResult.Commits,
+			Summary:     parseResult.Summary,
+		}
+
+		result.Versions = append(result.Versions, vpr)
+		totalCommits += len(parseResult.Commits)
+	}
+
+	result.TotalCount = totalCommits
+
+	// Parse output format
+	f, err := format.Parse(parseCommitsFormat)
+	if err != nil {
+		return err
+	}
+
+	// Output in specified format
+	outputBytes, err := format.Marshal(result, f)
+	if err != nil {
+		return fmt.Errorf("failed to marshal output: %w", err)
+	}
+
+	fmt.Println(string(outputBytes))
+	return nil
 }
