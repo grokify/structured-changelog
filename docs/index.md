@@ -8,7 +8,7 @@ Structured Changelog provides a machine-readable JSON Intermediate Representatio
 
 ```
 ┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│  CHANGELOG.json │ ───► │    Renderer     │ ───► │  CHANGELOG.md   │
+│  CHANGELOG.json │ ───> │    Renderer     │ ───> │  CHANGELOG.md   │
 │  (Canonical IR) │      │ (Deterministic) │      │ (Human-Readable)│
 └─────────────────┘      └─────────────────┘      └─────────────────┘
 ```
