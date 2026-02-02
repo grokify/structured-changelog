@@ -4,9 +4,6 @@ site_url: https://grokify.github.io/structured-changelog/
 repo_url: https://github.com/grokify/structured-changelog
 repo_name: grokify/structured-changelog
 
-docs_dir: docsrc
-site_dir: docs
-
 theme:
   name: material
   palette:
