@@ -272,12 +272,12 @@ func renderReleaseContent(sb *strings.Builder, r *changelog.Release, ctx renderC
 	for _, cat := range r.CategoriesFiltered(maxTier) {
 		fmt.Fprintf(sb, "\n### %s\n\n", cat.Name)
 		for _, entry := range cat.Entries {
-			renderEntry(sb, &entry, ctx, cat.Name == "Security")
+			renderEntry(sb, &entry, ctx, cat.Name)
 		}
 	}
 }
 
-func renderEntry(sb *strings.Builder, e *changelog.Entry, ctx renderContext, isSecurity bool) {
+func renderEntry(sb *strings.Builder, e *changelog.Entry, ctx renderContext, categoryName string) {
 	opts := ctx.opts
 
 	// Build the entry line
@@ -304,12 +304,13 @@ func renderEntry(sb *strings.Builder, e *changelog.Entry, ctx renderContext, isS
 	if e.PR != "" && opts.IncludeReferences {
 		refs = append(refs, formatPRRef(e.PR, ctx))
 	}
-	if e.Commit != "" && opts.IncludeReferences && opts.IncludeCommits {
+	// Skip commit refs for Highlights - they're meant to be human-readable summaries
+	if e.Commit != "" && opts.IncludeReferences && opts.IncludeCommits && categoryName != changelog.CategoryHighlights {
 		refs = append(refs, formatCommitRef(e.Commit, ctx))
 	}
 
 	// Security metadata
-	if isSecurity && opts.IncludeSecurityMetadata {
+	if categoryName == changelog.CategorySecurity && opts.IncludeSecurityMetadata {
 		if e.CVE != "" {
 			refs = append(refs, e.CVE)
 		}
