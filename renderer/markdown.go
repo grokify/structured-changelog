@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/grokify/structured-changelog/changelog"
+	"github.com/grokify/structured-locale/messages"
 )
 
 // githubRepoPattern matches GitHub repository URLs and extracts owner/repo.
@@ -81,6 +82,7 @@ type renderContext struct {
 	opts    Options
 	baseURL string
 	host    repoHost
+	l       *messages.Localizer
 }
 
 // RenderMarkdownWithOptions renders a changelog with custom options.
@@ -89,25 +91,27 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 
 	// Parse repository for linking
 	baseURL, host := parseRepository(cl.Repository)
+	l := getLocalizer(opts)
 	ctx := renderContext{
 		cl:      cl,
 		opts:    opts,
 		baseURL: baseURL,
 		host:    host,
+		l:       l,
 	}
 
 	// Header
-	sb.WriteString("# Changelog\n\n")
-	sb.WriteString("All notable changes to this project will be documented in this file.\n\n")
+	sb.WriteString("# " + l.T("changelog.title") + "\n\n")
+	sb.WriteString(l.T("changelog.intro") + "\n\n")
 	sb.WriteString(renderHeaderLine(cl))
 
 	// Unreleased section
 	// Always show if IncludeUnreleasedLink is enabled and there are releases to compare against
 	if cl.Unreleased != nil && !cl.Unreleased.IsEmpty() {
-		sb.WriteString("\n## [Unreleased]\n")
+		sb.WriteString("\n## [" + l.T("section.unreleased") + "]\n")
 		renderReleaseContent(&sb, cl.Unreleased, ctx)
 	} else if opts.IncludeUnreleasedLink && len(cl.Releases) > 0 {
-		sb.WriteString("\n## [Unreleased]\n")
+		sb.WriteString("\n## [" + l.T("section.unreleased") + "]\n")
 	}
 
 	// Releases
@@ -134,7 +138,7 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 func renderRelease(sb *strings.Builder, r *changelog.Release, ctx renderContext) {
 	// Version header
 	if r.Yanked {
-		fmt.Fprintf(sb, "## [%s] - %s [YANKED]\n", r.Version, r.Date)
+		fmt.Fprintf(sb, "## [%s] - %s [%s]\n", r.Version, r.Date, ctx.l.T("section.yanked"))
 	} else {
 		fmt.Fprintf(sb, "## [%s] - %s\n", r.Version, r.Date)
 	}
@@ -177,38 +181,39 @@ func renderReleasesWithGrouping(sb *strings.Builder, releases []changelog.Releas
 }
 
 // renderMaintenanceRelease renders a single maintenance release in compact form.
-func renderMaintenanceRelease(sb *strings.Builder, r *changelog.Release, _ renderContext) {
+func renderMaintenanceRelease(sb *strings.Builder, r *changelog.Release, ctx renderContext) {
+	l := ctx.l
 	// Compact header with (Maintenance) suffix
-	fmt.Fprintf(sb, "## [%s] - %s (Maintenance)\n\n", r.Version, r.Date)
+	fmt.Fprintf(sb, "## [%s] - %s (%s)\n\n", r.Version, r.Date, l.T("marker.maintenance"))
 
 	// Summarize what changed
 	var types []string
 	if len(r.Dependencies) > 0 {
-		types = append(types, "dependency updates")
+		types = append(types, l.T("type.dependency_updates"))
 	}
 	if len(r.Documentation) > 0 {
-		types = append(types, "documentation")
+		types = append(types, l.T("type.documentation"))
 	}
 	if len(r.Build) > 0 {
-		types = append(types, "build")
+		types = append(types, l.T("type.build"))
 	}
 	if len(r.Tests) > 0 {
-		types = append(types, "tests")
+		types = append(types, l.T("type.tests"))
 	}
 	if len(r.Internal) > 0 {
-		types = append(types, "internal")
+		types = append(types, l.T("type.internal"))
 	}
 	if len(r.Infrastructure) > 0 {
-		types = append(types, "infrastructure")
+		types = append(types, l.T("type.infrastructure"))
 	}
 	if len(r.Observability) > 0 {
-		types = append(types, "observability")
+		types = append(types, l.T("type.observability"))
 	}
 	if len(r.Compliance) > 0 {
-		types = append(types, "compliance")
+		types = append(types, l.T("type.compliance"))
 	}
 	if len(r.Contributors) > 0 {
-		types = append(types, "contributors")
+		types = append(types, l.T("type.contributors"))
 	}
 
 	if len(types) > 0 {
@@ -218,17 +223,23 @@ func renderMaintenanceRelease(sb *strings.Builder, r *changelog.Release, _ rende
 }
 
 // renderMaintenanceGroup renders a group of consecutive maintenance releases.
-func renderMaintenanceGroup(sb *strings.Builder, releases []changelog.Release, _ renderContext) {
+func renderMaintenanceGroup(sb *strings.Builder, releases []changelog.Release, ctx renderContext) {
 	if len(releases) == 0 {
 		return
 	}
+
+	l := ctx.l
 
 	// releases are in reverse chronological order, so first is newest, last is oldest
 	newest := &releases[0]
 	oldest := &releases[len(releases)-1]
 
 	sb.WriteString("\n")
-	fmt.Fprintf(sb, "## Versions %s - %s (Maintenance)\n\n", oldest.Version, newest.Version)
+	versionsRange := l.Tf("marker.versions_range", map[string]any{
+		"From": oldest.Version,
+		"To":   newest.Version,
+	})
+	fmt.Fprintf(sb, "## %s (%s)\n\n", versionsRange, l.T("marker.maintenance"))
 
 	// Count total changes and summarize
 	var depsCount, docsCount, buildCount, testsCount, otherCount int
@@ -241,25 +252,26 @@ func renderMaintenanceGroup(sb *strings.Builder, releases []changelog.Release, _
 		otherCount += len(r.Internal) + len(r.Infrastructure) + len(r.Observability) + len(r.Compliance) + len(r.Contributors)
 	}
 
-	// Build summary line
+	// Build summary line with pluralized counts
 	var parts []string
 	if depsCount > 0 {
-		parts = append(parts, fmt.Sprintf("%d dependency update(s)", depsCount))
+		parts = append(parts, l.Tn("plural.dependency_updates", depsCount))
 	}
 	if docsCount > 0 {
-		parts = append(parts, fmt.Sprintf("%d documentation change(s)", docsCount))
+		parts = append(parts, l.Tn("plural.documentation_changes", docsCount))
 	}
 	if buildCount > 0 {
-		parts = append(parts, fmt.Sprintf("%d build change(s)", buildCount))
+		parts = append(parts, l.Tn("plural.build_changes", buildCount))
 	}
 	if testsCount > 0 {
-		parts = append(parts, fmt.Sprintf("%d test change(s)", testsCount))
+		parts = append(parts, l.Tn("plural.test_changes", testsCount))
 	}
 	if otherCount > 0 {
-		parts = append(parts, fmt.Sprintf("%d other change(s)", otherCount))
+		parts = append(parts, l.Tn("plural.other_changes", otherCount))
 	}
 
-	fmt.Fprintf(sb, "%d releases: %s.\n", len(releases), strings.Join(parts, ", "))
+	releasesStr := l.Tn("plural.releases", len(releases))
+	fmt.Fprintf(sb, "%s: %s.\n", releasesStr, strings.Join(parts, ", "))
 }
 
 func renderReleaseContent(sb *strings.Builder, r *changelog.Release, ctx renderContext) {
@@ -270,7 +282,13 @@ func renderReleaseContent(sb *strings.Builder, r *changelog.Release, ctx renderC
 	}
 
 	for _, cat := range r.CategoriesFiltered(maxTier) {
-		fmt.Fprintf(sb, "\n### %s\n\n", cat.Name)
+		// Translate category name
+		categoryName := ctx.l.T(categoryToMessageID(cat.Name))
+		// Fall back to original name if translation is the message ID
+		if categoryName == categoryToMessageID(cat.Name) {
+			categoryName = cat.Name
+		}
+		fmt.Fprintf(sb, "\n### %s\n\n", categoryName)
 		for _, entry := range cat.Entries {
 			renderEntry(sb, &entry, ctx, cat.Name)
 		}
@@ -292,7 +310,7 @@ func renderEntry(sb *strings.Builder, e *changelog.Entry, ctx renderContext, cat
 	}
 
 	if e.Breaking && opts.MarkBreakingChanges {
-		desc = "**BREAKING:** " + desc
+		desc = "**" + ctx.l.T("marker.breaking") + "** " + desc
 	}
 	parts = append(parts, desc)
 

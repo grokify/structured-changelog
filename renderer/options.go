@@ -43,6 +43,14 @@ type Options struct {
 	// MaxTier filters change types to include only those at or above this tier.
 	// Default is TierOptional (include all).
 	MaxTier changelog.Tier
+
+	// Locale specifies the BCP 47 locale tag for output (e.g., "en", "fr", "de").
+	// Default is "en" (English).
+	Locale string
+
+	// LocaleOverrides specifies a path to a JSON file with locale message overrides.
+	// Only the messages specified in this file will be replaced; others use defaults.
+	LocaleOverrides string
 }
 
 // DefaultOptions returns the default rendering options.
@@ -59,6 +67,7 @@ func DefaultOptions() Options {
 		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierOptional,
+		Locale:                     "en",
 	}
 }
 
@@ -75,6 +84,7 @@ func MinimalOptions() Options {
 		IncludeUnreleasedLink:      false,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierCore,
+		Locale:                     "en",
 	}
 }
 
@@ -93,6 +103,7 @@ func FullOptions() Options {
 		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: false, // Full detail shows all releases expanded
 		MaxTier:                    changelog.TierOptional,
+		Locale:                     "en",
 	}
 }
 
@@ -109,6 +120,7 @@ func CoreOptions() Options {
 		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierCore,
+		Locale:                     "en",
 	}
 }
 
@@ -125,12 +137,25 @@ func StandardOptions() Options {
 		IncludeUnreleasedLink:      true,
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierStandard,
+		Locale:                     "en",
 	}
 }
 
 // WithMaxTier returns a copy of the options with the MaxTier field set.
 func (o Options) WithMaxTier(tier changelog.Tier) Options {
 	o.MaxTier = tier
+	return o
+}
+
+// WithLocale returns a copy of the options with the Locale field set.
+func (o Options) WithLocale(locale string) Options {
+	o.Locale = locale
+	return o
+}
+
+// WithLocaleOverrides returns a copy of the options with the LocaleOverrides field set.
+func (o Options) WithLocaleOverrides(path string) Options {
+	o.LocaleOverrides = path
 	return o
 }
 
@@ -158,12 +183,14 @@ var ErrInvalidPreset = errors.New("invalid preset")
 
 // Config holds configuration for rendering options.
 type Config struct {
-	Preset  string // default, minimal, full, core, standard
-	MaxTier string // optional tier override
+	Preset          string // default, minimal, full, core, standard
+	MaxTier         string // optional tier override
+	Locale          string // optional BCP 47 locale tag override
+	LocaleOverrides string // optional path to locale override JSON file
 }
 
 // OptionsFromConfig creates Options from a Config struct.
-// It first applies the preset, then overrides MaxTier if specified.
+// It first applies the preset, then overrides MaxTier, Locale, and LocaleOverrides if specified.
 func OptionsFromConfig(cfg Config) (Options, error) {
 	opts, err := OptionsFromPreset(cfg.Preset)
 	if err != nil {
@@ -176,6 +203,14 @@ func OptionsFromConfig(cfg Config) (Options, error) {
 			return Options{}, err
 		}
 		opts = opts.WithMaxTier(tier)
+	}
+
+	if cfg.Locale != "" {
+		opts = opts.WithLocale(cfg.Locale)
+	}
+
+	if cfg.LocaleOverrides != "" {
+		opts = opts.WithLocaleOverrides(cfg.LocaleOverrides)
 	}
 
 	return opts, nil

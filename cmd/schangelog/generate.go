@@ -11,10 +11,12 @@ import (
 )
 
 var (
-	generateOutput  string
-	generateMinimal bool
-	generateFull    bool
-	generateMaxTier string
+	generateOutput     string
+	generateMinimal    bool
+	generateFull       bool
+	generateMaxTier    string
+	generateLocale     string
+	generateLocaleFile string
 )
 
 var generateCmd = &cobra.Command{
@@ -29,6 +31,8 @@ Output options:
   --minimal      Exclude references and security metadata (implies --max-tier core)
   --full         Include all metadata including commit SHAs
   --max-tier     Filter change types by tier (core, standard, extended, optional)
+  --locale       Output locale for localized strings (e.g., en, fr, de, es, ja, zh)
+  --locale-file  Path to JSON file with locale message overrides
 
 Tiers:
   core       KACL standard types (Security, Added, Changed, Deprecated, Removed, Fixed)
@@ -41,7 +45,9 @@ Examples:
   schangelog generate CHANGELOG.json -o CHANGELOG.md
   schangelog generate CHANGELOG.json --minimal
   schangelog generate CHANGELOG.json --max-tier standard
-  schangelog generate CHANGELOG.json --full -o docs/CHANGELOG.md`,
+  schangelog generate CHANGELOG.json --full -o docs/CHANGELOG.md
+  schangelog generate CHANGELOG.json --locale=fr
+  schangelog generate CHANGELOG.json --locale=fr-CA --locale-file=./custom-fr-ca.json`,
 	Args: cobra.ExactArgs(1),
 	RunE: runGenerate,
 }
@@ -51,6 +57,8 @@ func init() {
 	generateCmd.Flags().BoolVar(&generateMinimal, "minimal", false, "Use minimal output (no references/metadata, core tier only)")
 	generateCmd.Flags().BoolVar(&generateFull, "full", false, "Use full output (include commits)")
 	generateCmd.Flags().StringVar(&generateMaxTier, "max-tier", "", "Maximum tier to include (core, standard, extended, optional)")
+	generateCmd.Flags().StringVar(&generateLocale, "locale", "", "Output locale (e.g., en, fr, de, es, ja, zh)")
+	generateCmd.Flags().StringVar(&generateLocaleFile, "locale-file", "", "Path to locale override JSON file")
 	rootCmd.AddCommand(generateCmd)
 }
 
@@ -82,8 +90,10 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 	}
 
 	opts, err := renderer.OptionsFromConfig(renderer.Config{
-		Preset:  preset,
-		MaxTier: generateMaxTier,
+		Preset:          preset,
+		MaxTier:         generateMaxTier,
+		Locale:          generateLocale,
+		LocaleOverrides: generateLocaleFile,
 	})
 	if err != nil {
 		return fmt.Errorf("invalid options: %w", err)
