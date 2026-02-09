@@ -51,7 +51,7 @@ go get github.com/grokify/structured-changelog
 
 ```json
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "my-project",
   "releases": [
     {
@@ -106,6 +106,7 @@ schangelog generate CHANGELOG.json -o CHANGELOG.md
 - [Security Metadata](specification/security.md) — CVE, GHSA, SARIF fields
 - [SBOM Metadata](specification/sbom.md) — Component tracking
 - [LLM Guide](guides/llm-guide.md) — AI-assisted changelog generation with TOON format
+- [Localization Guide](guides/localization.md) — I18N support for 6 languages
 - [Release Notes Guide](guides/release-notes-guide.md) — CHANGELOG vs RELEASE_NOTES
 
 ## Links

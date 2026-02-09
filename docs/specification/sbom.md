@@ -32,7 +32,7 @@ The new version of the component:
 {
   "description": "Upgrade database driver",
   "component": "github.com/lib/pq",
-  "component_version": "1.10.9"
+  "componentVersion": "1.10.9"
 }
 ```
 
@@ -44,7 +44,7 @@ SPDX license identifier:
 {
   "description": "Add logging library",
   "component": "go.uber.org/zap",
-  "component_version": "1.26.0",
+  "componentVersion": "1.26.0",
   "license": "MIT"
 }
 ```
@@ -72,12 +72,12 @@ Track when dependencies are updated:
     {
       "description": "Upgrade Go to 1.23",
       "component": "go",
-      "component_version": "1.23.0"
+      "componentVersion": "1.23.0"
     },
     {
       "description": "Update protobuf library",
       "component": "google.golang.org/protobuf",
-      "component_version": "1.32.0",
+      "componentVersion": "1.32.0",
       "license": "BSD-3-Clause"
     }
   ]
@@ -94,7 +94,7 @@ Track when new dependencies are added:
     {
       "description": "Add OpenTelemetry instrumentation",
       "component": "go.opentelemetry.io/otel",
-      "component_version": "1.21.0",
+      "componentVersion": "1.21.0",
       "license": "Apache-2.0"
     }
   ]
@@ -126,7 +126,7 @@ Combine with security metadata:
     {
       "description": "Upgrade crypto library to fix timing attack",
       "component": "golang.org/x/crypto",
-      "component_version": "0.18.0",
+      "componentVersion": "0.18.0",
       "license": "BSD-3-Clause",
       "severity": "medium",
       "cve": "CVE-2026-54321"
@@ -144,7 +144,7 @@ The component metadata can be used to generate CycloneDX SBOMs:
 ```json
 {
   "component": "github.com/example/lib",
-  "component_version": "1.2.3",
+  "componentVersion": "1.2.3",
   "license": "MIT"
 }
 ```

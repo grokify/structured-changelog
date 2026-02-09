@@ -17,14 +17,14 @@ The Structured Changelog IR is a JSON format that serves as the canonical source
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `ir_version` | string | Yes | IR schema version (currently "1.0") |
+| `irVersion` | string | Yes | IR schema version (currently "1.0") |
 | `project` | string | Yes | Project name |
 | `repository` | string | No | Repository URL |
 | `versioning` | string | No | Versioning scheme (see below) |
-| `commit_convention` | string | No | Commit message convention (see below) |
+| `commitConvention` | string | No | Commit message convention (see below) |
 | `maintainers` | string[] | No | Team members excluded from author attribution |
 | `bots` | string[] | No | Custom bots excluded from author attribution |
-| `generated_at` | datetime | No | ISO 8601 timestamp of generation |
+| `generatedAt` | datetime | No | ISO 8601 timestamp of generation |
 | `unreleased` | Release | No | Unreleased changes |
 | `releases` | Release[] | No | Array of releases (reverse chronological) |
 
@@ -41,7 +41,7 @@ The `versioning` field controls what versioning reference appears in the generat
 
 #### Commit Conventions
 
-The `commit_convention` field adds a reference to the commit message convention:
+The `commitConvention` field adds a reference to the commit message convention:
 
 | Value | Description | Header Text |
 |-------|-------------|-------------|
@@ -55,7 +55,7 @@ The `commit_convention` field adds a reference to the commit message convention:
 | `version` | string | Yes* | Semantic version string |
 | `date` | string | Yes* | Release date (YYYY-MM-DD) |
 | `yanked` | boolean | No | Whether the release was retracted |
-| `compare_url` | string | No | URL to diff with previous version |
+| `compareUrl` | string | No | URL to diff with previous version |
 | `added` | Entry[] | No | New features |
 | `changed` | Entry[] | No | Changes to existing features |
 | `deprecated` | Entry[] | No | Features to be removed |
@@ -109,12 +109,12 @@ Security entries may include additional fields:
 | `cve` | string | CVE identifier (e.g., CVE-2026-12345) |
 | `ghsa` | string | GitHub Security Advisory ID |
 | `severity` | string | critical, high, medium, low, informational |
-| `cvss_score` | number | CVSS score (0.0-10.0) |
-| `cvss_vector` | string | CVSS vector string |
+| `cvssScore` | number | CVSS score (0.0-10.0) |
+| `cvssVector` | string | CVSS vector string |
 | `cwe` | string | CWE identifier (e.g., CWE-89) |
-| `affected_versions` | string | Version range affected |
-| `patched_versions` | string | Version range with fix |
-| `sarif_rule_id` | string | SARIF rule ID for linking |
+| `affectedVersions` | string | Version range affected |
+| `patchedVersions` | string | Version range with fix |
+| `sarifRuleId` | string | SARIF rule ID for linking |
 
 ### SBOM Metadata (Optional)
 
@@ -123,7 +123,7 @@ Entries may include SBOM (Software Bill of Materials) fields:
 | Field | Type | Description |
 |-------|------|-------------|
 | `component` | string | Component/dependency name |
-| `component_version` | string | Component version |
+| `componentVersion` | string | Component version |
 | `license` | string | SPDX license identifier |
 
 ## Breaking Changes
@@ -200,7 +200,7 @@ The renderer MUST produce identical output for identical input. This means:
 
 ## Validation Rules
 
-1. `ir_version` must be "1.0"
+1. `irVersion` must be "1.0"
 2. `project` must be non-empty
 3. Release `version` must be valid semver
 4. Release `date` must be YYYY-MM-DD format
@@ -208,14 +208,14 @@ The renderer MUST produce identical output for identical input. This means:
 6. `cve` must match pattern `CVE-\d{4}-\d{4,}`
 7. `ghsa` must match pattern `GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}`
 8. `severity` must be one of: critical, high, medium, low, informational
-9. `cvss_score` must be between 0 and 10
+9. `cvssScore` must be between 0 and 10
 10. No duplicate versions allowed
 
 ## Example
 
 ```json
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "my-project",
   "releases": [
     {

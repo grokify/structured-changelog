@@ -57,8 +57,8 @@ Valid values:
 ```json
 {
   "description": "Fix buffer overflow",
-  "cvss_score": 8.5,
-  "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+  "cvssScore": 8.5,
+  "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
 }
 ```
 
@@ -91,8 +91,8 @@ Common CWEs:
 ```json
 {
   "description": "Fix privilege escalation",
-  "affected_versions": "<2.0.0",
-  "patched_versions": ">=2.0.0"
+  "affectedVersions": "<2.0.0",
+  "patchedVersions": ">=2.0.0"
 }
 ```
 
@@ -103,7 +103,7 @@ Link to static analysis results:
 ```json
 {
   "description": "Fix issue identified by CodeQL",
-  "sarif_rule_id": "go/sql-injection"
+  "sarifRuleId": "go/sql-injection"
 }
 ```
 
@@ -111,7 +111,7 @@ Link to static analysis results:
 
 ```json
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "secure-app",
   "releases": [
     {
@@ -123,12 +123,12 @@ Link to static analysis results:
           "cve": "CVE-2026-12345",
           "ghsa": "GHSA-abcd-efgh-ijkl",
           "severity": "high",
-          "cvss_score": 8.5,
-          "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+          "cvssScore": 8.5,
+          "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
           "cwe": "CWE-89",
-          "affected_versions": "<2.1.1",
-          "patched_versions": ">=2.1.1",
-          "sarif_rule_id": "go/sql-injection",
+          "affectedVersions": "<2.1.1",
+          "patchedVersions": ">=2.1.1",
+          "sarifRuleId": "go/sql-injection",
           "pr": "#123"
         }
       ]
