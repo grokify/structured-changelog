@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://grokify.github.io/structured-changelog/releases/v0.10.0/">
       
       
+        <link rel="prev" href="../../prd/rendering/">
+      
+      
+        <link rel="next" href="../v0.9.0/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +24,7 @@
     
     
       
-        <title>Release Notes - v0.10.0 - Structured Changelog</title>
+        <title>v0.10.0 - Structured Changelog</title>
       
     
     
@@ -108,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Release Notes - v0.10.0
+              v0.10.0
             
           </span>
         </div>
@@ -487,6 +491,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Localization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/release-notes-guide/" class="md-nav__link">
         
   
@@ -658,8 +685,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -670,13 +699,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
@@ -692,12 +719,230 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Releases
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    v0.10.0
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    v0.10.0
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      Highlights
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Breaking Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#camelcase-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      camelCase Migration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      Added
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Added">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#localization-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Localization Support
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in Languages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-overrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Overrides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#library-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Library Additions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Library Additions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#renderer-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Renderer Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Next
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Links
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
             
               
                 
@@ -1288,12 +1533,12 @@
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>See <code>examples/l10n/</code> for rendered changelogs in all 6 languages:</p>
 <ul>
-<li><a href="../../examples/l10n/CHANGELOG.en.md">English</a></li>
-<li><a href="../../examples/l10n/CHANGELOG.de.md">German</a></li>
-<li><a href="../../examples/l10n/CHANGELOG.es.md">Spanish</a></li>
-<li><a href="../../examples/l10n/CHANGELOG.fr.md">French</a></li>
-<li><a href="../../examples/l10n/CHANGELOG.ja.md">Japanese</a></li>
-<li><a href="../../examples/l10n/CHANGELOG.zh.md">Chinese</a></li>
+<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.en.md">English</a></li>
+<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.de.md">German</a></li>
+<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.es.md">Spanish</a></li>
+<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.fr.md">French</a></li>
+<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.ja.md">Japanese</a></li>
+<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.zh.md">Chinese</a></li>
 </ul>
 <h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
 <p>Future releases may include:</p>
