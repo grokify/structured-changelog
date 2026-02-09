@@ -2,6 +2,12 @@
   "messages": [
     {"id": "changelog.title", "translation": "Journal des modifications"},
     {"id": "changelog.intro", "translation": "Tous les changements notables de ce projet seront documentés dans ce fichier."},
+    {"id": "header.format_kacl", "translation": "Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/)"},
+    {"id": "header.versioning_semver", "translation": "ce projet adhère au [Versionnement Sémantique](https://semver.org/lang/fr/)"},
+    {"id": "header.versioning_calver", "translation": "ce projet utilise le [Versionnement Calendaire](https://calver.org/)"},
+    {"id": "header.commits_conventional", "translation": "les commits suivent [Conventional Commits](https://www.conventionalcommits.org/fr/v1.0.0/)"},
+    {"id": "header.generated_by", "translation": "ce changelog est généré par [Structured Changelog](https://github.com/grokify/structured-changelog)"},
+    {"id": "header.conjunction", "translation": "et"},
     {"id": "section.unreleased", "translation": "Non publié"},
     {"id": "section.yanked", "translation": "RETIRÉ"},
     {"id": "marker.breaking", "translation": "RUPTURE :"},

@@ -2,6 +2,12 @@
   "messages": [
     {"id": "changelog.title", "translation": "更新日志"},
     {"id": "changelog.intro", "translation": "此项目的所有重要更改都将记录在此文件中。"},
+    {"id": "header.format_kacl", "translation": "格式基于[如何维护更新日志](https://keepachangelog.com/zh-CN/1.1.0/)"},
+    {"id": "header.versioning_semver", "translation": "本项目遵循[语义化版本](https://semver.org/lang/zh-CN/)"},
+    {"id": "header.versioning_calver", "translation": "本项目使用[日历版本](https://calver.org/)"},
+    {"id": "header.commits_conventional", "translation": "提交遵循[约定式提交](https://www.conventionalcommits.org/zh-hans/v1.0.0/)"},
+    {"id": "header.generated_by", "translation": "此变更日志由[Structured Changelog](https://github.com/grokify/structured-changelog)生成"},
+    {"id": "header.conjunction", "translation": "并且"},
     {"id": "section.unreleased", "translation": "未发布"},
     {"id": "section.yanked", "translation": "已撤回"},
     {"id": "marker.breaking", "translation": "破坏性变更:"},

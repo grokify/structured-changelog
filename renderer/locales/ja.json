@@ -2,6 +2,12 @@
   "messages": [
     {"id": "changelog.title", "translation": "変更履歴"},
     {"id": "changelog.intro", "translation": "このプロジェクトへのすべての注目すべき変更は、このファイルに記載されます。"},
+    {"id": "header.format_kacl", "translation": "このフォーマットは[Keep a Changelog](https://keepachangelog.com/ja/1.1.0/)に基づいています"},
+    {"id": "header.versioning_semver", "translation": "このプロジェクトは[セマンティック バージョニング](https://semver.org/lang/ja/)に準拠しています"},
+    {"id": "header.versioning_calver", "translation": "このプロジェクトは[カレンダー バージョニング](https://calver.org/)を使用しています"},
+    {"id": "header.commits_conventional", "translation": "コミットは[Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/)に従っています"},
+    {"id": "header.generated_by", "translation": "この変更履歴は[Structured Changelog](https://github.com/grokify/structured-changelog)によって生成されています"},
+    {"id": "header.conjunction", "translation": "そして"},
     {"id": "section.unreleased", "translation": "未リリース"},
     {"id": "section.yanked", "translation": "取り下げ"},
     {"id": "marker.breaking", "translation": "破壊的変更:"},
