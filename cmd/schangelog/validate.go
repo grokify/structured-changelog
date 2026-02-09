@@ -12,10 +12,11 @@ import (
 )
 
 var (
-	validateStrict   bool
-	validateWarnings bool
-	validateMinTier  string
-	validateFormat   string
+	validateStrict         bool
+	validateWarnings       bool
+	validateMinTier        string
+	validateFormat         string
+	validateRequireCommits bool
 )
 
 var validateCmd = &cobra.Command{
@@ -39,6 +40,10 @@ Output formats (with --format flag):
 Tier validation:
   --min-tier     Require at least one entry in a category at or above this tier
 
+Commit validation:
+  --require-commits  Require commit hashes on all entries
+                     (except highlights, upgradeGuide, knownIssues)
+
 Tiers:
   core       KACL standard types (Security, Added, Changed, Deprecated, Removed, Fixed)
   standard   Commonly used types (core + Highlights, Breaking, Upgrade Guide, Performance, Dependencies)
@@ -49,6 +54,7 @@ Examples:
   schangelog validate CHANGELOG.json
   schangelog validate CHANGELOG.json --strict
   schangelog validate CHANGELOG.json --min-tier core
+  schangelog validate CHANGELOG.json --require-commits
   schangelog validate CHANGELOG.json --format=toon`,
 	Args: cobra.ExactArgs(1),
 	RunE: runValidate,
@@ -59,6 +65,7 @@ func init() {
 	validateCmd.Flags().BoolVar(&validateWarnings, "warnings", true, "Show warnings")
 	validateCmd.Flags().StringVar(&validateMinTier, "min-tier", "", "Minimum tier to require coverage for (core, standard, extended, optional)")
 	validateCmd.Flags().StringVar(&validateFormat, "format", "", "Output format: toon, json, json-compact (enables structured output)")
+	validateCmd.Flags().BoolVar(&validateRequireCommits, "require-commits", false, "Require commit hashes on all entries (except highlights, upgradeGuide, knownIssues)")
 	rootCmd.AddCommand(validateCmd)
 }
 
@@ -108,6 +115,22 @@ func runValidate(cmd *cobra.Command, args []string) error {
 
 func runValidateStructured(cl *changelog.Changelog, _ string) error {
 	result := cl.ValidateRich()
+
+	// Convert missing commit warnings to errors if --require-commits
+	if validateRequireCommits {
+		var remainingWarnings []changelog.RichValidationError
+		for _, w := range result.Warnings {
+			if w.Code == changelog.WarnCodeMissingCommit {
+				w.Code = changelog.ErrCodeMissingCommit
+				w.Severity = changelog.SeverityError
+				result.Errors = append(result.Errors, w)
+				result.Valid = false
+			} else {
+				remainingWarnings = append(remainingWarnings, w)
+			}
+		}
+		result.Warnings = remainingWarnings
+	}
 
 	// Add tier validation as warning if specified
 	if validateMinTier != "" {

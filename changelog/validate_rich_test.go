@@ -361,3 +361,145 @@ func TestRichValidationError_Error(t *testing.T) {
 		t.Errorf("expected %q, got %q", expected, err.Error())
 	}
 }
+
+func TestValidateRich_MissingCommitWarning(t *testing.T) {
+	cl := New("test-project")
+	cl.AddRelease(Release{
+		Version: "1.0.0",
+		Date:    "2024-01-15",
+		Added: []Entry{
+			{Description: "Added feature without commit"},
+		},
+	})
+
+	result := cl.ValidateRich()
+
+	// Should be valid but have warning
+	if !result.Valid {
+		t.Error("expected valid result with warnings")
+	}
+
+	found := false
+	for _, warn := range result.Warnings {
+		if warn.Code == WarnCodeMissingCommit {
+			found = true
+			if warn.Suggestion == "" {
+				t.Error("expected suggestion for missing commit")
+			}
+		}
+	}
+	if !found {
+		t.Error("expected missing commit warning")
+	}
+}
+
+func TestValidateRich_CommitPresent(t *testing.T) {
+	cl := New("test-project")
+	cl.AddRelease(Release{
+		Version: "1.0.0",
+		Date:    "2024-01-15",
+		Added: []Entry{
+			{Description: "Added feature with commit", Commit: "abc1234"},
+		},
+	})
+
+	result := cl.ValidateRich()
+
+	if !result.Valid {
+		t.Error("expected valid result")
+	}
+
+	for _, warn := range result.Warnings {
+		if warn.Code == WarnCodeMissingCommit {
+			t.Error("unexpected missing commit warning when commit is present")
+		}
+	}
+}
+
+func TestValidateRich_ExemptCategoriesNoCommitWarning(t *testing.T) {
+	cl := New("test-project")
+	cl.AddRelease(Release{
+		Version: "1.0.0",
+		Date:    "2024-01-15",
+		Highlights: []Entry{
+			{Description: "Highlight entry without commit"},
+		},
+		UpgradeGuide: []Entry{
+			{Description: "Upgrade guide entry without commit"},
+		},
+		KnownIssues: []Entry{
+			{Description: "Known issue without commit"},
+		},
+	})
+
+	result := cl.ValidateRich()
+
+	if !result.Valid {
+		t.Error("expected valid result")
+	}
+
+	for _, warn := range result.Warnings {
+		if warn.Code == WarnCodeMissingCommit {
+			t.Errorf("unexpected missing commit warning for exempt category at %s", warn.Path)
+		}
+	}
+}
+
+func TestValidateCommitsRich(t *testing.T) {
+	cl := New("test-project")
+
+	tests := []struct {
+		name        string
+		entries     []Entry
+		category    string
+		expectWarns int
+	}{
+		{
+			name:        "entries with commits",
+			entries:     []Entry{{Description: "test", Commit: "abc123"}},
+			category:    "added",
+			expectWarns: 0,
+		},
+		{
+			name:        "entries without commits",
+			entries:     []Entry{{Description: "test"}},
+			category:    "added",
+			expectWarns: 1,
+		},
+		{
+			name:        "highlights exempt",
+			entries:     []Entry{{Description: "test"}},
+			category:    "highlights",
+			expectWarns: 0,
+		},
+		{
+			name:        "upgradeGuide exempt",
+			entries:     []Entry{{Description: "test"}},
+			category:    "upgradeGuide",
+			expectWarns: 0,
+		},
+		{
+			name:        "knownIssues exempt",
+			entries:     []Entry{{Description: "test"}},
+			category:    "knownIssues",
+			expectWarns: 0,
+		},
+		{
+			name:        "multiple entries without commits",
+			entries:     []Entry{{Description: "one"}, {Description: "two"}},
+			category:    "fixed",
+			expectWarns: 2,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := &RichValidationResult{Valid: true}
+			cl.validateCommitsRich(tt.entries, "test."+tt.category, tt.category, result)
+
+			if len(result.Warnings) != tt.expectWarns {
+				t.Errorf("expected %d warnings, got %d", tt.expectWarns, len(result.Warnings))
+			}
+		})
+	}
+}

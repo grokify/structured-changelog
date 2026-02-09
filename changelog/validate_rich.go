@@ -32,7 +32,21 @@ const (
 	WarnCodeShortDescription ErrorCode = "W002"
 	WarnCodeNoTierCoverage   ErrorCode = "W003"
 	WarnCodeMissingSeverity  ErrorCode = "W004"
+	WarnCodeMissingCommit    ErrorCode = "W005"
+
+	// Error codes for promoted warnings (E01x)
+	ErrCodeMissingCommit ErrorCode = "E010"
 )
+
+// commitExemptCategories lists categories that don't require commit hashes.
+// - highlights: Human-readable summaries, not tied to specific commits
+// - upgradeGuide: Documentation/guidance for users
+// - knownIssues: Ongoing issues that may not have a specific commit
+var commitExemptCategories = map[string]bool{
+	"highlights":   true,
+	"upgradeGuide": true,
+	"knownIssues":  true,
+}
 
 // Severity represents the severity of a validation issue.
 type Severity string
@@ -226,25 +240,45 @@ func (c *Changelog) validateReleaseRich(r *Release, field string, result *RichVa
 
 	// Validate all entries
 	entriesCount += c.validateEntriesRich(r.Highlights, field+".highlights", result)
+	c.validateCommitsRich(r.Highlights, field+".highlights", "highlights", result)
 	entriesCount += c.validateEntriesRich(r.Breaking, field+".breaking", result)
+	c.validateCommitsRich(r.Breaking, field+".breaking", "breaking", result)
 	entriesCount += c.validateEntriesRich(r.UpgradeGuide, field+".upgrade_guide", result)
+	c.validateCommitsRich(r.UpgradeGuide, field+".upgrade_guide", "upgradeGuide", result)
 	entriesCount += c.validateSecurityEntriesRich(r.Security, field+".security", result)
+	c.validateCommitsRich(r.Security, field+".security", "security", result)
 	entriesCount += c.validateEntriesRich(r.Added, field+".added", result)
+	c.validateCommitsRich(r.Added, field+".added", "added", result)
 	entriesCount += c.validateEntriesRich(r.Changed, field+".changed", result)
+	c.validateCommitsRich(r.Changed, field+".changed", "changed", result)
 	entriesCount += c.validateEntriesRich(r.Deprecated, field+".deprecated", result)
+	c.validateCommitsRich(r.Deprecated, field+".deprecated", "deprecated", result)
 	entriesCount += c.validateEntriesRich(r.Removed, field+".removed", result)
+	c.validateCommitsRich(r.Removed, field+".removed", "removed", result)
 	entriesCount += c.validateEntriesRich(r.Fixed, field+".fixed", result)
+	c.validateCommitsRich(r.Fixed, field+".fixed", "fixed", result)
 	entriesCount += c.validateEntriesRich(r.Performance, field+".performance", result)
+	c.validateCommitsRich(r.Performance, field+".performance", "performance", result)
 	entriesCount += c.validateEntriesRich(r.Dependencies, field+".dependencies", result)
+	c.validateCommitsRich(r.Dependencies, field+".dependencies", "dependencies", result)
 	entriesCount += c.validateEntriesRich(r.Documentation, field+".documentation", result)
+	c.validateCommitsRich(r.Documentation, field+".documentation", "documentation", result)
 	entriesCount += c.validateEntriesRich(r.Build, field+".build", result)
+	c.validateCommitsRich(r.Build, field+".build", "build", result)
 	entriesCount += c.validateEntriesRich(r.Tests, field+".tests", result)
+	c.validateCommitsRich(r.Tests, field+".tests", "tests", result)
 	entriesCount += c.validateEntriesRich(r.Infrastructure, field+".infrastructure", result)
+	c.validateCommitsRich(r.Infrastructure, field+".infrastructure", "infrastructure", result)
 	entriesCount += c.validateEntriesRich(r.Observability, field+".observability", result)
+	c.validateCommitsRich(r.Observability, field+".observability", "observability", result)
 	entriesCount += c.validateEntriesRich(r.Compliance, field+".compliance", result)
+	c.validateCommitsRich(r.Compliance, field+".compliance", "compliance", result)
 	entriesCount += c.validateEntriesRich(r.Internal, field+".internal", result)
+	c.validateCommitsRich(r.Internal, field+".internal", "internal", result)
 	entriesCount += c.validateEntriesRich(r.KnownIssues, field+".known_issues", result)
+	c.validateCommitsRich(r.KnownIssues, field+".known_issues", "knownIssues", result)
 	entriesCount += c.validateEntriesRich(r.Contributors, field+".contributors", result)
+	c.validateCommitsRich(r.Contributors, field+".contributors", "contributors", result)
 
 	return entriesCount
 }
@@ -361,6 +395,26 @@ func (c *Changelog) validateSecurityEntriesRich(entries []Entry, field string, r
 		}
 	}
 	return len(entries)
+}
+
+func (c *Changelog) validateCommitsRich(entries []Entry, field, category string, result *RichValidationResult) {
+	// Skip exempt categories
+	if commitExemptCategories[category] {
+		return
+	}
+
+	for i, entry := range entries {
+		if entry.Commit == "" {
+			entryField := fmt.Sprintf("%s[%d]", field, i)
+			result.addWarning(RichValidationError{
+				Code:       WarnCodeMissingCommit,
+				Severity:   SeverityWarning,
+				Path:       entryField,
+				Message:    "Entry missing commit hash",
+				Suggestion: "Add 'commit' field with the commit hash (e.g., \"commit\": \"abc1234\")",
+			})
+		}
+	}
 }
 
 func (r *RichValidationResult) addError(err RichValidationError) {

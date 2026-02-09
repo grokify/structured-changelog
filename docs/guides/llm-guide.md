@@ -200,7 +200,20 @@ schangelog validate --format=json CHANGELOG.json
 
 # Strict mode (warnings become errors)
 schangelog validate --format=toon --strict CHANGELOG.json
+
+# Require commit hashes on all entries
+schangelog validate --format=toon --require-commits CHANGELOG.json
 ```
+
+**Commit validation:**
+
+The `--require-commits` flag requires commit hashes on all entries, except for categories that are exempt:
+
+- `highlights` — Human-readable summaries not tied to specific commits
+- `upgradeGuide` — Documentation/guidance for users
+- `knownIssues` — Ongoing issues that may not have a specific commit
+
+Without `--require-commits`, missing commits generate W005 warnings. With the flag, they become E010 errors.
 
 **Example TOON output:**
 
@@ -263,6 +276,7 @@ Summary:
 | E007 | Invalid IR version |
 | E008 | Invalid versioning scheme |
 | E009 | Invalid commit convention |
+| E010 | Missing commit hash (with `--require-commits`) |
 | E100 | Missing required field |
 | E101 | Duplicate version |
 | E103 | Empty description |
@@ -270,6 +284,7 @@ Summary:
 | W002 | Description too short |
 | W003 | Tier coverage below minimum |
 | W004 | Missing severity |
+| W005 | Entry missing commit hash |
 
 ## Example Prompts
 
