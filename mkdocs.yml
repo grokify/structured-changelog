@@ -46,6 +46,7 @@ nav:
       - SBOM Metadata: specification/sbom.md
   - Guides:
       - LLM-Assisted Generation: guides/llm-guide.md
+      - Localization: guides/localization.md
       - Release Notes Guide: guides/release-notes-guide.md
   - PRDs:
       - Tools Integration: prd/tools.md
@@ -53,6 +54,7 @@ nav:
       - Localization: prd/localization.md
       - Rendering: prd/rendering.md
   - Releases:
+      - v0.10.0: releases/v0.10.0.md
       - v0.9.0: releases/v0.9.0.md
       - v0.8.0: releases/v0.8.0.md
       - v0.7.0: releases/v0.7.0.md

@@ -132,12 +132,12 @@ Messages not included in your override file will use the built-in translations f
 
 See `examples/l10n/` for complete rendered examples in all 6 languages:
 
-- [English](../examples/l10n/CHANGELOG.en.md)
-- [German](../examples/l10n/CHANGELOG.de.md)
-- [Spanish](../examples/l10n/CHANGELOG.es.md)
-- [French](../examples/l10n/CHANGELOG.fr.md)
-- [Japanese](../examples/l10n/CHANGELOG.ja.md)
-- [Chinese](../examples/l10n/CHANGELOG.zh.md)
+- [English](https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.en.md)
+- [German](https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.de.md)
+- [Spanish](https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.es.md)
+- [French](https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.fr.md)
+- [Japanese](https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.ja.md)
+- [Chinese](https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.zh.md)
 
 ## What Gets Localized
 
