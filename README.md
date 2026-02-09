@@ -75,6 +75,8 @@ Several tools generate changelogs from git history. Here's how Structured Change
 - **chyle**: You need to enrich changelog data from external APIs (Jira, GitHub)
 - **semverbot**: You primarily need automated semantic version tagging
 
+> **Note:** [git-chglog](https://github.com/git-chglog/git-chglog) was previously the most popular Go-based changelog generator (~2.9k stars), but the project has been archived. Its maintainers recommend [git-cliff] as the successor.
+
 [conventional-changelog]: https://github.com/conventional-changelog/conventional-changelog
 [git-cliff]: https://github.com/orhun/git-cliff
 [chyle]: https://github.com/antham/chyle
