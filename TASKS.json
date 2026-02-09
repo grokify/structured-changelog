@@ -1,0 +1,145 @@
+{
+  "irVersion": "1.0",
+  "project": "structured-changelog",
+  "repository": "https://github.com/grokify/structured-changelog",
+
+  "legend": {
+    "completed": {"emoji": "✅", "description": "Completed"},
+    "in_progress": {"emoji": "🚧", "description": "In Progress"},
+    "planned": {"emoji": "📋", "description": "Planned"},
+    "future": {"emoji": "💡", "description": "Under Consideration"}
+  },
+
+  "areas": [
+    {"id": "core", "name": "Core"},
+    {"id": "cli", "name": "CLI"},
+    {"id": "output", "name": "Output Formats"},
+    {"id": "validation", "name": "Validation"},
+    {"id": "cicd", "name": "CI/CD"},
+    {"id": "docs", "name": "Documentation"}
+  ],
+
+  "tasks": [
+    {
+      "id": "i18n",
+      "title": "Internationalization (I18N/L10N)",
+      "description": "Localized changelog output in multiple languages",
+      "status": "completed",
+      "phase": 1,
+      "area": "output",
+      "type": "Added",
+      "subtasks": [
+        {"id": "i18n-1", "description": "Built-in translations for 6 locales (en, de, es, fr, ja, zh)", "completed": true},
+        {"id": "i18n-2", "description": "--locale flag for generate command", "completed": true},
+        {"id": "i18n-3", "description": "--locale-file flag for custom overrides", "completed": true},
+        {"id": "i18n-4", "description": "Header text localization", "completed": true}
+      ]
+    },
+    {
+      "id": "json-schema",
+      "title": "JSON Schema for Tooling Support",
+      "description": "JSON Schema for IDE autocomplete and validation",
+      "status": "completed",
+      "phase": 1,
+      "area": "core",
+      "type": "Added",
+      "subtasks": [
+        {"id": "schema-1", "description": "Create changelog-v1.schema.json", "completed": true},
+        {"id": "schema-2", "description": "Document schema in specification", "completed": true}
+      ]
+    },
+    {
+      "id": "semver-validation",
+      "title": "Robust Validation and Linting",
+      "description": "Rich validation with actionable error messages",
+      "status": "completed",
+      "phase": 1,
+      "area": "validation",
+      "type": "Added",
+      "subtasks": [
+        {"id": "val-1", "description": "SemVer version validation (E002)", "completed": true},
+        {"id": "val-2", "description": "ISO 8601 date validation (E001)", "completed": true},
+        {"id": "val-3", "description": "CVE/GHSA format validation (E003, E004)", "completed": true},
+        {"id": "val-4", "description": "Structured error output with --format flag", "completed": true},
+        {"id": "val-5", "description": "Warning codes (W001-W005)", "completed": true},
+        {"id": "val-6", "description": "--strict mode for treating warnings as errors", "completed": true},
+        {"id": "val-7", "description": "--require-commits flag for commit hash validation", "completed": true}
+      ]
+    },
+    {
+      "id": "git-seed",
+      "title": "Git-to-IR Seed Tooling",
+      "description": "Generate changelog from git history",
+      "status": "completed",
+      "phase": 1,
+      "area": "cli",
+      "type": "Added",
+      "subtasks": [
+        {"id": "seed-1", "description": "init --from-tags command", "completed": true},
+        {"id": "seed-2", "description": "parse-commits command with conventional commit parsing", "completed": true},
+        {"id": "seed-3", "description": "suggest-category command for commit classification", "completed": true},
+        {"id": "seed-4", "description": "list-tags command", "completed": true}
+      ]
+    },
+    {
+      "id": "camelcase",
+      "title": "Semantic Stability (camelCase Migration)",
+      "description": "Migrate JSON schema from snake_case to camelCase",
+      "status": "completed",
+      "phase": 1,
+      "area": "core",
+      "type": "Changed"
+    },
+    {
+      "id": "github-action",
+      "title": "Reusable GitHub Action",
+      "description": "Provide action.yml for users to automate changelog generation in CI/CD",
+      "status": "planned",
+      "phase": 2,
+      "area": "cicd",
+      "type": "Added",
+      "subtasks": [
+        {"id": "action-1", "description": "Create action.yml with inputs for changelog, output, locale", "completed": false},
+        {"id": "action-2", "description": "Support validate and generate modes", "completed": false},
+        {"id": "action-3", "description": "Document usage in README", "completed": false},
+        {"id": "action-4", "description": "Add example workflow in .github/workflows/", "completed": false}
+      ]
+    },
+    {
+      "id": "output-plaintext",
+      "title": "Plain Text Output Format",
+      "description": "Generate plain text changelog for terminal/email",
+      "status": "planned",
+      "phase": 2,
+      "area": "output",
+      "type": "Added"
+    },
+    {
+      "id": "output-html",
+      "title": "HTML Output Format",
+      "description": "Generate standalone HTML changelog for websites",
+      "status": "future",
+      "area": "output",
+      "type": "Added",
+      "dependsOn": ["output-plaintext"]
+    },
+    {
+      "id": "output-rss",
+      "title": "RSS/Atom Feed Output",
+      "description": "Generate RSS/Atom feed for release subscriptions",
+      "status": "future",
+      "area": "output",
+      "type": "Added"
+    },
+    {
+      "id": "v1-release",
+      "title": "v1.0.0 Release",
+      "description": "Tag and release v1.0.0 with API stability promise",
+      "status": "planned",
+      "phase": 2,
+      "area": "core",
+      "type": "Added",
+      "dependsOn": ["github-action"]
+    }
+  ]
+}
