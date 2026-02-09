@@ -11,6 +11,7 @@
       "date": "2026-02-08",
       "highlights": [
         { "description": "Localization support for rendered Markdown output in 6 languages" },
+        { "description": "Header text fully localized including versioning and convention references" },
         { "description": "JSON schema migrated to camelCase for ecosystem consistency" }
       ],
       "breaking": [
@@ -24,7 +25,8 @@
         { "description": "`--locale` flag for `generate` command to output in different languages", "commit": "64edc2e" },
         { "description": "`--locale-file` flag for custom translation overrides", "commit": "64edc2e" },
         { "description": "Built-in translations for 6 locales: English, German, Spanish, French, Japanese, Chinese", "commit": "64edc2e" },
-        { "description": "`Locale` and `LocaleOverrides` renderer options", "commit": "64edc2e" }
+        { "description": "`Locale` and `LocaleOverrides` renderer options", "commit": "64edc2e" },
+        { "description": "Header text localization for Keep a Changelog, versioning, and generator references", "commit": "19b3f06" }
       ],
       "dependencies": [
         { "description": "Add `github.com/grokify/structured-locale` v0.1.0 for localization support", "commit": "64edc2e" }
