@@ -1,11 +1,38 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "structured-changelog",
   "repository": "https://github.com/grokify/structured-changelog",
   "versioning": "semver",
-  "commit_convention": "conventional",
+  "commitConvention": "conventional",
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
+    {
+      "version": "v0.10.0",
+      "date": "2026-02-08",
+      "highlights": [
+        { "description": "Localization support for rendered Markdown output in 6 languages" },
+        { "description": "JSON schema migrated to camelCase for ecosystem consistency" }
+      ],
+      "breaking": [
+        { "description": "All JSON property names changed from snake_case to camelCase (e.g., `irVersion` instead of `ir_version`)", "commit": "adc355c" }
+      ],
+      "upgradeGuide": [
+        { "description": "Update existing CHANGELOG.json files to use camelCase property names" },
+        { "description": "Re-run `schangelog validate` to check for any issues" }
+      ],
+      "added": [
+        { "description": "`--locale` flag for `generate` command to output in different languages", "commit": "64edc2e" },
+        { "description": "`--locale-file` flag for custom translation overrides", "commit": "64edc2e" },
+        { "description": "Built-in translations for 6 locales: English, German, Spanish, French, Japanese, Chinese", "commit": "64edc2e" },
+        { "description": "`Locale` and `LocaleOverrides` renderer options", "commit": "64edc2e" }
+      ],
+      "dependencies": [
+        { "description": "Add `github.com/grokify/structured-locale` v0.1.0 for localization support", "commit": "64edc2e" }
+      ],
+      "tests": [
+        { "description": "Add localization unit tests for message loading and translation", "commit": "c56fe84" }
+      ]
+    },
     {
       "version": "v0.9.0",
       "date": "2026-02-02",
@@ -32,9 +59,9 @@
         { "description": "Monorepo tag path support for repositories using path-prefixed version tags (e.g., `sdk/go/v1.0.0`)" }
       ],
       "added": [
-        { "description": "`tag_path` field in changelog IR for specifying version tag prefixes in monorepos", "commit": "7761ead" },
-        { "description": "Automatic path prefixing for compare and tag links when `tag_path` is set", "commit": "7761ead" },
-        { "description": "`tag_path` property in JSON schema with documentation", "commit": "7761ead" }
+        { "description": "`tagPath` field in changelog IR for specifying version tag prefixes in monorepos", "commit": "7761ead" },
+        { "description": "Automatic path prefixing for compare and tag links when `tagPath` is set", "commit": "7761ead" },
+        { "description": "`tagPath` property in JSON schema with documentation", "commit": "7761ead" }
       ],
       "tests": [
         { "description": "Comprehensive tests for tag path functionality including GitHub, GitLab, unreleased links, and edge cases", "commit": "25a3190" }
@@ -70,7 +97,7 @@
         { "description": "`LinkReferences` renderer option (now enabled by default) for hyperlinking references", "commit": "be9b3b0" },
         { "description": "`IncludeUnreleasedLink` renderer option (enabled by default) for always showing compare link to HEAD", "commit": "d4b3e90" },
         { "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`", "commit": "93b8da1" },
-        { "description": "`commit_convention` field in changelog IR: `conventional` or `none`", "commit": "93b8da1" },
+        { "description": "`commitConvention` field in changelog IR: `conventional` or `none`", "commit": "93b8da1" },
         { "description": "Dynamic header generation based on versioning scheme and commit convention", "commit": "be9b3b0" },
         { "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)", "commit": "93b8da1" },
         { "description": "`maintainers` and `bots` fields in changelog IR for identifying team members", "commit": "91e788f" },
