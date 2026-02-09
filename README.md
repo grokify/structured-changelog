@@ -47,6 +47,7 @@ Several tools generate changelogs from git history. Here's how Structured Change
 | Feature | Structured Changelog | [conventional-changelog] | [git-cliff] | [chyle] | [semverbot] |
 |---------|---------------------|-------------------------|-------------|---------|-------------|
 | **GitHub stars** | — | ~8.4k | ~5.5k | ~160 | ~144 |
+| **Workflow** | LLM/Human-assisted | Fully automated | Fully automated | Fully automated | Fully automated |
 | **Source of truth** | JSON IR | Git commits | Git + templates | Git commits | Git tags |
 | **Output format** | JSON → Markdown | Markdown | Markdown | Flexible | Tags only |
 | **Rendering** | Deterministic | Template-based | Template-based | Configurable | N/A |
@@ -60,13 +61,37 @@ Several tools generate changelogs from git history. Here's how Structured Change
 | **Custom templates** | ✗ (deterministic) | ✓ | ✓ | ✓ | ✗ |
 | **Language** | Go | Node.js | Rust | Go | Go |
 
+#### LLM-Assisted vs. Fully Automated
+
+The key architectural difference is *how* the changelog is populated:
+
+```
+Traditional tools (git-cliff, conventional-changelog):
+  Git Commits → Template/Parser → Markdown
+  └─ Runs in CI/CD, fully automated, pattern-based
+
+Structured Changelog:
+  Git Commits → LLM/Human → JSON IR → Markdown
+  └─ Semantic understanding, judgment calls, better prose
+```
+
+**Why LLM-assisted?** Pure automation works well for simple cases, but changelogs benefit from intelligence:
+
+- **Grouping**: Consolidate 5 related commits into one meaningful entry
+- **Context**: Explain *why* something changed, not just *what*
+- **Judgment**: Categorize ambiguous changes correctly
+- **Quality**: Write user-friendly descriptions, not commit messages
+- **Edge cases**: Handle non-conventional commits gracefully
+
+The `parse-commits` command outputs token-optimized TOON format (~8x reduction vs raw git log), making it practical to feed git history to an LLM for changelog generation.
+
 **When to use Structured Changelog:**
 
+- You want LLM-assisted changelog generation with human-quality prose
 - You need a machine-readable changelog for automation or APIs
 - You want deterministic output (same input → identical output)
 - You track security vulnerabilities with CVE/GHSA identifiers
 - You need SBOM integration for compliance
-- You use LLMs for changelog generation
 
 **When to use other tools:**
 
