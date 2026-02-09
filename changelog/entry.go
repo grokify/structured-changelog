@@ -11,19 +11,19 @@ type Entry struct {
 
 	// SBOM metadata
 	Component        string `json:"component,omitempty"`
-	ComponentVersion string `json:"component_version,omitempty"`
+	ComponentVersion string `json:"componentVersion,omitempty"`
 	License          string `json:"license,omitempty"`
 
 	// Security metadata
 	CVE              string  `json:"cve,omitempty"`
 	GHSA             string  `json:"ghsa,omitempty"`
 	Severity         string  `json:"severity,omitempty"`
-	CVSSScore        float64 `json:"cvss_score,omitempty"`
-	CVSSVector       string  `json:"cvss_vector,omitempty"`
+	CVSSScore        float64 `json:"cvssScore,omitempty"`
+	CVSSVector       string  `json:"cvssVector,omitempty"`
 	CWE              string  `json:"cwe,omitempty"`
-	AffectedVersions string  `json:"affected_versions,omitempty"`
-	PatchedVersions  string  `json:"patched_versions,omitempty"`
-	SARIFRuleID      string  `json:"sarif_rule_id,omitempty"`
+	AffectedVersions string  `json:"affectedVersions,omitempty"`
+	PatchedVersions  string  `json:"patchedVersions,omitempty"`
+	SARIFRuleID      string  `json:"sarifRuleId,omitempty"`
 }
 
 // NewEntry creates a new entry with the given description.

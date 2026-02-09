@@ -27,15 +27,15 @@ const (
 
 // Changelog represents the root of a structured changelog.
 type Changelog struct {
-	IRVersion        string     `json:"ir_version"`
+	IRVersion        string     `json:"irVersion"`
 	Project          string     `json:"project"`
 	Repository       string     `json:"repository,omitempty"`
-	TagPath          string     `json:"tag_path,omitempty"`
+	TagPath          string     `json:"tagPath,omitempty"`
 	Versioning       string     `json:"versioning,omitempty"`
-	CommitConvention string     `json:"commit_convention,omitempty"`
+	CommitConvention string     `json:"commitConvention,omitempty"`
 	Maintainers      []string   `json:"maintainers,omitempty"`
 	Bots             []string   `json:"bots,omitempty"`
-	GeneratedAt      *time.Time `json:"generated_at,omitempty"`
+	GeneratedAt      *time.Time `json:"generatedAt,omitempty"`
 	Unreleased       *Release   `json:"unreleased,omitempty"`
 	Releases         []Release  `json:"releases,omitempty"`
 }

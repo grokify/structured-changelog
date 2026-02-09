@@ -1,5 +1,5 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "secure-app",
   "repository": "https://github.com/example/secure-app",
   "releases": [
@@ -12,16 +12,16 @@
           "cve": "CVE-2026-12345",
           "ghsa": "GHSA-abcd-efgh-ijkl",
           "severity": "high",
-          "cvss_score": 8.5,
+          "cvssScore": 8.5,
           "cwe": "CWE-89",
-          "affected_versions": "<2.1.1",
-          "patched_versions": ">=2.1.1"
+          "affectedVersions": "<2.1.1",
+          "patchedVersions": ">=2.1.1"
         },
         {
           "description": "Fix XSS vulnerability in comment rendering",
           "cve": "CVE-2026-12346",
           "severity": "medium",
-          "cvss_score": 6.1,
+          "cvssScore": 6.1,
           "cwe": "CWE-79"
         }
       ],
@@ -41,7 +41,7 @@
           "description": "Upgrade bcrypt to address timing attack",
           "severity": "low",
           "component": "golang.org/x/crypto",
-          "component_version": "0.18.0"
+          "componentVersion": "0.18.0"
         }
       ]
     }

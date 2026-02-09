@@ -5,12 +5,12 @@ type Release struct {
 	Version    string `json:"version,omitempty"`
 	Date       string `json:"date,omitempty"`
 	Yanked     bool   `json:"yanked,omitempty"`
-	CompareURL string `json:"compare_url,omitempty"`
+	CompareURL string `json:"compareUrl,omitempty"`
 
 	// Overview & Critical (standard tier, except Security which is core)
 	Highlights   []Entry `json:"highlights,omitempty"`
 	Breaking     []Entry `json:"breaking,omitempty"`
-	UpgradeGuide []Entry `json:"upgrade_guide,omitempty"`
+	UpgradeGuide []Entry `json:"upgradeGuide,omitempty"`
 	Security     []Entry `json:"security,omitempty"`
 
 	// Core KACL types (core tier)
@@ -38,7 +38,7 @@ type Release struct {
 	Internal []Entry `json:"internal,omitempty"`
 
 	// End Matter (extended tier)
-	KnownIssues  []Entry `json:"known_issues,omitempty"`
+	KnownIssues  []Entry `json:"knownIssues,omitempty"`
 	Contributors []Entry `json:"contributors,omitempty"`
 }
 

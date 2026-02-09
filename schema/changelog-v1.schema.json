@@ -4,9 +4,9 @@
   "title": "Structured Changelog IR",
   "description": "JSON Intermediate Representation for changelogs following Keep a Changelog format",
   "type": "object",
-  "required": ["ir_version", "project"],
+  "required": ["irVersion", "project"],
   "properties": {
-    "ir_version": {
+    "irVersion": {
       "type": "string",
       "description": "Version of the IR schema",
       "enum": ["1.0"]
@@ -20,11 +20,11 @@
       "format": "uri",
       "description": "URL of the project repository"
     },
-    "tag_path": {
+    "tagPath": {
       "type": "string",
       "description": "Path prefix for version tags (e.g., 'sdk/go' for nested Go modules where tags are 'sdk/go/v1.0.0')"
     },
-    "generated_at": {
+    "generatedAt": {
       "type": "string",
       "format": "date-time",
       "description": "Timestamp when this IR was generated"
@@ -61,7 +61,7 @@
           "description": "Whether this release has been yanked/retracted",
           "default": false
         },
-        "compare_url": {
+        "compareUrl": {
           "type": "string",
           "format": "uri",
           "description": "URL to compare this release with the previous one"
@@ -74,7 +74,7 @@
           "$ref": "#/definitions/entryList",
           "description": "Backward-incompatible changes (standard tier)"
         },
-        "upgrade_guide": {
+        "upgradeGuide": {
           "$ref": "#/definitions/entryList",
           "description": "Migration instructions and upgrade paths (standard tier)"
         },
@@ -138,7 +138,7 @@
           "$ref": "#/definitions/entryList",
           "description": "Refactors and internal changes (optional tier)"
         },
-        "known_issues": {
+        "knownIssues": {
           "$ref": "#/definitions/entryList",
           "description": "Known problems and limitations (extended tier)"
         },
@@ -160,7 +160,7 @@
           "$ref": "#/definitions/entryList",
           "description": "Backward-incompatible changes (standard tier)"
         },
-        "upgrade_guide": {
+        "upgradeGuide": {
           "$ref": "#/definitions/entryList",
           "description": "Migration instructions and upgrade paths (standard tier)"
         },
@@ -224,7 +224,7 @@
           "$ref": "#/definitions/entryList",
           "description": "Refactors and internal changes (optional tier)"
         },
-        "known_issues": {
+        "knownIssues": {
           "$ref": "#/definitions/entryList",
           "description": "Known problems and limitations (extended tier)"
         },
@@ -279,7 +279,7 @@
           "type": "string",
           "description": "SBOM: Component name affected"
         },
-        "component_version": {
+        "componentVersion": {
           "type": "string",
           "description": "SBOM: Component version"
         },
@@ -310,13 +310,13 @@
               "description": "Severity level",
               "enum": ["critical", "high", "medium", "low", "informational"]
             },
-            "cvss_score": {
+            "cvssScore": {
               "type": "number",
               "description": "CVSS score (0.0-10.0)",
               "minimum": 0,
               "maximum": 10
             },
-            "cvss_vector": {
+            "cvssVector": {
               "type": "string",
               "description": "CVSS vector string"
             },
@@ -325,15 +325,15 @@
               "description": "CWE identifier",
               "pattern": "^CWE-\\d+$"
             },
-            "affected_versions": {
+            "affectedVersions": {
               "type": "string",
               "description": "Version range affected (e.g., '<1.2.3')"
             },
-            "patched_versions": {
+            "patchedVersions": {
               "type": "string",
               "description": "Version range with fix (e.g., '>=1.2.3')"
             },
-            "sarif_rule_id": {
+            "sarifRuleId": {
               "type": "string",
               "description": "SARIF rule ID for linking to static analysis results"
             }

@@ -14,18 +14,18 @@ import (
 type Tag struct {
 	Name        string    `json:"name"`
 	Date        time.Time `json:"date"`
-	DateString  string    `json:"date_string"`
-	CommitHash  string    `json:"commit_hash"`
-	CommitCount int       `json:"commit_count,omitempty"` // Commits since previous tag
-	IsInitial   bool      `json:"is_initial,omitempty"`   // True if this is the first tag
+	DateString  string    `json:"dateString"`
+	CommitHash  string    `json:"commitHash"`
+	CommitCount int       `json:"commitCount,omitempty"` // Commits since previous tag
+	IsInitial   bool      `json:"isInitial,omitempty"`   // True if this is the first tag
 }
 
 // TagList represents a list of tags with metadata.
 type TagList struct {
 	Repository  string    `json:"repository,omitempty"`
 	Tags        []Tag     `json:"tags"`
-	TotalTags   int       `json:"total_tags"`
-	GeneratedAt time.Time `json:"generated_at"`
+	TotalTags   int       `json:"totalTags"`
+	GeneratedAt time.Time `json:"generatedAt"`
 }
 
 // semverRegex matches semantic version tags like v1.0.0, v1.2.3-beta, 1.0.0

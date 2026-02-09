@@ -9,9 +9,9 @@ import (
 // Commit represents a parsed git commit with structured metadata.
 type Commit struct {
 	Hash              string   `json:"hash"`
-	ShortHash         string   `json:"short_hash"`
+	ShortHash         string   `json:"shortHash"`
 	Author            string   `json:"author"`
-	AuthorEmail       string   `json:"author_email,omitempty"`
+	AuthorEmail       string   `json:"authorEmail,omitempty"`
 	Date              string   `json:"date"`
 	Message           string   `json:"message"`
 	Body              string   `json:"body,omitempty"`
@@ -21,42 +21,42 @@ type Commit struct {
 	Breaking          bool     `json:"breaking,omitempty"`
 	Issue             int      `json:"issue,omitempty"`
 	PR                int      `json:"pr,omitempty"`
-	FilesChanged      int      `json:"files_changed,omitempty"`
+	FilesChanged      int      `json:"filesChanged,omitempty"`
 	Insertions        int      `json:"insertions,omitempty"`
 	Deletions         int      `json:"deletions,omitempty"`
 	Files             []string `json:"files,omitempty"`
-	SuggestedCategory string   `json:"suggested_category,omitempty"`
-	IsExternal        bool     `json:"is_external,omitempty"`
+	SuggestedCategory string   `json:"suggestedCategory,omitempty"`
+	IsExternal        bool     `json:"isExternal,omitempty"`
 }
 
 // Range represents the commit range that was parsed.
 type Range struct {
 	Since       string `json:"since,omitempty"`
 	Until       string `json:"until,omitempty"`
-	CommitCount int    `json:"commit_count"`
+	CommitCount int    `json:"commitCount"`
 }
 
 // Summary provides aggregate statistics about the parsed commits.
 type Summary struct {
-	ByType              map[string]int `json:"by_type,omitempty"`
-	BySuggestedCategory map[string]int `json:"by_suggested_category,omitempty"`
-	TotalFilesChanged   int            `json:"total_files_changed,omitempty"`
-	TotalInsertions     int            `json:"total_insertions,omitempty"`
-	TotalDeletions      int            `json:"total_deletions,omitempty"`
+	ByType              map[string]int `json:"byType,omitempty"`
+	BySuggestedCategory map[string]int `json:"bySuggestedCategory,omitempty"`
+	TotalFilesChanged   int            `json:"totalFilesChanged,omitempty"`
+	TotalInsertions     int            `json:"totalInsertions,omitempty"`
+	TotalDeletions      int            `json:"totalDeletions,omitempty"`
 }
 
 // Contributor represents an author with commit count.
 type Contributor struct {
 	Name        string `json:"name"`
-	CommitCount int    `json:"commit_count"`
-	IsExternal  bool   `json:"is_external,omitempty"`
+	CommitCount int    `json:"commitCount"`
+	IsExternal  bool   `json:"isExternal,omitempty"`
 }
 
 // ParseResult is the complete output of parsing git commits.
 type ParseResult struct {
 	Repository   string        `json:"repository,omitempty"`
 	Range        Range         `json:"range"`
-	GeneratedAt  time.Time     `json:"generated_at"`
+	GeneratedAt  time.Time     `json:"generatedAt"`
 	Commits      []Commit      `json:"commits"`
 	Summary      Summary       `json:"summary"`
 	Contributors []Contributor `json:"contributors,omitempty"`

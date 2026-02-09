@@ -21,7 +21,7 @@ var (
 type SuggestCategoryOutput struct {
 	Input              string                      `json:"input"`
 	Suggestions        []gitlog.CategorySuggestion `json:"suggestions"`
-	ConventionalCommit *gitlog.ConventionalCommit  `json:"conventional_commit,omitempty"`
+	ConventionalCommit *gitlog.ConventionalCommit  `json:"conventionalCommit,omitempty"`
 }
 
 var suggestCategoryCmd = &cobra.Command{

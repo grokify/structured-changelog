@@ -1,5 +1,5 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "extended-example",
   "repository": "https://github.com/example/extended-example",
   "releases": [
@@ -14,7 +14,7 @@
         { "description": "Renamed `Config.timeout` to `Config.requestTimeout` for clarity", "breaking": true },
         { "description": "Removed deprecated `v1` API endpoints", "breaking": true }
       ],
-      "upgrade_guide": [
+      "upgradeGuide": [
         { "description": "Update config files to use `requestTimeout` instead of `timeout`" },
         { "description": "Migrate API calls from `/v1/*` to `/v2/*` endpoints" }
       ],
@@ -47,8 +47,8 @@
         { "description": "Optimized database queries for large datasets" }
       ],
       "dependencies": [
-        { "description": "Upgraded Go from 1.21 to 1.22", "component": "go", "component_version": "1.22" },
-        { "description": "Updated redis client to v9.0.0", "component": "redis/go-redis", "component_version": "9.0.0" }
+        { "description": "Upgraded Go from 1.21 to 1.22", "component": "go", "componentVersion": "1.22" },
+        { "description": "Updated redis client to v9.0.0", "component": "redis/go-redis", "componentVersion": "9.0.0" }
       ],
       "documentation": [
         { "description": "Added migration guide for v1 to v2 upgrade" },
@@ -58,7 +58,7 @@
         { "description": "Added multi-platform Docker builds (amd64, arm64)" },
         { "description": "Migrated CI from CircleCI to GitHub Actions" }
       ],
-      "known_issues": [
+      "knownIssues": [
         { "description": "Batch endpoint limited to 1000 items per request" },
         { "description": "ARM64 builds not yet tested on Windows" }
       ],

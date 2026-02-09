@@ -1,5 +1,5 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "my-project",
   "repository": "https://github.com/example/my-project",
   "unreleased": {

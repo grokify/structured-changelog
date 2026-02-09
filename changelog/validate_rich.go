@@ -61,10 +61,10 @@ func (e RichValidationError) Error() string {
 
 // RichValidationSummary provides summary statistics.
 type RichValidationSummary struct {
-	ErrorCount   int `json:"error_count"`
-	WarningCount int `json:"warning_count"`
-	ReleaseCount int `json:"releases_checked"`
-	EntriesCount int `json:"entries_checked"`
+	ErrorCount   int `json:"errorCount"`
+	WarningCount int `json:"warningCount"`
+	ReleaseCount int `json:"releasesChecked"`
+	EntriesCount int `json:"entriesChecked"`
 }
 
 // RichValidationResult holds comprehensive validation results.

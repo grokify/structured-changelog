@@ -1,8 +1,8 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "omniobserve",
   "repository": "https://github.com/agentplexus/omniobserve",
-  "generated_at": "2026-01-03T21:42:00Z",
+  "generatedAt": "2026-01-03T21:42:00Z",
   "unreleased": {
     "added": [
       { "description": "Prometheus metrics exporter" }

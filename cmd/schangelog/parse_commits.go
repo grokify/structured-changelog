@@ -239,8 +239,8 @@ func getRepositoryURL() (string, error) {
 type AllVersionsResult struct {
 	Repository  string               `json:"repository,omitempty"`
 	Versions    []VersionParseResult `json:"versions"`
-	TotalCount  int                  `json:"total_count"`
-	GeneratedAt string               `json:"generated_at"`
+	TotalCount  int                  `json:"totalCount"`
+	GeneratedAt string               `json:"generatedAt"`
 }
 
 // VersionParseResult contains parse result for a single version.
@@ -248,7 +248,7 @@ type VersionParseResult struct {
 	Version     string          `json:"version"`
 	Date        string          `json:"date"`
 	Since       string          `json:"since,omitempty"`
-	CommitCount int             `json:"commit_count"`
+	CommitCount int             `json:"commitCount"`
 	Commits     []gitlog.Commit `json:"commits"`
 	Summary     gitlog.Summary  `json:"summary"`
 }
