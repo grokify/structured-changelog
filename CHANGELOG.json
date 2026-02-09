@@ -27,10 +27,10 @@
         { "description": "Built-in translations for 6 locales: English, German, Spanish, French, Japanese, Chinese", "commit": "64edc2e" },
         { "description": "`Locale` and `LocaleOverrides` renderer options", "commit": "64edc2e" },
         { "description": "Header text localization for Keep a Changelog, versioning, and generator references", "commit": "19b3f06" },
-        { "description": "`--require-commits` flag for `validate` command to require commit hashes on entries", "commit": "HEAD" },
-        { "description": "W005 warning code for missing commit hashes (shown by default)", "commit": "HEAD" },
-        { "description": "E010 error code for missing commits when `--require-commits` is set", "commit": "HEAD" },
-        { "description": "Exempt categories for commit validation: highlights, upgradeGuide, knownIssues", "commit": "HEAD" }
+        { "description": "`--require-commits` flag for `validate` command to require commit hashes on entries", "commit": "12ac69f" },
+        { "description": "W005 warning code for missing commit hashes (shown by default)", "commit": "12ac69f" },
+        { "description": "E010 error code for missing commits when `--require-commits` is set", "commit": "12ac69f" },
+        { "description": "Exempt categories for commit validation: highlights, upgradeGuide, knownIssues", "commit": "12ac69f" }
       ],
       "dependencies": [
         { "description": "Add `github.com/grokify/structured-locale` v0.1.0 for localization support", "commit": "64edc2e" }
