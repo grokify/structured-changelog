@@ -4,6 +4,7 @@
 
 このフォーマットは[Keep a Changelog](https://keepachangelog.com/ja/1.1.0/)に基づいています,
 このプロジェクトは[セマンティック バージョニング](https://semver.org/lang/ja/)に準拠しています,
+コミットは[Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/)に従っています,
 そして この変更履歴は[Structured Changelog](https://github.com/grokify/structured-changelog)によって生成されています.
 
 ## [未リリース]

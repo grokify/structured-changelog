@@ -2,6 +2,7 @@
   "irVersion": "1.0",
   "project": "extended-example",
   "repository": "https://github.com/example/extended-example",
+  "commitConvention": "conventional",
   "releases": [
     {
       "version": "2.0.0",

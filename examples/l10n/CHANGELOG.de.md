@@ -4,6 +4,7 @@ Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert
 
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 dieses Projekt folgt [Semantischer Versionierung](https://semver.org/lang/de/),
+Commits folgen [Conventional Commits](https://www.conventionalcommits.org/de/v1.0.0/),
 und dieses Änderungsprotokoll wird generiert von [Structured Changelog](https://github.com/grokify/structured-changelog).
 
 ## [Unveröffentlicht]
