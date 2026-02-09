@@ -1459,7 +1459,7 @@ func TestRenderMarkdown_MaintenanceGrouping(t *testing.T) {
 	if !strings.Contains(md, "## Versions 1.0.1 - 1.0.2 (Maintenance)") {
 		t.Error("should group consecutive maintenance releases")
 	}
-	if !strings.Contains(md, "2 releases: 2 dependency update(s)") {
+	if !strings.Contains(md, "2 releases: 2 dependency updates") {
 		t.Error("should show release count and change summary")
 	}
 
@@ -1636,21 +1636,21 @@ func TestRenderMarkdown_MaintenanceGroupSummary(t *testing.T) {
 		t.Error("expected '5 releases' in summary")
 	}
 
-	// Should summarize counts
-	if !strings.Contains(md, "3 dependency update(s)") {
-		t.Error("expected '3 dependency update(s)' in summary")
+	// Should summarize counts (using CLDR plural forms)
+	if !strings.Contains(md, "3 dependency updates") {
+		t.Error("expected '3 dependency updates' in summary")
 	}
-	if !strings.Contains(md, "1 documentation change(s)") {
-		t.Error("expected '1 documentation change(s)' in summary")
+	if !strings.Contains(md, "1 documentation change") {
+		t.Error("expected '1 documentation change' in summary")
 	}
-	if !strings.Contains(md, "1 build change(s)") {
-		t.Error("expected '1 build change(s)' in summary")
+	if !strings.Contains(md, "1 build change") {
+		t.Error("expected '1 build change' in summary")
 	}
-	if !strings.Contains(md, "2 test change(s)") {
-		t.Error("expected '2 test change(s)' in summary")
+	if !strings.Contains(md, "2 test changes") {
+		t.Error("expected '2 test changes' in summary")
 	}
-	if !strings.Contains(md, "1 other change(s)") {
-		t.Error("expected '1 other change(s)' in summary")
+	if !strings.Contains(md, "1 other change") {
+		t.Error("expected '1 other change' in summary")
 	}
 }
 
