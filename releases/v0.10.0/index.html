@@ -861,6 +861,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#commit-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commit Validation
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1263,6 +1272,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#commit-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commit Validation
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1365,6 +1383,7 @@
 <li>Header text fully localized (Keep a Changelog, SemVer, Conventional Commits references)</li>
 <li>JSON schema migrated from snake_case to camelCase (breaking change)</li>
 <li>Custom locale override support for tailored translations</li>
+<li>Commit hash validation with <code>--require-commits</code> flag</li>
 </ul>
 <h2 id="breaking-changes">Breaking Changes<a class="headerlink" href="#breaking-changes" title="Permanent link">&para;</a></h2>
 <h3 id="camelcase-migration">camelCase Migration<a class="headerlink" href="#camelcase-migration" title="Permanent link">&para;</a></h3>
@@ -1493,19 +1512,62 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
 </code></pre></div>
 <p>See the <a href="../../guides/localization/">Localization Guide</a> for all 50 customizable message IDs.</p>
+<h3 id="commit-validation">Commit Validation<a class="headerlink" href="#commit-validation" title="Permanent link">&para;</a></h3>
+<p>Validate that changelog entries include commit hashes:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Default: W005 warnings for missing commits (valid=true)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--format<span class="o">=</span>json
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Require commits: W005 becomes E010 errors (valid=false)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span>--require-commits
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Strict mode also converts warnings to errors</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span>--strict
+</code></pre></div>
+<p><strong>Exempt categories</strong> (don't require commit hashes):</p>
+<ul>
+<li><code>highlights</code> — Human-readable summaries</li>
+<li><code>upgradeGuide</code> — Documentation/guidance</li>
+<li><code>knownIssues</code> — Ongoing issues</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Missing Commit</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default</td>
+<td>W005 warning</td>
+<td><code>valid=true</code></td>
+</tr>
+<tr>
+<td><code>--require-commits</code></td>
+<td>E010 error</td>
+<td><code>valid=false</code></td>
+</tr>
+<tr>
+<td><code>--strict</code></td>
+<td>W005 as error</td>
+<td><code>valid=false</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="library-additions">Library Additions<a class="headerlink" href="#library-additions" title="Permanent link">&para;</a></h2>
 <h3 id="renderer-options">Renderer Options<a class="headerlink" href="#renderer-options" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/renderer&quot;</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">// Built-in locale</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">// With custom overrides</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">).</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nx">WithLocaleOverrides</span><span class="p">(</span><span class="s">&quot;./custom-fr.json&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nx">md</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">RenderMarkdown</span><span class="p">(</span><span class="nx">changelog</span><span class="p">,</span><span class="w"> </span><span class="nx">opts</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/renderer&quot;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">// Built-in locale</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1">// With custom overrides</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">).</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nx">WithLocaleOverrides</span><span class="p">(</span><span class="s">&quot;./custom-fr.json&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="nx">md</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">RenderMarkdown</span><span class="p">(</span><span class="nx">changelog</span><span class="p">,</span><span class="w"> </span><span class="nx">opts</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="new-options">New Options<a class="headerlink" href="#new-options" title="Permanent link">&para;</a></h3>
 <table>

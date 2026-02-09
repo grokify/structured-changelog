@@ -1588,7 +1588,18 @@
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
 <a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Strict mode (warnings become errors)</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>--strict<span class="w"> </span>CHANGELOG.json
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># Require commit hashes on all entries</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>--format<span class="o">=</span>toon<span class="w"> </span>--require-commits<span class="w"> </span>CHANGELOG.json
 </code></pre></div>
+<p><strong>Commit validation:</strong></p>
+<p>The <code>--require-commits</code> flag requires commit hashes on all entries, except for categories that are exempt:</p>
+<ul>
+<li><code>highlights</code> — Human-readable summaries not tied to specific commits</li>
+<li><code>upgradeGuide</code> — Documentation/guidance for users</li>
+<li><code>knownIssues</code> — Ongoing issues that may not have a specific commit</li>
+</ul>
+<p>Without <code>--require-commits</code>, missing commits generate W005 warnings. With the flag, they become E010 errors.</p>
 <p><strong>Example TOON output:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Valid: false
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Errors[1]{Code,Severity,Path,Message,Actual,Expected,Suggestion}:
@@ -1677,6 +1688,10 @@
 <td>Invalid commit convention</td>
 </tr>
 <tr>
+<td>E010</td>
+<td>Missing commit hash (with <code>--require-commits</code>)</td>
+</tr>
+<tr>
 <td>E100</td>
 <td>Missing required field</td>
 </tr>
@@ -1703,6 +1718,10 @@
 <tr>
 <td>W004</td>
 <td>Missing severity</td>
+</tr>
+<tr>
+<td>W005</td>
+<td>Entry missing commit hash</td>
 </tr>
 </tbody>
 </table>

@@ -1499,7 +1499,7 @@
 </thead>
 <tbody>
 <tr>
-<td><code>ir_version</code></td>
+<td><code>irVersion</code></td>
 <td>string</td>
 <td>Yes</td>
 <td>IR schema version (currently "1.0")</td>
@@ -1523,7 +1523,7 @@
 <td>Versioning scheme (see below)</td>
 </tr>
 <tr>
-<td><code>commit_convention</code></td>
+<td><code>commitConvention</code></td>
 <td>string</td>
 <td>No</td>
 <td>Commit message convention (see below)</td>
@@ -1541,7 +1541,7 @@
 <td>Custom bots excluded from author attribution</td>
 </tr>
 <tr>
-<td><code>generated_at</code></td>
+<td><code>generatedAt</code></td>
 <td>datetime</td>
 <td>No</td>
 <td>ISO 8601 timestamp of generation</td>
@@ -1594,7 +1594,7 @@
 </tbody>
 </table>
 <h4 id="commit-conventions">Commit Conventions<a class="headerlink" href="#commit-conventions" title="Permanent link">&para;</a></h4>
-<p>The <code>commit_convention</code> field adds a reference to the commit message convention:</p>
+<p>The <code>commitConvention</code> field adds a reference to the commit message convention:</p>
 <table>
 <thead>
 <tr>
@@ -1646,7 +1646,7 @@
 <td>Whether the release was retracted</td>
 </tr>
 <tr>
-<td><code>compare_url</code></td>
+<td><code>compareUrl</code></td>
 <td>string</td>
 <td>No</td>
 <td>URL to diff with previous version</td>
@@ -1801,12 +1801,12 @@
 <td>critical, high, medium, low, informational</td>
 </tr>
 <tr>
-<td><code>cvss_score</code></td>
+<td><code>cvssScore</code></td>
 <td>number</td>
 <td>CVSS score (0.0-10.0)</td>
 </tr>
 <tr>
-<td><code>cvss_vector</code></td>
+<td><code>cvssVector</code></td>
 <td>string</td>
 <td>CVSS vector string</td>
 </tr>
@@ -1816,17 +1816,17 @@
 <td>CWE identifier (e.g., CWE-89)</td>
 </tr>
 <tr>
-<td><code>affected_versions</code></td>
+<td><code>affectedVersions</code></td>
 <td>string</td>
 <td>Version range affected</td>
 </tr>
 <tr>
-<td><code>patched_versions</code></td>
+<td><code>patchedVersions</code></td>
 <td>string</td>
 <td>Version range with fix</td>
 </tr>
 <tr>
-<td><code>sarif_rule_id</code></td>
+<td><code>sarifRuleId</code></td>
 <td>string</td>
 <td>SARIF rule ID for linking</td>
 </tr>
@@ -1849,7 +1849,7 @@
 <td>Component/dependency name</td>
 </tr>
 <tr>
-<td><code>component_version</code></td>
+<td><code>componentVersion</code></td>
 <td>string</td>
 <td>Component version</td>
 </tr>
@@ -1941,7 +1941,7 @@
 </ul>
 <h2 id="validation-rules">Validation Rules<a class="headerlink" href="#validation-rules" title="Permanent link">&para;</a></h2>
 <ol>
-<li><code>ir_version</code> must be "1.0"</li>
+<li><code>irVersion</code> must be "1.0"</li>
 <li><code>project</code> must be non-empty</li>
 <li>Release <code>version</code> must be valid semver</li>
 <li>Release <code>date</code> must be YYYY-MM-DD format</li>
@@ -1949,12 +1949,12 @@
 <li><code>cve</code> must match pattern <code>CVE-\d{4}-\d{4,}</code></li>
 <li><code>ghsa</code> must match pattern <code>GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}</code></li>
 <li><code>severity</code> must be one of: critical, high, medium, low, informational</li>
-<li><code>cvss_score</code> must be between 0 and 10</li>
+<li><code>cvssScore</code> must be between 0 and 10</li>
 <li>No duplicate versions allowed</li>
 </ol>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;ir_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;irVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;project&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-project&quot;</span><span class="p">,</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;releases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p">{</span>
