@@ -70,22 +70,3 @@ release:
   draft: false
   prerelease: auto
   name_template: "v{{.Version}}"
-
-brews:
-  - name: structured-changelog
-    repository:
-      owner: grokify
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-    directory: Formula
-    homepage: "https://github.com/grokify/structured-changelog"
-    description: "CLI for canonical, deterministic changelogs using JSON IR"
-    license: "MIT"
-    install: |
-      bin.install "schangelog"
-      bin.install_symlink "schangelog" => "structured-changelog"
-    test: |
-      system "#{bin}/schangelog", "version"
-    commit_author:
-      name: goreleaserbot
-      email: bot@goreleaser.com
