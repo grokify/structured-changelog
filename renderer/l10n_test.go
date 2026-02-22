@@ -159,6 +159,7 @@ func TestRenderYankedWithLocale(t *testing.T) {
 				Version: "1.0.0",
 				Date:    "2024-01-15",
 				Yanked:  true,
+				Added:   []changelog.Entry{{Description: "Some feature"}}, // Need entry for notable release
 			},
 		},
 	}

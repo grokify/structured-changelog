@@ -434,3 +434,248 @@ func TestAddTests(t *testing.T) {
 		t.Errorf("expected description 'add unit tests', got %q", r.Tests[0].Description)
 	}
 }
+
+func TestHasCategory(t *testing.T) {
+	r := Release{
+		Added:        []Entry{{Description: "added"}},
+		Security:     []Entry{{Description: "security"}},
+		Dependencies: []Entry{{Description: "deps"}},
+	}
+
+	tests := []struct {
+		category string
+		want     bool
+	}{
+		{"Added", true},
+		{"Security", true},
+		{"Dependencies", true},
+		{"Fixed", false},
+		{"Changed", false},
+		{"NonExistent", false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.category, func(t *testing.T) {
+			got := r.HasCategory(tt.category)
+			if got != tt.want {
+				t.Errorf("HasCategory(%q) = %v, want %v", tt.category, got, tt.want)
+			}
+		})
+	}
+}
+
+func TestIsNotable(t *testing.T) {
+	tests := []struct {
+		name    string
+		release Release
+		policy  *NotabilityPolicy
+		want    bool
+	}{
+		{
+			name:    "empty release - nil policy",
+			release: Release{},
+			policy:  nil,
+			want:    false, // Empty release is never notable
+		},
+		{
+			name:    "empty release - default policy",
+			release: Release{},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "has notable category - nil policy",
+			release: Release{Added: []Entry{{Description: "new feature"}}},
+			policy:  nil,
+			want:    true,
+		},
+		{
+			name:    "has notable category - default policy",
+			release: Release{Added: []Entry{{Description: "new feature"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+		{
+			name:    "has security - notable",
+			release: Release{Security: []Entry{{Description: "fix CVE"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+		{
+			name:    "has fixed - notable",
+			release: Release{Fixed: []Entry{{Description: "bug fix"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+		{
+			name:    "has performance - notable",
+			release: Release{Performance: []Entry{{Description: "faster"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+		{
+			name:    "dependencies only - not notable",
+			release: Release{Dependencies: []Entry{{Description: "bump lib"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "documentation only - not notable",
+			release: Release{Documentation: []Entry{{Description: "update docs"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "build only - not notable",
+			release: Release{Build: []Entry{{Description: "fix ci"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "tests only - not notable",
+			release: Release{Tests: []Entry{{Description: "add tests"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "internal only - not notable",
+			release: Release{Internal: []Entry{{Description: "refactor"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "mixed notable and non-notable - notable",
+			release: Release{Added: []Entry{{Description: "feature"}}, Dependencies: []Entry{{Description: "bump"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+		{
+			name:    "infrastructure only - not notable",
+			release: Release{Infrastructure: []Entry{{Description: "infra"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "contributors only - not notable",
+			release: Release{Contributors: []Entry{{Description: "thanks"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    false,
+		},
+		{
+			name:    "custom policy - only security",
+			release: Release{Added: []Entry{{Description: "feature"}}},
+			policy:  NewNotabilityPolicy([]string{"Security"}),
+			want:    false, // Added is not in custom policy
+		},
+		{
+			name:    "custom policy - matches",
+			release: Release{Security: []Entry{{Description: "fix"}}},
+			policy:  NewNotabilityPolicy([]string{"Security"}),
+			want:    true,
+		},
+		{
+			name:    "empty policy - all notable",
+			release: Release{Dependencies: []Entry{{Description: "deps"}}},
+			policy:  NewNotabilityPolicy([]string{}),
+			want:    true, // Empty policy means all are notable
+		},
+		{
+			name:    "highlights - notable",
+			release: Release{Highlights: []Entry{{Description: "summary"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+		{
+			name:    "breaking - notable",
+			release: Release{Breaking: []Entry{{Description: "breaking change"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+		{
+			name:    "known issues - notable",
+			release: Release{KnownIssues: []Entry{{Description: "known issue"}}},
+			policy:  DefaultNotabilityPolicy(),
+			want:    true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.release.IsNotable(tt.policy)
+			if got != tt.want {
+				t.Errorf("IsNotable() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDefaultNotabilityPolicy(t *testing.T) {
+	policy := DefaultNotabilityPolicy()
+
+	// Check that notable categories are included
+	notableCategories := []string{
+		"Highlights", "Breaking", "Upgrade Guide", "Security",
+		"Added", "Changed", "Deprecated", "Removed", "Fixed",
+		"Performance", "Known Issues",
+	}
+	for _, cat := range notableCategories {
+		if !policy.IsNotable(cat) {
+			t.Errorf("expected %q to be notable", cat)
+		}
+	}
+
+	// Check that maintenance categories are NOT notable
+	maintenanceCategories := []string{
+		"Dependencies", "Documentation", "Build", "Tests",
+		"Infrastructure", "Observability", "Compliance",
+		"Internal", "Contributors",
+	}
+	for _, cat := range maintenanceCategories {
+		if policy.IsNotable(cat) {
+			t.Errorf("expected %q to NOT be notable", cat)
+		}
+	}
+}
+
+func TestNotabilityPolicy_IsNotable(t *testing.T) {
+	tests := []struct {
+		name     string
+		policy   *NotabilityPolicy
+		category string
+		want     bool
+	}{
+		{
+			name:     "nil policy - all notable",
+			policy:   nil,
+			category: "Dependencies",
+			want:     true,
+		},
+		{
+			name:     "empty categories - all notable",
+			policy:   &NotabilityPolicy{NotableCategories: []string{}},
+			category: "Dependencies",
+			want:     true,
+		},
+		{
+			name:     "category in list - notable",
+			policy:   &NotabilityPolicy{NotableCategories: []string{"Added", "Fixed"}},
+			category: "Added",
+			want:     true,
+		},
+		{
+			name:     "category not in list - not notable",
+			policy:   &NotabilityPolicy{NotableCategories: []string{"Added", "Fixed"}},
+			category: "Security",
+			want:     false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.policy.IsNotable(tt.category)
+			if got != tt.want {
+				t.Errorf("IsNotable(%q) = %v, want %v", tt.category, got, tt.want)
+			}
+		})
+	}
+}

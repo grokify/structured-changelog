@@ -1452,8 +1452,9 @@ func TestRenderMarkdown_MaintenanceGrouping(t *testing.T) {
 		},
 	}
 
-	// With grouping enabled (default)
-	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+	// With grouping enabled and all releases (need NotableOnly=false to include maintenance)
+	opts := DefaultOptions().WithNotableOnly(false)
+	md := RenderMarkdownWithOptions(cl, opts)
 
 	// Should have grouped maintenance releases
 	if !strings.Contains(md, "## Versions 1.0.1 - 1.0.2 (Maintenance)") {
@@ -1525,7 +1526,8 @@ func TestRenderMarkdown_SingleMaintenanceRelease(t *testing.T) {
 		},
 	}
 
-	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+	// Need NotableOnly=false to include maintenance releases
+	md := RenderMarkdownWithOptions(cl, DefaultOptions().WithNotableOnly(false))
 
 	// Single maintenance release should render with (Maintenance) suffix
 	if !strings.Contains(md, "## [1.0.0] - 2024-01-15 (Maintenance)") {
@@ -1563,7 +1565,8 @@ func TestRenderMarkdown_MaintenanceReleaseAllTypes(t *testing.T) {
 		},
 	}
 
-	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+	// Need NotableOnly=false to include maintenance releases
+	md := RenderMarkdownWithOptions(cl, DefaultOptions().WithNotableOnly(false))
 
 	// All maintenance types should be listed
 	expectedTypes := []string{
@@ -1624,7 +1627,8 @@ func TestRenderMarkdown_MaintenanceGroupSummary(t *testing.T) {
 		},
 	}
 
-	md := RenderMarkdownWithOptions(cl, DefaultOptions())
+	// Need NotableOnly=false to include maintenance releases
+	md := RenderMarkdownWithOptions(cl, DefaultOptions().WithNotableOnly(false))
 
 	// Should group maintenance releases
 	if !strings.Contains(md, "## Versions 1.0.0 - 1.0.4 (Maintenance)") {
@@ -1794,5 +1798,309 @@ func TestRenderMarkdown_ReferenceLinks_NoTagPath(t *testing.T) {
 	}
 	if !strings.Contains(md, "[v1.0.0]: https://github.com/example/repo/releases/tag/v1.0.0") {
 		t.Error("missing tag link (no tag path)")
+	}
+}
+
+func TestRenderMarkdown_NotableOnly(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.3",
+				Date:    "2024-03-01",
+				Added:   []changelog.Entry{{Description: "New feature"}},
+			},
+			{
+				Version:      "1.0.2",
+				Date:         "2024-02-15",
+				Dependencies: []changelog.Entry{{Description: "Update deps"}},
+			},
+			{
+				Version:      "1.0.1",
+				Date:         "2024-02-01",
+				Dependencies: []changelog.Entry{{Description: "Update more deps"}},
+			},
+			{
+				Version: "1.0.0",
+				Date:    "2024-01-01",
+				Added:   []changelog.Entry{{Description: "Initial release"}},
+			},
+		},
+	}
+
+	// Default (NotableOnly=true) - only notable releases included
+	opts := DefaultOptions()
+	opts.CompactMaintenanceReleases = false // Disable grouping for clearer test
+	md := RenderMarkdownWithOptions(cl, opts)
+
+	// Notable releases should be present
+	if !strings.Contains(md, "## [1.0.3]") {
+		t.Error("notable release 1.0.3 should be present")
+	}
+	if !strings.Contains(md, "## [1.0.0]") {
+		t.Error("notable release 1.0.0 should be present")
+	}
+
+	// Maintenance-only releases should NOT be present
+	if strings.Contains(md, "## [1.0.2]") {
+		t.Error("maintenance release 1.0.2 should NOT be present with NotableOnly")
+	}
+	if strings.Contains(md, "## [1.0.1]") {
+		t.Error("maintenance release 1.0.1 should NOT be present with NotableOnly")
+	}
+
+	// With AllReleases (NotableOnly=false) - all releases included
+	opts = opts.WithNotableOnly(false)
+	md = RenderMarkdownWithOptions(cl, opts)
+
+	if !strings.Contains(md, "## [1.0.2]") {
+		t.Error("maintenance release 1.0.2 should be present with AllReleases")
+	}
+	if !strings.Contains(md, "## [1.0.1]") {
+		t.Error("maintenance release 1.0.1 should be present with AllReleases")
+	}
+}
+
+func TestRenderMarkdown_NotableOnly_CustomCategories(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version:  "1.0.3",
+				Date:     "2024-03-01",
+				Security: []changelog.Entry{{Description: "Security fix"}},
+			},
+			{
+				Version: "1.0.2",
+				Date:    "2024-02-15",
+				Added:   []changelog.Entry{{Description: "New feature"}},
+			},
+			{
+				Version: "1.0.1",
+				Date:    "2024-02-01",
+				Fixed:   []changelog.Entry{{Description: "Bug fix"}},
+			},
+			{
+				Version: "1.0.0",
+				Date:    "2024-01-01",
+				Added:   []changelog.Entry{{Description: "Initial"}},
+			},
+		},
+	}
+
+	// Custom policy: only Security is notable
+	opts := DefaultOptions()
+	opts.CompactMaintenanceReleases = false
+	opts = opts.WithNotableOnly(true).WithNotabilityPolicy(changelog.NewNotabilityPolicy([]string{"Security"}))
+	md := RenderMarkdownWithOptions(cl, opts)
+
+	// Only Security release should be present
+	if !strings.Contains(md, "## [1.0.3]") {
+		t.Error("release with Security should be present")
+	}
+
+	// Other releases should NOT be present
+	if strings.Contains(md, "## [1.0.2]") {
+		t.Error("release with Added should NOT be present (not in custom policy)")
+	}
+	if strings.Contains(md, "## [1.0.1]") {
+		t.Error("release with Fixed should NOT be present (not in custom policy)")
+	}
+	if strings.Contains(md, "## [1.0.0]") {
+		t.Error("release with Added should NOT be present (not in custom policy)")
+	}
+}
+
+func TestRenderMarkdown_NotableOnly_ReferenceLinks(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Releases: []changelog.Release{
+			{
+				Version: "1.0.3",
+				Date:    "2024-03-01",
+				Added:   []changelog.Entry{{Description: "Feature 3"}},
+			},
+			{
+				Version:      "1.0.2",
+				Date:         "2024-02-15",
+				Dependencies: []changelog.Entry{{Description: "Deps"}}, // Maintenance only
+			},
+			{
+				Version: "1.0.1",
+				Date:    "2024-02-01",
+				Fixed:   []changelog.Entry{{Description: "Bug fix"}},
+			},
+			{
+				Version: "1.0.0",
+				Date:    "2024-01-01",
+				Added:   []changelog.Entry{{Description: "Initial"}},
+			},
+		},
+	}
+
+	opts := DefaultOptions()
+	opts = opts.WithNotableOnly(true).WithNotabilityPolicy(changelog.DefaultNotabilityPolicy())
+	md := RenderMarkdownWithOptions(cl, opts)
+
+	// Reference links should only include notable releases
+	// 1.0.3 should compare with 1.0.1 (skipping maintenance 1.0.2)
+	if !strings.Contains(md, "[1.0.3]: https://github.com/example/repo/compare/1.0.1...1.0.3") {
+		t.Error("1.0.3 should compare with 1.0.1 (skipping maintenance 1.0.2)")
+	}
+
+	// 1.0.2 should NOT have a reference link
+	if strings.Contains(md, "[1.0.2]:") {
+		t.Error("maintenance release 1.0.2 should NOT have a reference link")
+	}
+
+	// 1.0.1 should compare with 1.0.0
+	if !strings.Contains(md, "[1.0.1]: https://github.com/example/repo/compare/1.0.0...1.0.1") {
+		t.Error("1.0.1 should compare with 1.0.0")
+	}
+
+	// 1.0.0 should be a tag link (oldest)
+	if !strings.Contains(md, "[1.0.0]: https://github.com/example/repo/releases/tag/1.0.0") {
+		t.Error("1.0.0 should have a tag link")
+	}
+}
+
+func TestRenderMarkdown_NotableOnly_EmptyResult(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion: "1.0",
+		Project:   "test",
+		Releases: []changelog.Release{
+			{
+				Version:      "1.0.1",
+				Date:         "2024-02-01",
+				Dependencies: []changelog.Entry{{Description: "Deps"}},
+			},
+			{
+				Version:       "1.0.0",
+				Date:          "2024-01-01",
+				Documentation: []changelog.Entry{{Description: "Docs"}},
+			},
+		},
+	}
+
+	opts := DefaultOptions()
+	opts = opts.WithNotableOnly(true).WithNotabilityPolicy(changelog.DefaultNotabilityPolicy())
+	md := RenderMarkdownWithOptions(cl, opts)
+
+	// No releases should be present (all are maintenance-only)
+	if strings.Contains(md, "## [1.0.1]") {
+		t.Error("maintenance release should NOT be present")
+	}
+	if strings.Contains(md, "## [1.0.0]") {
+		t.Error("maintenance release should NOT be present")
+	}
+
+	// Header should still be present
+	if !strings.Contains(md, "# Changelog") {
+		t.Error("header should be present even with no releases")
+	}
+}
+
+func TestRenderMarkdown_NotableOnly_WithUnreleased(t *testing.T) {
+	cl := &changelog.Changelog{
+		IRVersion:  "1.0",
+		Project:    "test",
+		Repository: "https://github.com/example/repo",
+		Unreleased: &changelog.Release{
+			Added: []changelog.Entry{{Description: "WIP feature"}},
+		},
+		Releases: []changelog.Release{
+			{
+				Version:      "1.0.1",
+				Date:         "2024-02-01",
+				Dependencies: []changelog.Entry{{Description: "Deps"}}, // Maintenance
+			},
+			{
+				Version: "1.0.0",
+				Date:    "2024-01-01",
+				Added:   []changelog.Entry{{Description: "Initial"}},
+			},
+		},
+	}
+
+	opts := DefaultOptions()
+	opts = opts.WithNotableOnly(true).WithNotabilityPolicy(changelog.DefaultNotabilityPolicy())
+	md := RenderMarkdownWithOptions(cl, opts)
+
+	// Unreleased should be present (it has content)
+	if !strings.Contains(md, "## [Unreleased]") {
+		t.Error("unreleased section should be present")
+	}
+
+	// Only notable release should be present
+	if !strings.Contains(md, "## [1.0.0]") {
+		t.Error("notable release 1.0.0 should be present")
+	}
+
+	// Maintenance release should NOT be present
+	if strings.Contains(md, "## [1.0.1]") {
+		t.Error("maintenance release 1.0.1 should NOT be present")
+	}
+
+	// Unreleased link should compare with 1.0.0 (the latest notable release)
+	if !strings.Contains(md, "[unreleased]: https://github.com/example/repo/compare/1.0.0...HEAD") {
+		t.Error("unreleased should compare with latest notable release (1.0.0)")
+	}
+}
+
+func TestFilterNotableReleases(t *testing.T) {
+	releases := []changelog.Release{
+		{Version: "1.0.3", Added: []changelog.Entry{{Description: "Feature"}}},
+		{Version: "1.0.2", Dependencies: []changelog.Entry{{Description: "Deps"}}},
+		{Version: "1.0.1", Fixed: []changelog.Entry{{Description: "Fix"}}},
+		{Version: "1.0.0", Documentation: []changelog.Entry{{Description: "Docs"}}},
+	}
+
+	// Default policy
+	filtered := filterNotableReleases(releases, changelog.DefaultNotabilityPolicy())
+
+	if len(filtered) != 2 {
+		t.Errorf("expected 2 notable releases, got %d", len(filtered))
+	}
+
+	// Check correct releases are included
+	versions := make(map[string]bool)
+	for _, r := range filtered {
+		versions[r.Version] = true
+	}
+
+	if !versions["1.0.3"] {
+		t.Error("expected 1.0.3 to be included (has Added)")
+	}
+	if !versions["1.0.1"] {
+		t.Error("expected 1.0.1 to be included (has Fixed)")
+	}
+	if versions["1.0.2"] {
+		t.Error("expected 1.0.2 to be excluded (Dependencies only)")
+	}
+	if versions["1.0.0"] {
+		t.Error("expected 1.0.0 to be excluded (Documentation only)")
+	}
+}
+
+func TestFilterNotableReleases_NilPolicy(t *testing.T) {
+	releases := []changelog.Release{
+		{Version: "1.0.1", Dependencies: []changelog.Entry{{Description: "Deps"}}},
+		{Version: "1.0.0", Added: []changelog.Entry{{Description: "Feature"}}},
+	}
+
+	// Nil policy should use default
+	filtered := filterNotableReleases(releases, nil)
+
+	if len(filtered) != 1 {
+		t.Errorf("expected 1 notable release with nil policy, got %d", len(filtered))
+	}
+	if filtered[0].Version != "1.0.0" {
+		t.Errorf("expected version 1.0.0, got %s", filtered[0].Version)
 	}
 }

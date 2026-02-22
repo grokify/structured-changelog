@@ -190,3 +190,117 @@ func TestOptionsFromConfig_CaseInsensitiveTier(t *testing.T) {
 		t.Errorf("expected MaxTier core, got %s", opts.MaxTier)
 	}
 }
+
+func TestWithNotableOnly(t *testing.T) {
+	opts := DefaultOptions()
+	// Default is now NotableOnly=true
+	if !opts.NotableOnly {
+		t.Error("expected NotableOnly to be true by default")
+	}
+
+	newOpts := opts.WithNotableOnly(false)
+	if newOpts.NotableOnly {
+		t.Error("expected NotableOnly to be false after WithNotableOnly(false)")
+	}
+
+	// Original should be unchanged
+	if !opts.NotableOnly {
+		t.Error("expected original NotableOnly to still be true")
+	}
+}
+
+func TestWithNotabilityPolicy(t *testing.T) {
+	opts := DefaultOptions()
+	// Default now has NotabilityPolicy set
+	if opts.NotabilityPolicy == nil {
+		t.Error("expected NotabilityPolicy to be set by default")
+	}
+
+	customPolicy := changelog.NewNotabilityPolicy([]string{"Security"})
+	newOpts := opts.WithNotabilityPolicy(customPolicy)
+	if newOpts.NotabilityPolicy == nil {
+		t.Error("expected NotabilityPolicy to be set")
+	}
+	if newOpts.NotabilityPolicy.IsNotable("Added") {
+		t.Error("expected Added to NOT be notable in custom policy")
+	}
+}
+
+func TestOptionsFromConfig_DefaultNotableOnly(t *testing.T) {
+	cfg := Config{
+		Preset: "default",
+	}
+
+	opts, err := OptionsFromConfig(cfg)
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+	// Default is now NotableOnly=true
+	if !opts.NotableOnly {
+		t.Error("expected NotableOnly to be true by default")
+	}
+	if opts.NotabilityPolicy == nil {
+		t.Error("expected NotabilityPolicy to be set by default")
+	}
+}
+
+func TestOptionsFromConfig_AllReleases(t *testing.T) {
+	cfg := Config{
+		Preset:      "default",
+		AllReleases: true,
+	}
+
+	opts, err := OptionsFromConfig(cfg)
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+	if opts.NotableOnly {
+		t.Error("expected NotableOnly to be false when AllReleases is true")
+	}
+	if opts.NotabilityPolicy != nil {
+		t.Error("expected NotabilityPolicy to be nil when AllReleases is true")
+	}
+}
+
+func TestOptionsFromConfig_CustomNotableCategories(t *testing.T) {
+	cfg := Config{
+		Preset:            "default",
+		NotableCategories: []string{"Security", "Added"},
+	}
+
+	opts, err := OptionsFromConfig(cfg)
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+	if !opts.NotableOnly {
+		t.Error("expected NotableOnly to be true")
+	}
+	if opts.NotabilityPolicy == nil {
+		t.Error("expected NotabilityPolicy to be set")
+	}
+
+	// Verify custom categories are used
+	if !opts.NotabilityPolicy.IsNotable("Security") {
+		t.Error("expected Security to be notable")
+	}
+	if !opts.NotabilityPolicy.IsNotable("Added") {
+		t.Error("expected Added to be notable")
+	}
+	if opts.NotabilityPolicy.IsNotable("Fixed") {
+		t.Error("expected Fixed to NOT be notable (not in custom list)")
+	}
+}
+
+func TestOptionsFromConfig_FullPresetIncludesAllReleases(t *testing.T) {
+	cfg := Config{
+		Preset: "full",
+	}
+
+	opts, err := OptionsFromConfig(cfg)
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+	if opts.NotableOnly {
+		t.Error("expected NotableOnly to be false for full preset")
+	}
+}
