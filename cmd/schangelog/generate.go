@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -11,12 +12,14 @@ import (
 )
 
 var (
-	generateOutput     string
-	generateMinimal    bool
-	generateFull       bool
-	generateMaxTier    string
-	generateLocale     string
-	generateLocaleFile string
+	generateOutput            string
+	generateMinimal           bool
+	generateFull              bool
+	generateMaxTier           string
+	generateLocale            string
+	generateLocaleFile        string
+	generateAllReleases       bool
+	generateNotableCategories string
 )
 
 var generateCmd = &cobra.Command{
@@ -27,18 +30,31 @@ Structured Changelog JSON file.
 
 The output is deterministic: the same input always produces identical output.
 
+By default, only notable releases are included (those with user-facing changes).
+Use --all-releases to include maintenance-only releases.
+
 Output options:
-  --minimal      Exclude references and security metadata (implies --max-tier core)
-  --full         Include all metadata including commit SHAs
-  --max-tier     Filter change types by tier (core, standard, extended, optional)
-  --locale       Output locale for localized strings (e.g., en, fr, de, es, ja, zh)
-  --locale-file  Path to JSON file with locale message overrides
+  --minimal             Exclude references and security metadata (implies --max-tier core)
+  --full                Include all metadata and all releases (implies --all-releases)
+  --max-tier            Filter change types by tier (core, standard, extended, optional)
+  --locale              Output locale for localized strings (e.g., en, fr, de, es, ja, zh)
+  --locale-file         Path to JSON file with locale message overrides
+  --all-releases        Include all releases (overrides default notable-only behavior)
+  --notable-categories  Custom notable categories (comma-separated)
 
 Tiers:
   core       KACL standard types (Security, Added, Changed, Deprecated, Removed, Fixed)
   standard   Commonly used types (core + Highlights, Breaking, Upgrade Guide, Performance, Dependencies)
   extended   Extended types (standard + Documentation, Build, Known Issues, Contributors)
   optional   All types (extended + Infrastructure, Observability, Compliance, Internal)
+
+Notable Categories (default):
+  Highlights, Breaking, Upgrade Guide, Security, Added, Changed, Deprecated,
+  Removed, Fixed, Performance, Known Issues
+
+Non-notable (maintenance) categories:
+  Dependencies, Documentation, Build, Tests, Infrastructure, Observability,
+  Compliance, Internal, Contributors
 
 Examples:
   schangelog generate CHANGELOG.json
@@ -47,7 +63,8 @@ Examples:
   schangelog generate CHANGELOG.json --max-tier standard
   schangelog generate CHANGELOG.json --full -o docs/CHANGELOG.md
   schangelog generate CHANGELOG.json --locale=fr
-  schangelog generate CHANGELOG.json --locale=fr-CA --locale-file=./custom-fr-ca.json`,
+  schangelog generate CHANGELOG.json --all-releases
+  schangelog generate CHANGELOG.json --notable-categories "Security,Added,Fixed"`,
 	Args: cobra.ExactArgs(1),
 	RunE: runGenerate,
 }
@@ -55,10 +72,12 @@ Examples:
 func init() {
 	generateCmd.Flags().StringVarP(&generateOutput, "output", "o", "", "Output file (default: stdout)")
 	generateCmd.Flags().BoolVar(&generateMinimal, "minimal", false, "Use minimal output (no references/metadata, core tier only)")
-	generateCmd.Flags().BoolVar(&generateFull, "full", false, "Use full output (include commits)")
+	generateCmd.Flags().BoolVar(&generateFull, "full", false, "Use full output (include commits and all releases)")
 	generateCmd.Flags().StringVar(&generateMaxTier, "max-tier", "", "Maximum tier to include (core, standard, extended, optional)")
 	generateCmd.Flags().StringVar(&generateLocale, "locale", "", "Output locale (e.g., en, fr, de, es, ja, zh)")
 	generateCmd.Flags().StringVar(&generateLocaleFile, "locale-file", "", "Path to locale override JSON file")
+	generateCmd.Flags().BoolVar(&generateAllReleases, "all-releases", false, "Include all releases (overrides default notable-only)")
+	generateCmd.Flags().StringVar(&generateNotableCategories, "notable-categories", "", "Custom notable categories (comma-separated)")
 	rootCmd.AddCommand(generateCmd)
 }
 
@@ -89,11 +108,24 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 		preset = "full"
 	}
 
+	// Parse notable categories if provided
+	var notableCategories []string
+	if generateNotableCategories != "" {
+		for _, cat := range strings.Split(generateNotableCategories, ",") {
+			cat = strings.TrimSpace(cat)
+			if cat != "" {
+				notableCategories = append(notableCategories, cat)
+			}
+		}
+	}
+
 	opts, err := renderer.OptionsFromConfig(renderer.Config{
-		Preset:          preset,
-		MaxTier:         generateMaxTier,
-		Locale:          generateLocale,
-		LocaleOverrides: generateLocaleFile,
+		Preset:            preset,
+		MaxTier:           generateMaxTier,
+		Locale:            generateLocale,
+		LocaleOverrides:   generateLocaleFile,
+		AllReleases:       generateAllReleases,
+		NotableCategories: notableCategories,
 	})
 	if err != nil {
 		return fmt.Errorf("invalid options: %w", err)

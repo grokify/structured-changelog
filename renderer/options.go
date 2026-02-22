@@ -51,10 +51,20 @@ type Options struct {
 	// LocaleOverrides specifies a path to a JSON file with locale message overrides.
 	// Only the messages specified in this file will be replaced; others use defaults.
 	LocaleOverrides string
+
+	// NotableOnly when true, only includes releases that are considered "notable"
+	// according to the NotabilityPolicy. Non-notable releases (maintenance-only)
+	// are excluded from the output entirely.
+	NotableOnly bool
+
+	// NotabilityPolicy defines which categories make a release notable.
+	// If nil and NotableOnly is true, uses DefaultNotabilityPolicy().
+	NotabilityPolicy *changelog.NotabilityPolicy
 }
 
 // DefaultOptions returns the default rendering options.
 // Includes commit links and reference linking when repository URL is available.
+// By default, only notable releases are included (NotableOnly: true).
 func DefaultOptions() Options {
 	return Options{
 		IncludeReferences:          true,
@@ -68,6 +78,8 @@ func DefaultOptions() Options {
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierOptional,
 		Locale:                     "en",
+		NotableOnly:                true,
+		NotabilityPolicy:           changelog.DefaultNotabilityPolicy(),
 	}
 }
 
@@ -85,12 +97,14 @@ func MinimalOptions() Options {
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierCore,
 		Locale:                     "en",
+		NotableOnly:                true,
+		NotabilityPolicy:           changelog.DefaultNotabilityPolicy(),
 	}
 }
 
 // FullOptions returns options for maximum detail.
-// Same as DefaultOptions but with CompactMaintenanceReleases disabled
-// to show all releases expanded instead of grouping maintenance releases.
+// Includes all releases (NotableOnly: false) and shows them expanded
+// instead of grouping maintenance releases.
 func FullOptions() Options {
 	return Options{
 		IncludeReferences:          true,
@@ -104,6 +118,7 @@ func FullOptions() Options {
 		CompactMaintenanceReleases: false, // Full detail shows all releases expanded
 		MaxTier:                    changelog.TierOptional,
 		Locale:                     "en",
+		NotableOnly:                false, // Full includes all releases
 	}
 }
 
@@ -121,6 +136,8 @@ func CoreOptions() Options {
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierCore,
 		Locale:                     "en",
+		NotableOnly:                true,
+		NotabilityPolicy:           changelog.DefaultNotabilityPolicy(),
 	}
 }
 
@@ -138,6 +155,8 @@ func StandardOptions() Options {
 		CompactMaintenanceReleases: true,
 		MaxTier:                    changelog.TierStandard,
 		Locale:                     "en",
+		NotableOnly:                true,
+		NotabilityPolicy:           changelog.DefaultNotabilityPolicy(),
 	}
 }
 
@@ -156,6 +175,19 @@ func (o Options) WithLocale(locale string) Options {
 // WithLocaleOverrides returns a copy of the options with the LocaleOverrides field set.
 func (o Options) WithLocaleOverrides(path string) Options {
 	o.LocaleOverrides = path
+	return o
+}
+
+// WithNotableOnly returns a copy of the options with NotableOnly set.
+// When enabled, only releases with entries in notable categories are included.
+func (o Options) WithNotableOnly(enabled bool) Options {
+	o.NotableOnly = enabled
+	return o
+}
+
+// WithNotabilityPolicy returns a copy of the options with a custom NotabilityPolicy.
+func (o Options) WithNotabilityPolicy(policy *changelog.NotabilityPolicy) Options {
+	o.NotabilityPolicy = policy
 	return o
 }
 
@@ -183,14 +215,17 @@ var ErrInvalidPreset = errors.New("invalid preset")
 
 // Config holds configuration for rendering options.
 type Config struct {
-	Preset          string // default, minimal, full, core, standard
-	MaxTier         string // optional tier override
-	Locale          string // optional BCP 47 locale tag override
-	LocaleOverrides string // optional path to locale override JSON file
+	Preset            string   // default, minimal, full, core, standard
+	MaxTier           string   // optional tier override
+	Locale            string   // optional BCP 47 locale tag override
+	LocaleOverrides   string   // optional path to locale override JSON file
+	AllReleases       bool     // include all releases (overrides default notable-only)
+	NotableCategories []string // custom notable categories (uses default if empty)
 }
 
 // OptionsFromConfig creates Options from a Config struct.
-// It first applies the preset, then overrides MaxTier, Locale, and LocaleOverrides if specified.
+// It first applies the preset, then overrides MaxTier, Locale, LocaleOverrides,
+// and notability settings if specified.
 func OptionsFromConfig(cfg Config) (Options, error) {
 	opts, err := OptionsFromPreset(cfg.Preset)
 	if err != nil {
@@ -211,6 +246,15 @@ func OptionsFromConfig(cfg Config) (Options, error) {
 
 	if cfg.LocaleOverrides != "" {
 		opts = opts.WithLocaleOverrides(cfg.LocaleOverrides)
+	}
+
+	// AllReleases overrides the default notable-only behavior
+	if cfg.AllReleases {
+		opts = opts.WithNotableOnly(false)
+		opts.NotabilityPolicy = nil
+	} else if len(cfg.NotableCategories) > 0 {
+		// Custom notable categories (only applies when not AllReleases)
+		opts = opts.WithNotabilityPolicy(changelog.NewNotabilityPolicy(cfg.NotableCategories))
 	}
 
 	return opts, nil

@@ -102,6 +102,12 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 		l:       l,
 	}
 
+	// Filter releases if NotableOnly is enabled
+	releases := cl.Releases
+	if opts.NotableOnly {
+		releases = filterNotableReleases(cl.Releases, opts.NotabilityPolicy)
+	}
+
 	// Header
 	sb.WriteString("# " + l.T("changelog.title") + "\n\n")
 	sb.WriteString(l.T("changelog.intro") + "\n\n")
@@ -112,29 +118,53 @@ func RenderMarkdownWithOptions(cl *changelog.Changelog, opts Options) string {
 	if cl.Unreleased != nil && !cl.Unreleased.IsEmpty() {
 		sb.WriteString("\n## [" + l.T("section.unreleased") + "]\n")
 		renderReleaseContent(&sb, cl.Unreleased, ctx)
-	} else if opts.IncludeUnreleasedLink && len(cl.Releases) > 0 {
+	} else if opts.IncludeUnreleasedLink && len(releases) > 0 {
 		sb.WriteString("\n## [" + l.T("section.unreleased") + "]\n")
 	}
 
 	// Releases
 	if opts.CompactMaintenanceReleases {
-		renderReleasesWithGrouping(&sb, cl.Releases, ctx)
+		renderReleasesWithGrouping(&sb, releases, ctx)
 	} else {
-		for _, release := range cl.Releases {
+		for _, release := range releases {
 			sb.WriteString("\n")
 			renderRelease(&sb, &release, ctx)
 		}
 	}
 
 	// Reference links at bottom (for GitHub repositories)
+	// Use filtered releases for links when NotableOnly is enabled
 	if opts.IncludeCompareLinks && cl.Repository != "" {
-		if links := renderReferenceLinks(cl, opts.IncludeUnreleasedLink); links != "" {
+		var links string
+		if opts.NotableOnly {
+			links = renderReferenceLinksForReleases(cl, releases, opts.IncludeUnreleasedLink)
+		} else {
+			links = renderReferenceLinks(cl, opts.IncludeUnreleasedLink)
+		}
+		if links != "" {
 			sb.WriteString("\n")
 			sb.WriteString(links)
 		}
 	}
 
 	return sb.String()
+}
+
+// filterNotableReleases filters releases to include only those that are notable
+// according to the given policy.
+func filterNotableReleases(releases []changelog.Release, policy *changelog.NotabilityPolicy) []changelog.Release {
+	// Use default policy if none provided
+	if policy == nil {
+		policy = changelog.DefaultNotabilityPolicy()
+	}
+
+	var notable []changelog.Release
+	for _, r := range releases {
+		if r.IsNotable(policy) {
+			notable = append(notable, r)
+		}
+	}
+	return notable
 }
 
 func renderRelease(sb *strings.Builder, r *changelog.Release, ctx renderContext) {
@@ -542,6 +572,12 @@ func parseRepository(repoURL string) (baseURL string, host repoHost) {
 // - Compare to HEAD for unreleased: /-/compare/v0.2.0...HEAD
 // If TagPath is set (e.g., "sdk/go"), tags are prefixed: sdk/go/v0.1.0
 func renderReferenceLinks(cl *changelog.Changelog, includeUnreleasedLink bool) string {
+	return renderReferenceLinksForReleases(cl, cl.Releases, includeUnreleasedLink)
+}
+
+// renderReferenceLinksForReleases generates reference links for a specific set of releases.
+// This variant is used when filtering releases (e.g., notable-only mode).
+func renderReferenceLinksForReleases(cl *changelog.Changelog, releases []changelog.Release, includeUnreleasedLink bool) string {
 	baseURL, host := parseRepository(cl.Repository)
 	if host == hostUnknown {
 		return ""
@@ -551,19 +587,19 @@ func renderReferenceLinks(cl *changelog.Changelog, includeUnreleasedLink bool) s
 
 	// Unreleased link (always included by default when there are releases)
 	// This lets users see what's been merged since the last release
-	if includeUnreleasedLink && len(cl.Releases) > 0 {
-		latestVersion := cl.Releases[0].Version
+	if includeUnreleasedLink && len(releases) > 0 {
+		latestVersion := releases[0].Version
 		fmt.Fprintf(&sb, "[unreleased]: %s\n", formatCompareLink(baseURL, host, cl.TagPath, latestVersion, "HEAD"))
 	}
 
 	// Release links
-	for i, release := range cl.Releases {
-		if i == len(cl.Releases)-1 {
+	for i, release := range releases {
+		if i == len(releases)-1 {
 			// First/oldest release - link to tag
 			fmt.Fprintf(&sb, "[%s]: %s\n", release.Version, formatTagLink(baseURL, host, cl.TagPath, release.Version))
 		} else {
 			// Subsequent releases - link to compare with previous
-			prevVersion := cl.Releases[i+1].Version
+			prevVersion := releases[i+1].Version
 			fmt.Fprintf(&sb, "[%s]: %s\n", release.Version, formatCompareLink(baseURL, host, cl.TagPath, prevVersion, release.Version))
 		}
 	}

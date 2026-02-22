@@ -149,6 +149,44 @@ func (r *Release) GetEntries(categoryName string) []Entry {
 	return r.categoryMap()[categoryName]
 }
 
+// HasCategory returns true if the release has entries in the specified category.
+func (r *Release) HasCategory(categoryName string) bool {
+	entries := r.GetEntries(categoryName)
+	return len(entries) > 0
+}
+
+// IsNotable returns true if the release is considered notable according to the
+// given policy. A release is notable if it has entries in any of the policy's
+// notable categories.
+//
+// If policy is nil, falls back to !IsMaintenanceOnly() for consistency with
+// existing behavior.
+func (r *Release) IsNotable(policy *NotabilityPolicy) bool {
+	// Empty release is never notable
+	if r.IsEmpty() {
+		return false
+	}
+
+	// Nil policy = use default behavior (inverse of maintenance-only)
+	if policy == nil {
+		return !r.IsMaintenanceOnly()
+	}
+
+	// Empty policy = all releases are notable
+	if len(policy.NotableCategories) == 0 {
+		return true
+	}
+
+	// Check if any notable category has entries
+	for _, catName := range policy.NotableCategories {
+		if r.HasCategory(catName) {
+			return true
+		}
+	}
+
+	return false
+}
+
 // Category represents a group of entries under a category heading.
 type Category struct {
 	Name    string
