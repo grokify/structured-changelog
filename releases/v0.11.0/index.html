@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://grokify.github.io/structured-changelog/releases/v0.10.0/">
+        <link rel="canonical" href="https://grokify.github.io/structured-changelog/releases/v0.11.0/">
       
       
-        <link rel="prev" href="../v0.11.0/">
+        <link rel="prev" href="../../prd/rendering/">
       
       
-        <link rel="next" href="../v0.9.0/">
+        <link rel="next" href="../v0.10.0/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>v0.10.0 - Structured Changelog</title>
+        <title>v0.11.0 - Structured Changelog</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#release-notes-v0100" class="md-skip">
+        <a href="#release-notes-v0110" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              v0.10.0
+              v0.11.0
             
           </span>
         </div>
@@ -730,29 +730,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../v0.11.0/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    v0.11.0
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -770,7 +747,7 @@
   
   
   <span class="md-ellipsis">
-    v0.10.0
+    v0.11.0
     
   </span>
   
@@ -783,7 +760,7 @@
   
   
   <span class="md-ellipsis">
-    v0.10.0
+    v0.11.0
     
   </span>
   
@@ -834,9 +811,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#camelcase-migration" class="md-nav__link">
+  <a href="#default-output-now-notable-only" class="md-nav__link">
     <span class="md-ellipsis">
-      camelCase Migration
+      Default Output Now Notable-Only
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration
     </span>
   </a>
   
@@ -848,46 +834,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#notable-vs-non-notable-categories" class="md-nav__link">
     <span class="md-ellipsis">
-      Added
+      Notable vs Non-Notable Categories
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Added">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-cli-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      New CLI Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New CLI Flags">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#localization-support" class="md-nav__link">
+  <a href="#-all-releases" class="md-nav__link">
     <span class="md-ellipsis">
-      Localization Support
+      --all-releases
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#built-in-languages" class="md-nav__link">
+  <a href="#-notable-categories" class="md-nav__link">
     <span class="md-ellipsis">
-      Built-in Languages
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#custom-overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Custom Overrides
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#commit-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Commit Validation
+      --notable-categories
     </span>
   </a>
   
@@ -909,6 +886,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#notabilitypolicy-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NotabilityPolicy Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#renderer-options" class="md-nav__link">
     <span class="md-ellipsis">
       Renderer Options
@@ -918,9 +904,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#new-options" class="md-nav__link">
+  <a href="#new-methods" class="md-nav__link">
     <span class="md-ellipsis">
-      New Options
+      New Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config Changes
     </span>
   </a>
   
@@ -932,29 +927,53 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
+  <a href="#preset-behavior" class="md-nav__link">
     <span class="md-ellipsis">
-      Dependencies
+      Preset Behavior
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#use-cases" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-facing-changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      User-Facing Changelog
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#whats-next" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#complete-archive" class="md-nav__link">
     <span class="md-ellipsis">
-      What's Next
+      Complete Archive
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-focused" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security-Focused
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -971,6 +990,29 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../v0.10.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v0.10.0
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1245,9 +1287,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#camelcase-migration" class="md-nav__link">
+  <a href="#default-output-now-notable-only" class="md-nav__link">
     <span class="md-ellipsis">
-      camelCase Migration
+      Default Output Now Notable-Only
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration
     </span>
   </a>
   
@@ -1259,46 +1310,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#notable-vs-non-notable-categories" class="md-nav__link">
     <span class="md-ellipsis">
-      Added
+      Notable vs Non-Notable Categories
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Added">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-cli-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      New CLI Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New CLI Flags">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#localization-support" class="md-nav__link">
+  <a href="#-all-releases" class="md-nav__link">
     <span class="md-ellipsis">
-      Localization Support
+      --all-releases
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#built-in-languages" class="md-nav__link">
+  <a href="#-notable-categories" class="md-nav__link">
     <span class="md-ellipsis">
-      Built-in Languages
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#custom-overrides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Custom Overrides
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#commit-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Commit Validation
+      --notable-categories
     </span>
   </a>
   
@@ -1320,6 +1362,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#notabilitypolicy-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      NotabilityPolicy Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#renderer-options" class="md-nav__link">
     <span class="md-ellipsis">
       Renderer Options
@@ -1329,9 +1380,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#new-options" class="md-nav__link">
+  <a href="#new-methods" class="md-nav__link">
     <span class="md-ellipsis">
-      New Options
+      New Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config Changes
     </span>
   </a>
   
@@ -1343,29 +1403,53 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
+  <a href="#preset-behavior" class="md-nav__link">
     <span class="md-ellipsis">
-      Dependencies
+      Preset Behavior
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#use-cases" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-facing-changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      User-Facing Changelog
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#whats-next" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#complete-archive" class="md-nav__link">
     <span class="md-ellipsis">
-      What's Next
+      Complete Archive
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-focused" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security-Focused
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1397,246 +1481,232 @@
   
 
 
-<h1 id="release-notes-v0100">Release Notes - v0.10.0<a class="headerlink" href="#release-notes-v0100" title="Permanent link">&para;</a></h1>
+<h1 id="release-notes-v0110">Release Notes - v0.11.0<a class="headerlink" href="#release-notes-v0110" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This release adds <strong>localization support</strong> for rendered Markdown output in 6 languages, and <strong>migrates the JSON schema to camelCase</strong> for consistency with the broader JSON ecosystem.</p>
+<p>This release changes the <strong>default behavior</strong> of <code>schangelog generate</code> to output <strong>notable releases only</strong>. Maintenance-only releases (those containing only dependency updates, documentation, build, tests, etc.) are now excluded by default, making generated changelogs more focused on user-facing changes.</p>
 <h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Localized changelog output in English, German, Spanish, French, Japanese, and Chinese</li>
-<li>Header text fully localized (Keep a Changelog, SemVer, Conventional Commits references)</li>
-<li>JSON schema migrated from snake_case to camelCase (breaking change)</li>
-<li>Custom locale override support for tailored translations</li>
-<li>Commit hash validation with <code>--require-commits</code> flag</li>
+<li>Notable-only filtering is now the default behavior</li>
+<li>New <code>--all-releases</code> flag to include all releases when needed</li>
+<li>Customizable notability policy via <code>--notable-categories</code></li>
+<li><code>--full</code> preset automatically includes all releases</li>
 </ul>
 <h2 id="breaking-changes">Breaking Changes<a class="headerlink" href="#breaking-changes" title="Permanent link">&para;</a></h2>
-<h3 id="camelcase-migration">camelCase Migration<a class="headerlink" href="#camelcase-migration" title="Permanent link">&para;</a></h3>
-<p>All JSON property names have been changed from snake_case to camelCase:</p>
+<h3 id="default-output-now-notable-only">Default Output Now Notable-Only<a class="headerlink" href="#default-output-now-notable-only" title="Permanent link">&para;</a></h3>
+<p>Previously, <code>schangelog generate</code> included all releases. Now it excludes maintenance-only releases by default.</p>
+<p><strong>Before (v0.10.0):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Included ALL releases</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
+</code></pre></div>
+<p><strong>After (v0.11.0):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Default: notable releases only</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Explicit: include all releases</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md<span class="w"> </span>--all-releases
+</code></pre></div>
+<h3 id="migration">Migration<a class="headerlink" href="#migration" title="Permanent link">&para;</a></h3>
+<p>If your workflow requires all releases in the output:</p>
+<ol>
+<li>Add <code>--all-releases</code> to your <code>schangelog generate</code> commands</li>
+<li>Or use the <code>--full</code> preset which now implies <code>--all-releases</code></li>
+</ol>
+<h2 id="notable-vs-non-notable-categories">Notable vs Non-Notable Categories<a class="headerlink" href="#notable-vs-non-notable-categories" title="Permanent link">&para;</a></h2>
+<p>A release is <strong>notable</strong> if it contains at least one entry in a notable category:</p>
 <table>
 <thead>
 <tr>
-<th>Old (snake_case)</th>
-<th>New (camelCase)</th>
+<th>Notable Categories</th>
+<th>Non-Notable (Maintenance)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ir_version</code></td>
-<td><code>irVersion</code></td>
+<td>Highlights</td>
+<td>Dependencies</td>
 </tr>
 <tr>
-<td><code>tag_path</code></td>
-<td><code>tagPath</code></td>
+<td>Breaking</td>
+<td>Documentation</td>
 </tr>
 <tr>
-<td><code>commit_convention</code></td>
-<td><code>commitConvention</code></td>
+<td>Upgrade Guide</td>
+<td>Build</td>
 </tr>
 <tr>
-<td><code>generated_at</code></td>
-<td><code>generatedAt</code></td>
+<td>Security</td>
+<td>Tests</td>
 </tr>
 <tr>
-<td><code>compare_url</code></td>
-<td><code>compareUrl</code></td>
+<td>Added</td>
+<td>Infrastructure</td>
 </tr>
 <tr>
-<td><code>upgrade_guide</code></td>
-<td><code>upgradeGuide</code></td>
+<td>Changed</td>
+<td>Observability</td>
 </tr>
 <tr>
-<td><code>known_issues</code></td>
-<td><code>knownIssues</code></td>
+<td>Deprecated</td>
+<td>Compliance</td>
 </tr>
 <tr>
-<td><code>component_version</code></td>
-<td><code>componentVersion</code></td>
+<td>Removed</td>
+<td>Internal</td>
 </tr>
 <tr>
-<td><code>cvss_score</code></td>
-<td><code>cvssScore</code></td>
+<td>Fixed</td>
+<td>Contributors</td>
 </tr>
 <tr>
-<td><code>cvss_vector</code></td>
-<td><code>cvssVector</code></td>
+<td>Performance</td>
+<td></td>
 </tr>
 <tr>
-<td><code>affected_versions</code></td>
-<td><code>affectedVersions</code></td>
-</tr>
-<tr>
-<td><code>patched_versions</code></td>
-<td><code>patchedVersions</code></td>
+<td>Known Issues</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Migration:</strong> Update your CHANGELOG.json files to use camelCase property names, then run <code>schangelog validate</code> to verify.</p>
-<h2 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h2>
-<h3 id="localization-support">Localization Support<a class="headerlink" href="#localization-support" title="Permanent link">&para;</a></h3>
-<p>Generate changelogs in multiple languages:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Generate in French</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--locale<span class="o">=</span>fr<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Generate in Japanese</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--locale<span class="o">=</span>ja<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Use custom translation overrides</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--locale<span class="o">=</span>fr<span class="w"> </span>--locale-file<span class="o">=</span>./custom-fr.json
+<h2 id="new-cli-flags">New CLI Flags<a class="headerlink" href="#new-cli-flags" title="Permanent link">&para;</a></h2>
+<h3 id="-all-releases"><code>--all-releases</code><a class="headerlink" href="#-all-releases" title="Permanent link">&para;</a></h3>
+<p>Include all releases, overriding the default notable-only behavior:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--all-releases
 </code></pre></div>
-<h3 id="built-in-languages">Built-in Languages<a class="headerlink" href="#built-in-languages" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Language</th>
-<th>Example Headers</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>en</code></td>
-<td>English</td>
-<td>Changelog, Added, Breaking</td>
-</tr>
-<tr>
-<td><code>de</code></td>
-<td>German</td>
-<td>Änderungsprotokoll, Hinzugefügt, Breaking Changes</td>
-</tr>
-<tr>
-<td><code>es</code></td>
-<td>Spanish</td>
-<td>Registro de cambios, Añadido, Cambios importantes</td>
-</tr>
-<tr>
-<td><code>fr</code></td>
-<td>French</td>
-<td>Journal des modifications, Ajouté, Changements majeurs</td>
-</tr>
-<tr>
-<td><code>ja</code></td>
-<td>Japanese</td>
-<td>変更履歴, 追加, 破壊的変更</td>
-</tr>
-<tr>
-<td><code>zh</code></td>
-<td>Chinese</td>
-<td>变更日志, 新增, 破坏性变更</td>
-</tr>
-</tbody>
-</table>
-<h3 id="custom-overrides">Custom Overrides<a class="headerlink" href="#custom-overrides" title="Permanent link">&para;</a></h3>
-<p>Create a JSON file to override specific translations:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;messages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;changelog.title&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release Notes&quot;</span><span class="p">},</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;category.added&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;New Features&quot;</span><span class="p">},</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;marker.breaking&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;⚠️ BREAKING:&quot;</span><span class="p">}</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+<h3 id="-notable-categories"><code>--notable-categories</code><a class="headerlink" href="#-notable-categories" title="Permanent link">&para;</a></h3>
+<p>Customize which categories make a release notable:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Only include releases with Security or Fixed entries</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--notable-categories<span class="w"> </span><span class="s2">&quot;Security,Fixed&quot;</span>
 </code></pre></div>
-<p>See the <a href="../../guides/localization/">Localization Guide</a> for all 50 customizable message IDs.</p>
-<h3 id="commit-validation">Commit Validation<a class="headerlink" href="#commit-validation" title="Permanent link">&para;</a></h3>
-<p>Validate that changelog entries include commit hashes:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Default: W005 warnings for missing commits (valid=true)</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--format<span class="o">=</span>json
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Require commits: W005 becomes E010 errors (valid=false)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span>--require-commits
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Strict mode also converts warnings to errors</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>schangelog<span class="w"> </span>validate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--format<span class="o">=</span>json<span class="w"> </span>--strict
-</code></pre></div>
-<p><strong>Exempt categories</strong> (don't require commit hashes):</p>
-<ul>
-<li><code>highlights</code> — Human-readable summaries</li>
-<li><code>upgradeGuide</code> — Documentation/guidance</li>
-<li><code>knownIssues</code> — Ongoing issues</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Missing Commit</th>
-<th>Result</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Default</td>
-<td>W005 warning</td>
-<td><code>valid=true</code></td>
-</tr>
-<tr>
-<td><code>--require-commits</code></td>
-<td>E010 error</td>
-<td><code>valid=false</code></td>
-</tr>
-<tr>
-<td><code>--strict</code></td>
-<td>W005 as error</td>
-<td><code>valid=false</code></td>
-</tr>
-</tbody>
-</table>
 <h2 id="library-additions">Library Additions<a class="headerlink" href="#library-additions" title="Permanent link">&para;</a></h2>
-<h3 id="renderer-options">Renderer Options<a class="headerlink" href="#renderer-options" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/renderer&quot;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">// Built-in locale</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1">// With custom overrides</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">).</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nx">WithLocaleOverrides</span><span class="p">(</span><span class="s">&quot;./custom-fr.json&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="nx">md</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">RenderMarkdown</span><span class="p">(</span><span class="nx">changelog</span><span class="p">,</span><span class="w"> </span><span class="nx">opts</span><span class="p">)</span>
+<h3 id="notabilitypolicy-type">NotabilityPolicy Type<a class="headerlink" href="#notabilitypolicy-type" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/changelog&quot;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">// Use default policy</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nx">policy</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">changelog</span><span class="p">.</span><span class="nx">DefaultNotabilityPolicy</span><span class="p">()</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">// Custom policy</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nx">policy</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">changelog</span><span class="p">.</span><span class="nx">NewNotabilityPolicy</span><span class="p">([]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;Security&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Added&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Fixed&quot;</span><span class="p">})</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">// Check if a release is notable</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">if</span><span class="w"> </span><span class="nx">release</span><span class="p">.</span><span class="nx">IsNotable</span><span class="p">(</span><span class="nx">policy</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="c1">// Has user-facing changes</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="new-options">New Options<a class="headerlink" href="#new-options" title="Permanent link">&para;</a></h3>
+<h3 id="renderer-options">Renderer Options<a class="headerlink" href="#renderer-options" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/renderer&quot;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">// Default: notable only</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">()</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">// Include all releases</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span><span class="nx">WithNotableOnly</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1">// Custom notability</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="nx">WithNotabilityPolicy</span><span class="p">(</span><span class="nx">changelog</span><span class="p">.</span><span class="nx">NewNotabilityPolicy</span><span class="p">([]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;Security&quot;</span><span class="p">}))</span>
+</code></pre></div>
+<h3 id="new-methods">New Methods<a class="headerlink" href="#new-methods" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Option</th>
+<th>Method</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>Locale</code></td>
-<td>BCP 47 locale code (e.g., "en", "fr", "ja")</td>
+<td><code>Release.IsNotable(policy)</code></td>
+<td>Returns true if release has entries in notable categories</td>
 </tr>
 <tr>
-<td><code>LocaleOverrides</code></td>
-<td>Path to custom translation JSON file</td>
+<td><code>Release.HasCategory(name)</code></td>
+<td>Returns true if release has entries in the named category</td>
+</tr>
+<tr>
+<td><code>DefaultNotabilityPolicy()</code></td>
+<td>Returns policy with default notable categories</td>
+</tr>
+<tr>
+<td><code>NewNotabilityPolicy(cats)</code></td>
+<td>Creates policy with custom notable categories</td>
 </tr>
 </tbody>
 </table>
-<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Added <code>github.com/grokify/structured-locale</code> v0.1.0 for localization support</li>
-</ul>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p>See <code>examples/l10n/</code> for rendered changelogs in all 6 languages:</p>
-<ul>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.en.md">English</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.de.md">German</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.es.md">Spanish</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.fr.md">French</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.ja.md">Japanese</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.zh.md">Chinese</a></li>
-</ul>
-<h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
-<p>Future releases may include:</p>
-<ul>
-<li>Additional languages (Portuguese, Russian, Korean, etc.)</li>
-<li>RTL language support</li>
-<li>Date format localization</li>
-</ul>
+<h3 id="config-changes">Config Changes<a class="headerlink" href="#config-changes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Config.AllReleases</code></td>
+<td>Set to true to include all releases</td>
+</tr>
+<tr>
+<td><code>Config.NotableCategories</code></td>
+<td>Custom list of notable category names</td>
+</tr>
+</tbody>
+</table>
+<h2 id="preset-behavior">Preset Behavior<a class="headerlink" href="#preset-behavior" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Notable Only?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default</code></td>
+<td>Yes</td>
+<td>Standard output, notable releases only</td>
+</tr>
+<tr>
+<td><code>minimal</code></td>
+<td>Yes</td>
+<td>Minimal output, notable releases only</td>
+</tr>
+<tr>
+<td><code>core</code></td>
+<td>Yes</td>
+<td>KACL types only, notable releases</td>
+</tr>
+<tr>
+<td><code>standard</code></td>
+<td>Yes</td>
+<td>Standard tier, notable releases</td>
+</tr>
+<tr>
+<td><code>full</code></td>
+<td><strong>No</strong></td>
+<td>Maximum detail, <strong>all releases</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
+<h3 id="user-facing-changelog">User-Facing Changelog<a class="headerlink" href="#user-facing-changelog" title="Permanent link">&para;</a></h3>
+<p>The default behavior now produces a changelog focused on what users care about:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Generate user-facing changelog (default)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
+</code></pre></div>
+<h3 id="complete-archive">Complete Archive<a class="headerlink" href="#complete-archive" title="Permanent link">&para;</a></h3>
+<p>For complete history including all maintenance releases:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Generate complete changelog</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md<span class="w"> </span>--all-releases
+</code></pre></div>
+<h3 id="security-focused">Security-Focused<a class="headerlink" href="#security-focused" title="Permanent link">&para;</a></h3>
+<p>Generate changelog highlighting only security-relevant releases:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--notable-categories<span class="w"> </span><span class="s2">&quot;Security&quot;</span>
+</code></pre></div>
 <h2 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../changelog/">Full Changelog</a></li>
-<li><a href="../../guides/localization/">Localization Guide</a></li>
-<li><a href="https://pkg.go.dev/github.com/grokify/structured-changelog">Documentation</a></li>
+<li><a href="https://pkg.go.dev/github.com/grokify/structured-changelog">CLI Reference</a></li>
 </ul>
 
 
