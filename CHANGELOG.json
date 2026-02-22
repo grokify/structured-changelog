@@ -7,6 +7,39 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.11.0",
+      "date": "2026-02-22",
+      "highlights": [
+        { "description": "Notable-only filtering now the default - maintenance-only releases excluded from generated changelogs" },
+        { "description": "New `--all-releases` flag to include all releases when needed" }
+      ],
+      "breaking": [
+        { "description": "Default output now excludes maintenance-only releases (use `--all-releases` to include them)" }
+      ],
+      "upgradeGuide": [
+        { "description": "If you need all releases in output, add `--all-releases` flag to your `schangelog generate` commands" },
+        { "description": "The `--full` preset now implies `--all-releases` automatically" }
+      ],
+      "added": [
+        { "description": "`--all-releases` flag for `generate` command to include maintenance-only releases" },
+        { "description": "`--notable-categories` flag to customize which categories are considered notable" },
+        { "description": "`NotabilityPolicy` type for programmatic control over release filtering" },
+        { "description": "`DefaultNotabilityPolicy()` function returning default notable categories" },
+        { "description": "`Release.IsNotable()` method to check if a release has user-facing changes" },
+        { "description": "`Release.HasCategory()` helper method to check for entries in a specific category" },
+        { "description": "`Options.NotableOnly` and `Options.NotabilityPolicy` renderer fields" },
+        { "description": "`Config.AllReleases` and `Config.NotableCategories` for CLI configuration" }
+      ],
+      "changed": [
+        { "description": "Default rendering now filters to notable releases only (inverse of previous behavior)", "breaking": true },
+        { "description": "`--full` preset now includes all releases (sets `NotableOnly=false`)" }
+      ],
+      "documentation": [
+        { "description": "Updated CLI help text with notable-only default behavior explanation" },
+        { "description": "Added notable vs non-notable category reference to generate command help" }
+      ]
+    },
+    {
       "version": "v0.10.0",
       "date": "2026-02-08",
       "highlights": [

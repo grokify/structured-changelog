@@ -273,9 +273,28 @@ Generates: `- New feature by [@contributor](https://github.com/contributor)`
 
 Common bots (dependabot, renovate, etc.) are auto-detected and excluded from attribution.
 
+### Notable Releases (Default)
+
+By default, only **notable releases** are included in the generated output. Maintenance-only releases (those with only dependencies, documentation, build, tests, etc.) are excluded to keep changelogs focused on user-facing changes.
+
+```bash
+# Default: notable releases only
+schangelog generate CHANGELOG.json -o CHANGELOG.md
+
+# Include all releases
+schangelog generate CHANGELOG.json -o CHANGELOG.md --all-releases
+
+# Customize what's considered notable
+schangelog generate CHANGELOG.json --notable-categories "Security,Added,Fixed"
+```
+
+**Notable categories:** Highlights, Breaking, Upgrade Guide, Security, Added, Changed, Deprecated, Removed, Fixed, Performance, Known Issues
+
+**Non-notable (maintenance):** Dependencies, Documentation, Build, Tests, Infrastructure, Observability, Compliance, Internal, Contributors
+
 ### Compact Maintenance Releases
 
-Consecutive maintenance-only releases (dependencies, documentation, build) are automatically grouped:
+When using `--all-releases`, consecutive maintenance-only releases are automatically grouped:
 
 ```markdown
 ## Versions 0.71.1 - 0.71.10 (Maintenance)
@@ -283,7 +302,7 @@ Consecutive maintenance-only releases (dependencies, documentation, build) are a
 10 releases: 8 dependency update(s), 2 documentation change(s).
 ```
 
-Use `--full` to disable grouping and show all releases expanded.
+Use `--full` to include all releases expanded (disables both notable-only filtering and grouping).
 
 ## JSON IR Schema
 
