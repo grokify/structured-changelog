@@ -1,7 +1,8 @@
 # Structured Changelog
 
-[![Build Status][build-status-svg]][build-status-url]
-[![Lint Status][lint-status-svg]][lint-status-url]
+[![Go CI][go-ci-svg]][go-ci-url]
+[![Go Lint][go-lint-svg]][go-lint-url]
+[![Go SAST][go-sast-svg]][go-sast-url]
 [![Coverage][coverage-svg]][coverage-url]
 [![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
@@ -520,10 +521,12 @@ Contributions are welcome! Please read our contributing guidelines and submit pu
 
 MIT License - see [LICENSE](LICENSE) for details.
 
- [build-status-svg]: https://github.com/grokify/structured-changelog/actions/workflows/ci.yaml/badge.svg?branch=main
- [build-status-url]: https://github.com/grokify/structured-changelog/actions/workflows/ci.yaml
- [lint-status-svg]: https://github.com/grokify/structured-changelog/actions/workflows/lint.yaml/badge.svg?branch=main
- [lint-status-url]: https://github.com/grokify/structured-changelog/actions/workflows/lint.yaml
+ [go-ci-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-ci.yaml/badge.svg?branch=main
+ [go-ci-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-ci.yaml
+ [go-lint-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-lint.yaml/badge.svg?branch=main
+ [go-lint-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-lint.yaml
+ [go-sast-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
+ [go-sast-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-sast-codeql.yaml
  [coverage-svg]: https://img.shields.io/badge/coverage-96.1%25-brightgreen
  [coverage-url]: https://github.com/grokify/structured-changelog
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/structured-changelog
