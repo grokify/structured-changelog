@@ -39,9 +39,9 @@ func NewResolverWithPaths(paths []string) *Resolver {
 func DefaultSearchPaths() []string {
 	paths := []string{}
 
-	// Add ~/go/src
-	home := os.Getenv("HOME")
-	if home != "" {
+	// Get home directory (cross-platform via os.UserHomeDir)
+	home, err := os.UserHomeDir()
+	if err == nil && home != "" {
 		paths = append(paths, filepath.Join(home, "go", "src"))
 	}
 
