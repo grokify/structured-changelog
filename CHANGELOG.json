@@ -7,6 +7,37 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.12.0",
+      "date": "2026-02-28",
+      "highlights": [
+        { "description": "Multi-project changelog aggregation with `schangelog portfolio` commands for tracking releases across 100s of repositories" },
+        { "description": "GitHub-style activity heatmap and velocity dashboard generation for development metrics" }
+      ],
+      "added": [
+        { "description": "`portfolio` command group for multi-project changelog operations", "commit": "a0a36d7" },
+        { "description": "`portfolio discover` command to scan GitHub orgs/users for repositories with CHANGELOG.json", "commit": "a0a36d7" },
+        { "description": "`portfolio aggregate` command to combine changelogs from multiple projects into a unified portfolio", "commit": "a0a36d7" },
+        { "description": "`portfolio metrics` command to generate time-series metrics and dashboard data", "commit": "a0a36d7" },
+        { "description": "`aggregate` package with manifest, resolver, portfolio, metrics, and dashboard types", "commit": "6b9f28d" },
+        { "description": "Manifest schema for defining projects to aggregate (similar to go.mod but for changelogs)", "commit": "6b9f28d" },
+        { "description": "Local-first resolution searching ~/go/src and $GOPATH/src for project changelogs", "commit": "6b9f28d" },
+        { "description": "Remote changelog fetching from GitHub with HITL approval flow (--pending/--approve flags)", "commit": "6b9f28d" },
+        { "description": "Category roll-up rules mapping 20 categories to 6 groups: Features, Fixes, Improvements, Breaking, Maintenance, Community", "commit": "6b9f28d" },
+        { "description": "Time-series metrics with day/week/month granularity for release velocity tracking", "commit": "6b9f28d" },
+        { "description": "Daily activity data for GitHub-style contribution heatmaps", "commit": "6b9f28d" },
+        { "description": "Dashboard export in dashforge-compatible JSON format with widgets for metrics, charts, and tables", "commit": "6b9f28d" },
+        { "description": "`--dashboard` flag for metrics command to generate dashboard-ready data", "commit": "a0a36d7" },
+        { "description": "`--template velocity` option for generating complete dashboard definitions", "commit": "a0a36d7" }
+      ],
+      "dependencies": [
+        { "description": "Add `github.com/google/go-github/v84` for GitHub API access in discovery and remote fetch", "commit": "72ae60c" },
+        { "description": "Add `github.com/grokify/gogithub` v0.10.0 for GitHub utilities", "commit": "72ae60c" }
+      ],
+      "tests": [
+        { "description": "Comprehensive tests for aggregate package: manifest, rollup, resolver, portfolio, metrics, dashboard", "commit": "6b9f28d" }
+      ]
+    },
+    {
       "version": "v0.11.0",
       "date": "2026-02-22",
       "highlights": [
