@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "rollups": {
+    "Features": ["Added", "Highlights"],
+    "Fixes": ["Fixed", "Security"],
+    "Improvements": ["Changed", "Performance", "Deprecated", "Removed"],
+    "Breaking": ["Breaking", "UpgradeGuide"],
+    "Maintenance": ["Dependencies", "Build", "Tests", "Documentation", "Infrastructure", "Internal", "Observability", "Compliance"],
+    "Community": ["Contributors", "KnownIssues"]
+  }
+}
