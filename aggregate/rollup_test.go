@@ -117,3 +117,70 @@ func TestDefaultRollupRules(t *testing.T) {
 		t.Error("DefaultRollupRules() returned empty rollups")
 	}
 }
+
+func TestParseRollupRules(t *testing.T) {
+	validJSON := []byte(`{
+		"version": "1.0",
+		"rollups": {
+			"Features": ["Added", "Highlights"],
+			"Fixes": ["Fixed", "Security"]
+		}
+	}`)
+
+	rules, err := ParseRollupRules(validJSON)
+	if err != nil {
+		t.Fatalf("ParseRollupRules() error: %v", err)
+	}
+
+	if rules.Version != "1.0" {
+		t.Errorf("expected version 1.0, got %s", rules.Version)
+	}
+
+	if len(rules.Rollups) != 2 {
+		t.Errorf("expected 2 rollup groups, got %d", len(rules.Rollups))
+	}
+
+	if len(rules.Rollups["Features"]) != 2 {
+		t.Errorf("expected 2 categories in Features, got %d", len(rules.Rollups["Features"]))
+	}
+}
+
+func TestParseRollupRulesInvalid(t *testing.T) {
+	invalidJSON := []byte(`{invalid json`)
+
+	_, err := ParseRollupRules(invalidJSON)
+	if err == nil {
+		t.Error("expected error for invalid JSON, got nil")
+	}
+}
+
+func TestRollupRulesApplyEmpty(t *testing.T) {
+	rules, _ := LoadRollupRules()
+
+	// Empty input
+	result := rules.Apply(map[string]int{})
+
+	if len(result) != 0 {
+		t.Errorf("expected empty result for empty input, got %d entries", len(result))
+	}
+}
+
+func TestRollupRulesApplyAllUnknown(t *testing.T) {
+	rules, _ := LoadRollupRules()
+
+	raw := map[string]int{
+		"UnknownCategory1": 5,
+		"UnknownCategory2": 3,
+	}
+
+	result := rules.Apply(raw)
+
+	if result["Other"] != 8 {
+		t.Errorf("expected Other=8, got %d", result["Other"])
+	}
+
+	// Should only have "Other" group
+	if len(result) != 1 {
+		t.Errorf("expected 1 result group, got %d", len(result))
+	}
+}

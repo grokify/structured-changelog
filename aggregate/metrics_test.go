@@ -151,6 +151,10 @@ func TestNormalizeDate(t *testing.T) {
 		{"2024-06-15", GranularityMonth, "2024-06"},
 		{"2024-06-15", GranularityWeek, "2024-W24"}, // June 15, 2024 is week 24
 		{"2024-01-01", GranularityWeek, "2024-W01"}, // January 1, 2024 is week 1
+		// Edge cases
+		{"invalid-date", GranularityDay, "invalid-date"},    // Invalid date returns as-is
+		{"2024-06-15", "invalid", "2024-06-15"},             // Invalid granularity returns as-is
+		{"", GranularityDay, ""},                            // Empty date
 	}
 
 	for _, tt := range tests {
@@ -160,6 +164,32 @@ func TestNormalizeDate(t *testing.T) {
 				t.Errorf("normalizeDate(%q, %q) = %q, expected %q", tt.date, tt.granularity, result, tt.expected)
 			}
 		})
+	}
+}
+
+func TestDefaultMetricsOptions(t *testing.T) {
+	opts := DefaultMetricsOptions()
+
+	if opts.Granularity != GranularityDay {
+		t.Errorf("expected Granularity=%q, got %q", GranularityDay, opts.Granularity)
+	}
+
+	if !opts.IncludeRollups {
+		t.Error("expected IncludeRollups=true")
+	}
+
+	// Since should be approximately 1 year ago
+	expectedSince := time.Now().AddDate(-1, 0, 0)
+	diff := opts.Since.Sub(expectedSince)
+	if diff < -time.Hour || diff > time.Hour {
+		t.Errorf("expected Since to be approximately 1 year ago, got %v", opts.Since)
+	}
+
+	// Until should be approximately now
+	expectedUntil := time.Now()
+	diff = opts.Until.Sub(expectedUntil)
+	if diff < -time.Hour || diff > time.Hour {
+		t.Errorf("expected Until to be approximately now, got %v", opts.Until)
 	}
 }
 
