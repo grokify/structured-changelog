@@ -13,6 +13,7 @@
   "areas": [
     {"id": "core", "name": "Core"},
     {"id": "cli", "name": "CLI"},
+    {"id": "changelog-mgmt", "name": "Changelog Management"},
     {"id": "output", "name": "Output Formats"},
     {"id": "validation", "name": "Validation"},
     {"id": "cicd", "name": "CI/CD"},
@@ -140,6 +141,90 @@
       "area": "core",
       "type": "Added",
       "dependsOn": ["github-action"]
+    },
+    {
+      "id": "merge-command",
+      "title": "Merge Command",
+      "description": "Merge new release entries into existing CHANGELOG.json or combine multiple changelog files",
+      "status": "completed",
+      "phase": 1,
+      "area": "changelog-mgmt",
+      "type": "Added",
+      "subtasks": [
+        {"id": "merge-1", "description": "schangelog merge base.json additions.json -o output.json", "completed": true},
+        {"id": "merge-2", "description": "schangelog merge CHANGELOG.json --release release.json (prepend single release)", "completed": true},
+        {"id": "merge-3", "description": "Preserve metadata from base file (maintainers, bots, repository)", "completed": true},
+        {"id": "merge-4", "description": "Detect and warn about duplicate versions", "completed": true}
+      ]
+    },
+    {
+      "id": "invalid-tag-handling",
+      "title": "Invalid Tag Handling",
+      "description": "Gracefully handle non-semver tags during init and validation",
+      "status": "completed",
+      "phase": 1,
+      "area": "validation",
+      "type": "Added",
+      "subtasks": [
+        {"id": "invalid-1", "description": "init --from-tags --skip-invalid flag to skip non-semver tags", "completed": true},
+        {"id": "invalid-2", "description": "validate --fix flag to auto-remove invalid entries", "completed": false},
+        {"id": "invalid-3", "description": "Warning output listing skipped tags", "completed": true}
+      ]
+    },
+    {
+      "id": "incremental-update",
+      "title": "Incremental Update Command",
+      "description": "Add new releases to existing CHANGELOG.json without regenerating everything",
+      "status": "planned",
+      "phase": 2,
+      "area": "changelog-mgmt",
+      "type": "Added",
+      "subtasks": [
+        {"id": "incr-1", "description": "schangelog add-release CHANGELOG.json --version=vX.Y.Z --since=vPREV", "completed": false},
+        {"id": "incr-2", "description": "schangelog update CHANGELOG.json --since=LATEST (auto-detect latest version)", "completed": false},
+        {"id": "incr-3", "description": "Preserve existing entries, prepend new release", "completed": false}
+      ]
+    },
+    {
+      "id": "version-filters",
+      "title": "Version Filtering Options",
+      "description": "Filter releases by version pattern or date range for large repositories",
+      "status": "planned",
+      "phase": 2,
+      "area": "cli",
+      "type": "Added",
+      "subtasks": [
+        {"id": "filter-1", "description": "init --from-tags --minor-only (only vX.Y.0 releases)", "completed": false},
+        {"id": "filter-2", "description": "init --from-tags --since=vX.Y.Z (start from specific version)", "completed": false},
+        {"id": "filter-3", "description": "generate --minor-only (condensed output for large changelogs)", "completed": false},
+        {"id": "filter-4", "description": "generate --since=DATE --until=DATE (date range filter)", "completed": false}
+      ]
+    },
+    {
+      "id": "auto-highlights",
+      "title": "Auto-Suggest Highlights",
+      "description": "Suggest highlights for releases based on commit analysis",
+      "status": "future",
+      "area": "changelog-mgmt",
+      "type": "Added",
+      "subtasks": [
+        {"id": "highlight-1", "description": "schangelog suggest-highlights CHANGELOG.json --version=vX.Y.Z", "completed": false},
+        {"id": "highlight-2", "description": "Prioritize feat commits, breaking changes, and large diffs", "completed": false},
+        {"id": "highlight-3", "description": "Output suggested highlight text for manual review", "completed": false}
+      ]
+    },
+    {
+      "id": "compact-deps",
+      "title": "Compact Dependency Releases",
+      "description": "Group consecutive dependency-only releases in generated output",
+      "status": "future",
+      "area": "output",
+      "type": "Added",
+      "subtasks": [
+        {"id": "compact-1", "description": "generate --compact-deps flag", "completed": false},
+        {"id": "compact-2", "description": "Detect maintenance-only releases (deps, build, chore only)", "completed": false},
+        {"id": "compact-3", "description": "Group as 'vX.Y.Z - vX.Y.W (maintenance releases)'", "completed": false}
+      ]
     }
   ]
 }
