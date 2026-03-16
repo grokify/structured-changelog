@@ -152,9 +152,9 @@ func TestNormalizeDate(t *testing.T) {
 		{"2024-06-15", GranularityWeek, "2024-W24"}, // June 15, 2024 is week 24
 		{"2024-01-01", GranularityWeek, "2024-W01"}, // January 1, 2024 is week 1
 		// Edge cases
-		{"invalid-date", GranularityDay, "invalid-date"},    // Invalid date returns as-is
-		{"2024-06-15", "invalid", "2024-06-15"},             // Invalid granularity returns as-is
-		{"", GranularityDay, ""},                            // Empty date
+		{"invalid-date", GranularityDay, "invalid-date"}, // Invalid date returns as-is
+		{"2024-06-15", "invalid", "2024-06-15"},          // Invalid granularity returns as-is
+		{"", GranularityDay, ""},                         // Empty date
 	}
 
 	for _, tt := range tests {
