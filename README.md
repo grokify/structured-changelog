@@ -9,6 +9,25 @@
 [![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
 
+ [go-ci-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-ci.yaml/badge.svg?branch=main
+ [go-ci-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-ci.yaml
+ [go-lint-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-lint.yaml/badge.svg?branch=main
+ [go-lint-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-lint.yaml
+ [go-sast-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
+ [go-sast-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-sast-codeql.yaml
+ [coverage-svg]: https://img.shields.io/badge/coverage-85.1%25-green
+ [coverage-url]: https://github.com/grokify/structured-changelog
+ [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/structured-changelog
+ [goreport-url]: https://goreportcard.com/report/github.com/grokify/structured-changelog
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/structured-changelog
+ [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/structured-changelog
+ [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
+ [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fstructured-changelog
+ [loc-svg]: https://tokei.rs/b1/github/grokify/structured-changelog
+ [repo-url]: https://github.com/grokify/structured-changelog
+ [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+ [license-url]: https://github.com/grokify/structured-changelog/blob/master/LICENSE
+
 **A canonical, deterministic changelog framework with JSON IR and Markdown rendering.**
 
 Structured Changelog provides a machine-readable JSON Intermediate Representation (IR) as the source of truth for your changelog, with deterministic Markdown generation for human readability. It supports optional security metadata (CVE, GHSA, SARIF) and SBOM information.
@@ -520,22 +539,3 @@ Contributions are welcome! Please read our contributing guidelines and submit pu
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
-
- [go-ci-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-ci.yaml/badge.svg?branch=main
- [go-ci-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-ci.yaml
- [go-lint-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-lint.yaml/badge.svg?branch=main
- [go-lint-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-lint.yaml
- [go-sast-svg]: https://github.com/grokify/structured-changelog/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
- [go-sast-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-sast-codeql.yaml
- [coverage-svg]: https://img.shields.io/badge/coverage-96.1%25-brightgreen
- [coverage-url]: https://github.com/grokify/structured-changelog
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/structured-changelog
- [goreport-url]: https://goreportcard.com/report/github.com/grokify/structured-changelog
- [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/structured-changelog
- [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/structured-changelog
- [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
- [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=grokify%2Fstructured-changelog
- [loc-svg]: https://tokei.rs/b1/github/grokify/structured-changelog
- [repo-url]: https://github.com/grokify/structured-changelog
- [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/structured-changelog/blob/master/LICENSE
