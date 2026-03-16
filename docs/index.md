@@ -94,10 +94,16 @@ func main() {
 schangelog validate CHANGELOG.json
 
 # Generate Markdown
-schangelog generate CHANGELOG.json
-
-# Output to file
 schangelog generate CHANGELOG.json -o CHANGELOG.md
+
+# Initialize from git tags
+schangelog init --from-tags -o CHANGELOG.json
+
+# Merge changelog files
+schangelog merge base.json additions.json -o CHANGELOG.json
+
+# Parse commits for LLM-assisted generation
+schangelog parse-commits --since=v1.0.0
 ```
 
 ## Documentation

@@ -226,6 +226,33 @@ Show version:
 schangelog version
 ```
 
+### Merging Changelog Files
+
+Combine releases from multiple CHANGELOG.json files:
+
+```bash
+# Merge two changelog files
+schangelog merge base.json additions.json -o CHANGELOG.json
+
+# Prepend a single release file
+schangelog merge CHANGELOG.json --release new-release.json -o CHANGELOG.json
+
+# Skip duplicate versions
+schangelog merge base.json additions.json --dedup -o CHANGELOG.json
+```
+
+### Initializing from Git Tags
+
+Generate a skeleton CHANGELOG.json from git tag history:
+
+```bash
+# Create changelog from all semver tags
+schangelog init --from-tags -o CHANGELOG.json
+
+# Skip tags that aren't valid semver (e.g., v0.2.19.3)
+schangelog init --from-tags --skip-invalid -o CHANGELOG.json
+```
+
 ### Localized Output (I18N)
 
 Generate changelogs in multiple languages:
@@ -516,7 +543,8 @@ structured-changelog/
 │   ├── parse_commits.go
 │   ├── suggest_category.go
 │   ├── list_tags.go
-│   └── init.go
+│   ├── init.go
+│   └── merge.go
 ├── schema/             # JSON Schema definitions
 │   └── changelog-v1.schema.json
 ├── docs/               # Documentation source (MkDocs)
