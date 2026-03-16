@@ -54,6 +54,12 @@ var validSeverities = map[string]bool{
 	"informational": true,
 }
 
+// IsValidSemVer checks if a version string is a valid semantic version.
+// It accepts versions with or without a "v" prefix (e.g., "v1.0.0" or "1.0.0").
+func IsValidSemVer(version string) bool {
+	return semverRegex.MatchString(version)
+}
+
 // ValidationError contains details about a validation failure.
 type ValidationError struct {
 	Field   string

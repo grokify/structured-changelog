@@ -13,12 +13,13 @@ import (
 )
 
 var (
-	initFromTags   bool
-	initOutput     string
-	initProject    string
-	initRepoURL    string
-	initVersioning string
-	initConvention string
+	initFromTags    bool
+	initOutput      string
+	initProject     string
+	initRepoURL     string
+	initVersioning  string
+	initConvention  string
+	initSkipInvalid bool
 )
 
 var initCmd = &cobra.Command{
@@ -54,6 +55,7 @@ func init() {
 	initCmd.Flags().StringVar(&initRepoURL, "repo", "", "Repository URL")
 	initCmd.Flags().StringVar(&initVersioning, "versioning", "semver", "Versioning scheme: semver, calver, custom, none")
 	initCmd.Flags().StringVar(&initConvention, "convention", "conventional", "Commit convention: conventional, none")
+	initCmd.Flags().BoolVar(&initSkipInvalid, "skip-invalid", false, "Skip tags that are not valid semver versions")
 	rootCmd.AddCommand(initCmd)
 }
 
@@ -87,6 +89,24 @@ func runInitFromTags() error {
 	tagList, err := gitlog.GetTags()
 	if err != nil {
 		return fmt.Errorf("failed to get tags: %w", err)
+	}
+
+	// Filter out invalid semver tags if --skip-invalid is set
+	var skippedTags []string
+	if initSkipInvalid {
+		validTags := make([]gitlog.Tag, 0, len(tagList.Tags))
+		for _, tag := range tagList.Tags {
+			if changelog.IsValidSemVer(tag.Name) {
+				validTags = append(validTags, tag)
+			} else {
+				skippedTags = append(skippedTags, tag.Name)
+			}
+		}
+		tagList.Tags = validTags
+
+		if len(skippedTags) > 0 {
+			fmt.Fprintf(os.Stderr, "Skipped %d invalid semver tags: %v\n", len(skippedTags), skippedTags)
+		}
 	}
 
 	if len(tagList.Tags) == 0 {
