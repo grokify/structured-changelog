@@ -7,6 +7,28 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.13.0",
+      "date": "2026-03-15",
+      "highlights": [
+        { "description": "New `merge` command for combining multiple CHANGELOG.json files with deduplication and metadata preservation" },
+        { "description": "`--skip-invalid` flag for `init --from-tags` to gracefully handle non-semver tags" }
+      ],
+      "added": [
+        { "description": "`merge` command for combining releases from multiple CHANGELOG.json files", "commit": "6bb2a16" },
+        { "description": "`--release` flag for `merge` to prepend a single release file", "commit": "6bb2a16" },
+        { "description": "`--dedup` flag for `merge` to skip versions that already exist in base", "commit": "6bb2a16" },
+        { "description": "`--prepend-only` flag for `merge` to only add releases newer than base's latest", "commit": "6bb2a16" },
+        { "description": "`--skip-invalid` flag for `init --from-tags` to skip non-semver tags", "commit": "ede207f" },
+        { "description": "`IsValidSemVer()` function exported from changelog package for semver validation", "commit": "ede207f" }
+      ],
+      "tests": [
+        { "description": "Comprehensive tests for `compareSemver`, `semverRegex`, and tag list structures", "commit": "af49a84" },
+        { "description": "Tests for `DefaultDiscoveryOptions`, `ParseRollupRules`, `ProjectPaths`, `ParsePortfolio`", "commit": "af49a84" },
+        { "description": "Tests for `DefaultMetricsOptions` and `normalizeDate` edge cases", "commit": "af49a84" },
+        { "description": "Coverage improvement: aggregate 74.4% → 77.4%, gitlog 63.6% → 68.4%, overall 85.1%", "commit": "af49a84" }
+      ]
+    },
+    {
       "version": "v0.12.0",
       "date": "2026-02-28",
       "highlights": [
