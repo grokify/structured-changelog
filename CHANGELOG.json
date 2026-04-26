@@ -21,6 +21,7 @@
     {
       "version": "v0.13.0",
       "date": "2026-03-15",
+      "commit": "8295e4a",
       "highlights": [
         { "description": "New `merge` command for combining multiple CHANGELOG.json files with deduplication and metadata preservation" },
         { "description": "`--skip-invalid` flag for `init --from-tags` to gracefully handle non-semver tags" }
@@ -43,6 +44,7 @@
     {
       "version": "v0.12.0",
       "date": "2026-02-28",
+      "commit": "4817698",
       "highlights": [
         { "description": "Multi-project changelog aggregation with `schangelog portfolio` commands for tracking releases across 100s of repositories" },
         { "description": "GitHub-style activity heatmap and velocity dashboard generation for development metrics" }
@@ -74,6 +76,7 @@
     {
       "version": "v0.11.0",
       "date": "2026-02-22",
+      "commit": "20e09fc",
       "highlights": [
         { "description": "Notable-only filtering now the default - maintenance-only releases excluded from generated changelogs" },
         { "description": "New `--all-releases` flag to include all releases when needed" }
@@ -107,6 +110,7 @@
     {
       "version": "v0.10.0",
       "date": "2026-02-08",
+      "commit": "c48c3a6",
       "highlights": [
         { "description": "Localization support for rendered Markdown output in 6 languages" },
         { "description": "Header text fully localized including versioning and convention references" },
@@ -140,6 +144,7 @@
     {
       "version": "v0.9.0",
       "date": "2026-02-02",
+      "commit": "46c0ba9",
       "highlights": [
         { "description": "New CLI commands for changelog backfilling: `list-tags`, `init --from-tags`, and `parse-commits --all-versions`" }
       ],
@@ -159,6 +164,7 @@
     {
       "version": "v0.8.0",
       "date": "2026-01-18",
+      "commit": "ccba9a6",
       "highlights": [
         { "description": "Monorepo tag path support for repositories using path-prefixed version tags (e.g., `sdk/go/v1.0.0`)" }
       ],
@@ -174,6 +180,7 @@
     {
       "version": "v0.7.0",
       "date": "2026-01-11",
+      "commit": "fc3eb01",
       "highlights": [
         { "description": "CLI renamed from `sclog` to `schangelog` for naming consistency with sibling tools (sroadmap, sprd, strd)" }
       ],
@@ -188,6 +195,7 @@
     {
       "version": "v0.6.0",
       "date": "2026-01-10",
+      "commit": "67e310a",
       "highlights": [
         { "description": "TOON output format for LLM commands (~8x token reduction vs raw git log)" },
         { "description": "GitLab repository support with automatic reference linking for issues, PRs, and commits" },
@@ -235,6 +243,7 @@
     {
       "version": "v0.5.0",
       "date": "2026-01-04",
+      "commit": "d21c28c",
       "highlights": [
         { "description": "LLM-assisted changelog generation with optimized git parsing (~5x token reduction) and automatic commit classification" }
       ],
@@ -253,6 +262,7 @@
     {
       "version": "v0.4.0",
       "date": "2026-01-04",
+      "commit": "ace9de6",
       "highlights": [
         { "description": "Extend Keep a Changelog with 13 additional change types organized into tiers for flexible filtering and validation" }
       ],
@@ -275,6 +285,7 @@
     {
       "version": "v0.3.0",
       "date": "2026-01-04",
+      "commit": "5f2adeb",
       "highlights": [
         { "description": "Install via Homebrew or download pre-built binaries for Linux, macOS, and Windows - no Go toolchain required" }
       ],
@@ -288,6 +299,7 @@
     {
       "version": "v0.2.0",
       "date": "2026-01-03",
+      "commit": "518e956",
       "highlights": [
         { "description": "Generated changelogs now include clickable version comparison links for easy navigation on GitHub" }
       ],
@@ -306,6 +318,7 @@
     {
       "version": "v0.1.0",
       "date": "2026-01-03",
+      "commit": "e6993da",
       "highlights": [
         { "description": "Machine-readable JSON changelog with deterministic Markdown generation following Keep a Changelog format" }
       ],
