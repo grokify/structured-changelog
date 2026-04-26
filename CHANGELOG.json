@@ -9,6 +9,7 @@
     {
       "version": "v0.14.0",
       "date": "2026-04-25",
+      "commit": "043b9c2",
       "highlights": [
         { "description": "Release-level commit field for tracking tagged commit SHA in changelog entries" }
       ],
