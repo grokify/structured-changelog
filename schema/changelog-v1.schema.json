@@ -66,6 +66,10 @@
           "format": "uri",
           "description": "URL to compare this release with the previous one"
         },
+        "commit": {
+          "type": "string",
+          "description": "Commit SHA that the release tag points to"
+        },
         "highlights": {
           "$ref": "#/definitions/entryList",
           "description": "Release summaries and key takeaways (standard tier)"
