@@ -171,7 +171,7 @@ func renderRelease(sb *strings.Builder, r *changelog.Release, ctx renderContext)
 	// Version header
 	var commitSuffix string
 	if r.Commit != "" && ctx.opts.IncludeCommits {
-		commitSuffix = " " + formatCommitRef(r.Commit, ctx)
+		commitSuffix = " (" + formatCommitRef(r.Commit, ctx) + ")"
 	}
 
 	if r.Yanked {
