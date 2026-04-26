@@ -169,10 +169,15 @@ func filterNotableReleases(releases []changelog.Release, policy *changelog.Notab
 
 func renderRelease(sb *strings.Builder, r *changelog.Release, ctx renderContext) {
 	// Version header
+	var commitSuffix string
+	if r.Commit != "" && ctx.opts.IncludeCommits {
+		commitSuffix = " " + formatCommitRef(r.Commit, ctx)
+	}
+
 	if r.Yanked {
-		fmt.Fprintf(sb, "## [%s] - %s [%s]\n", r.Version, r.Date, ctx.l.T("section.yanked"))
+		fmt.Fprintf(sb, "## [%s] - %s%s [%s]\n", r.Version, r.Date, commitSuffix, ctx.l.T("section.yanked"))
 	} else {
-		fmt.Fprintf(sb, "## [%s] - %s\n", r.Version, r.Date)
+		fmt.Fprintf(sb, "## [%s] - %s%s\n", r.Version, r.Date, commitSuffix)
 	}
 
 	renderReleaseContent(sb, r, ctx)

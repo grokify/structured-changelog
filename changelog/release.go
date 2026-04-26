@@ -6,6 +6,7 @@ type Release struct {
 	Date       string `json:"date,omitempty"`
 	Yanked     bool   `json:"yanked,omitempty"`
 	CompareURL string `json:"compareUrl,omitempty"`
+	Commit     string `json:"commit,omitempty"`
 
 	// Overview & Critical (standard tier, except Security which is core)
 	Highlights   []Entry `json:"highlights,omitempty"`
