@@ -7,6 +7,18 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.14.0",
+      "date": "2026-04-25",
+      "highlights": [
+        { "description": "Release-level commit field for tracking tagged commit SHA in changelog entries" }
+      ],
+      "added": [
+        { "description": "`commit` field at release level in JSON schema for tracking the commit SHA a release tag points to", "commit": "3db6403" },
+        { "description": "`Commit` field in `Release` struct for programmatic access", "commit": "9df5ce5" },
+        { "description": "Release commit displayed in Markdown heading when `IncludeCommits` option is enabled", "commit": "9df5ce5" }
+      ]
+    },
+    {
       "version": "v0.13.0",
       "date": "2026-03-15",
       "highlights": [
