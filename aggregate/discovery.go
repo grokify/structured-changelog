@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/google/go-github/v84/github"
+	"github.com/google/go-github/v88/github"
 	"github.com/grokify/gogithub/auth"
 	"github.com/grokify/gogithub/repo"
 )
@@ -26,7 +26,10 @@ func NewDiscoveryClient(token string) (*DiscoveryClient, error) {
 		return nil, fmt.Errorf("GITHUB_TOKEN environment variable is required for discovery")
 	}
 
-	client := auth.NewGitHubClient(context.Background(), token)
+	client, err := auth.NewGitHubClient(context.Background(), token)
+	if err != nil {
+		return nil, fmt.Errorf("creating GitHub client: %w", err)
+	}
 
 	return &DiscoveryClient{
 		gh: client,
