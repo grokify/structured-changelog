@@ -4,7 +4,6 @@
 [![Go Lint][go-lint-svg]][go-lint-url]
 [![Go SAST][go-sast-svg]][go-sast-url]
 [![Coverage][coverage-svg]][coverage-url]
-[![Go Report Card][goreport-svg]][goreport-url]
 [![Docs][docs-godoc-svg]][docs-godoc-url]
 [![Visualization][viz-svg]][viz-url]
 [![License][license-svg]][license-url]
@@ -17,8 +16,6 @@
  [go-sast-url]: https://github.com/grokify/structured-changelog/actions/workflows/go-sast-codeql.yaml
  [coverage-svg]: https://img.shields.io/badge/coverage-85.1%25-green
  [coverage-url]: https://github.com/grokify/structured-changelog
- [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/structured-changelog
- [goreport-url]: https://goreportcard.com/report/github.com/grokify/structured-changelog
  [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/grokify/structured-changelog
  [docs-godoc-url]: https://pkg.go.dev/github.com/grokify/structured-changelog
  [viz-svg]: https://img.shields.io/badge/visualizaton-Go-blue.svg
