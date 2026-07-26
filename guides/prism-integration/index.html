@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://grokify.github.io/structured-changelog/guides/localization/">
+        <link rel="canonical" href="https://grokify.github.io/structured-changelog/guides/prism-integration/">
       
       
-        <link rel="prev" href="../llm-guide/">
+        <link rel="prev" href="../localization/">
       
       
-        <link rel="next" href="../prism-integration/">
+        <link rel="next" href="../release-notes-guide/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Localization - Structured Changelog</title>
+        <title>PRISM Integration - Structured Changelog</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#localization-guide" class="md-skip">
+        <a href="#prism-control-integration" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Localization
+              PRISM Integration
             
           </span>
         </div>
@@ -538,6 +538,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -557,7 +585,7 @@
   <span class="md-ellipsis">
     
   
-    Localization
+    PRISM Integration
   
 
     
@@ -575,7 +603,7 @@
   <span class="md-ellipsis">
     
   
-    Localization
+    PRISM Integration
   
 
     
@@ -601,10 +629,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#built-in-languages" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Built-in Languages
+        Overview
       
     </span>
   </a>
@@ -612,88 +640,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cli-usage" class="md-nav__link">
+  <a href="#json-schema" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLI Usage
+        JSON Schema
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#library-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Library Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#customizable-message-ids" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Customizable Message IDs
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Customizable Message IDs">
+    <nav class="md-nav" aria-label="JSON Schema">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#document-structure" class="md-nav__link">
+  <a href="#field-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Document Structure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#header-text" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Header Text
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#markers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Markers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#category-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Category Headers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#plural-forms-for-compact-maintenance-summaries" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Plural Forms (for compact maintenance summaries)
+        Field Reference
       
     </span>
   </a>
@@ -706,10 +668,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#custom-override-file-format" class="md-nav__link">
+  <a href="#programmatic-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Custom Override File Format
+        Programmatic Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Programmatic Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building Entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-by-rmi-or-initiative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering by RMI or Initiative
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-commit-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Commit Integration
       
     </span>
   </a>
@@ -717,10 +729,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#use-cases" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Examples
+        Use Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roadmap-progress-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roadmap Progress Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-notes-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release Notes Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit Trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
       
     </span>
   </a>
@@ -728,10 +790,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-gets-localized" class="md-nav__link">
+  <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Gets Localized
+        Links
       
     </span>
   </a>
@@ -742,34 +804,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../prism-integration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PRISM Integration
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1491,10 +1525,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#built-in-languages" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Built-in Languages
+        Overview
       
     </span>
   </a>
@@ -1502,88 +1536,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cli-usage" class="md-nav__link">
+  <a href="#json-schema" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLI Usage
+        JSON Schema
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#library-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Library Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#customizable-message-ids" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Customizable Message IDs
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Customizable Message IDs">
+    <nav class="md-nav" aria-label="JSON Schema">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#document-structure" class="md-nav__link">
+  <a href="#field-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Document Structure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#header-text" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Header Text
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#markers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Markers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#category-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Category Headers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#plural-forms-for-compact-maintenance-summaries" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Plural Forms (for compact maintenance summaries)
+        Field Reference
       
     </span>
   </a>
@@ -1596,10 +1564,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#custom-override-file-format" class="md-nav__link">
+  <a href="#programmatic-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Custom Override File Format
+        Programmatic Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Programmatic Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building Entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-by-rmi-or-initiative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering by RMI or Initiative
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-commit-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Commit Integration
       
     </span>
   </a>
@@ -1607,10 +1625,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#use-cases" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Examples
+        Use Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roadmap-progress-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roadmap Progress Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-notes-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release Notes Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit Trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
       
     </span>
   </a>
@@ -1618,10 +1686,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-gets-localized" class="md-nav__link">
+  <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Gets Localized
+        Links
       
     </span>
   </a>
@@ -1648,342 +1716,173 @@
   
 
 
-<h1 id="localization-guide">Localization Guide<a class="headerlink" href="#localization-guide" title="Permanent link">&para;</a></h1>
-<p>structured-changelog supports localized output in 6 languages. This guide explains how to use built-in translations and create custom overrides.</p>
-<h2 id="built-in-languages">Built-in Languages<a class="headerlink" href="#built-in-languages" title="Permanent link">&para;</a></h2>
+<h1 id="prism-control-integration">PRISM Control Integration<a class="headerlink" href="#prism-control-integration" title="Permanent link">&para;</a></h1>
+<p>This guide covers integrating Structured Changelog with PRISM Control for roadmap traceability — linking changelog entries to roadmap items (RMIs) and strategic initiatives.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>PRISM Control is a roadmap management system that organizes work into:</p>
+<ul>
+<li><strong>Initiatives</strong> — strategic goals spanning multiple projects (e.g., <code>INIT-STREAMING-001</code>)</li>
+<li><strong>Roadmap Items (RMIs)</strong> — discrete deliverables tracked per-repository (e.g., <code>RMI-MYREPO-042</code>)</li>
+</ul>
+<p>Structured Changelog supports optional <code>rmi</code> and <code>initiative</code> fields on changelog entries, enabling:</p>
+<ul>
+<li>Traceability from releases back to roadmap planning</li>
+<li>Automated initiative progress tracking across repositories</li>
+<li>Changelog-driven roadmap status updates</li>
+</ul>
+<h2 id="json-schema">JSON Schema<a class="headerlink" href="#json-schema" title="Permanent link">&para;</a></h2>
+<p>Add <code>rmi</code> and/or <code>initiative</code> to any changelog entry:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;releases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1.2.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-07-26&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">&quot;added&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add streaming support via ConverseStream API&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">          </span><span class="nt">&quot;rmi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RMI-MYREPO-042&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">          </span><span class="nt">&quot;initiative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INIT-STREAMING-001&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">          </span><span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123&quot;</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add bearer token authentication&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">          </span><span class="nt">&quot;rmi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RMI-MYREPO-043&quot;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p">}</span>
+</code></pre></div>
+<p>Both fields are optional and independent — use one, both, or neither as needed.</p>
+<h3 id="field-reference">Field Reference<a class="headerlink" href="#field-reference" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Code</th>
-<th>Language</th>
-<th>Example</th>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>en</code></td>
-<td>English (default)</td>
-<td>"Changelog", "Added", "Breaking"</td>
+<td><code>rmi</code></td>
+<td>string</td>
+<td>Roadmap Item ID (format: <code>RMI-&lt;REPOSLUG&gt;-&lt;NNN&gt;</code>)</td>
 </tr>
 <tr>
-<td><code>de</code></td>
-<td>German</td>
-<td>"Änderungsprotokoll", "Hinzugefügt", "Breaking Changes"</td>
-</tr>
-<tr>
-<td><code>es</code></td>
-<td>Spanish</td>
-<td>"Registro de cambios", "Añadido", "Cambios importantes"</td>
-</tr>
-<tr>
-<td><code>fr</code></td>
-<td>French</td>
-<td>"Journal des modifications", "Ajouté", "Changements majeurs"</td>
-</tr>
-<tr>
-<td><code>ja</code></td>
-<td>Japanese</td>
-<td>"変更履歴", "追加", "破壊的変更"</td>
-</tr>
-<tr>
-<td><code>zh</code></td>
-<td>Chinese</td>
-<td>"变更日志", "新增", "破坏性变更"</td>
+<td><code>initiative</code></td>
+<td>string</td>
+<td>Initiative ID (format: <code>INIT-&lt;SLUG&gt;-&lt;NNN&gt;</code>)</td>
 </tr>
 </tbody>
 </table>
-<h2 id="cli-usage">CLI Usage<a class="headerlink" href="#cli-usage" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Generate in French</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--locale<span class="o">=</span>fr<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Generate in Japanese</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--locale<span class="o">=</span>ja<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Use custom overrides</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>CHANGELOG.json<span class="w"> </span>--locale<span class="o">=</span>fr<span class="w"> </span>--locale-file<span class="o">=</span>./my-fr.json<span class="w"> </span>-o<span class="w"> </span>CHANGELOG.md
-</code></pre></div>
-<h2 id="library-usage">Library Usage<a class="headerlink" href="#library-usage" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/renderer&quot;</span>
+<h2 id="programmatic-usage">Programmatic Usage<a class="headerlink" href="#programmatic-usage" title="Permanent link">&para;</a></h2>
+<h3 id="building-entries">Building Entries<a class="headerlink" href="#building-entries" title="Permanent link">&para;</a></h3>
+<p>Use the builder methods for fluent entry construction:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/changelog&quot;</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// Use built-in French translations</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nx">md</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">RenderMarkdown</span><span class="p">(</span><span class="nx">changelog</span><span class="p">,</span><span class="w"> </span><span class="nx">opts</span><span class="p">)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">// Use custom overrides</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nx">opts</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">renderer</span><span class="p">.</span><span class="nx">DefaultOptions</span><span class="p">().</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="nx">WithLocale</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">).</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nx">WithLocaleOverrides</span><span class="p">(</span><span class="s">&quot;./my-fr.json&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">changelog</span><span class="p">.</span><span class="nx">NewEntry</span><span class="p">(</span><span class="s">&quot;Add streaming support&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nx">WithRMI</span><span class="p">(</span><span class="s">&quot;RMI-MYREPO-042&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nx">WithInitiative</span><span class="p">(</span><span class="s">&quot;INIT-STREAMING-001&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nx">WithCommit</span><span class="p">(</span><span class="s">&quot;abc123&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nx">WithAuthor</span><span class="p">(</span><span class="s">&quot;@developer&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="customizable-message-ids">Customizable Message IDs<a class="headerlink" href="#customizable-message-ids" title="Permanent link">&para;</a></h2>
-<p>Override any of these message IDs in your custom locale file:</p>
-<h3 id="document-structure">Document Structure<a class="headerlink" href="#document-structure" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>English Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>changelog.title</code></td>
-<td>"Changelog"</td>
-<td>Document title</td>
-</tr>
-<tr>
-<td><code>changelog.intro</code></td>
-<td>"All notable changes..."</td>
-<td>Intro paragraph</td>
-</tr>
-<tr>
-<td><code>section.unreleased</code></td>
-<td>"Unreleased"</td>
-<td>Unreleased section header</td>
-</tr>
-<tr>
-<td><code>section.yanked</code></td>
-<td>"YANKED"</td>
-<td>Yanked version marker</td>
-</tr>
-</tbody>
-</table>
-<h3 id="header-text">Header Text<a class="headerlink" href="#header-text" title="Permanent link">&para;</a></h3>
-<p>The introductory header paragraph references standards and tools. Each part links to the appropriate localized documentation where available.</p>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>English Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>header.format_kacl</code></td>
-<td>"The format is based on [Keep a Changelog](url)"</td>
-<td>Keep a Changelog reference</td>
-</tr>
-<tr>
-<td><code>header.versioning_semver</code></td>
-<td>"this project adheres to [Semantic Versioning](url)"</td>
-<td>SemVer reference</td>
-</tr>
-<tr>
-<td><code>header.versioning_calver</code></td>
-<td>"this project uses [Calendar Versioning](url)"</td>
-<td>CalVer reference</td>
-</tr>
-<tr>
-<td><code>header.commits_conventional</code></td>
-<td>"commits follow [Conventional Commits](url)"</td>
-<td>Conventional Commits reference</td>
-</tr>
-<tr>
-<td><code>header.generated_by</code></td>
-<td>"this changelog is generated by [Structured Changelog](url)"</td>
-<td>Generator attribution</td>
-</tr>
-<tr>
-<td><code>header.conjunction</code></td>
-<td>"and"</td>
-<td>Conjunction joining header clauses</td>
-</tr>
-</tbody>
-</table>
-<h3 id="markers">Markers<a class="headerlink" href="#markers" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>English Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>marker.breaking</code></td>
-<td>"BREAKING:"</td>
-<td>Breaking change prefix</td>
-</tr>
-<tr>
-<td><code>marker.maintenance</code></td>
-<td>"Maintenance"</td>
-<td>Maintenance release label</td>
-</tr>
-<tr>
-<td><code>marker.versions_range</code></td>
-<td>"Versions {{.From}} - {{.To}}"</td>
-<td>Grouped versions header</td>
-</tr>
-</tbody>
-</table>
-<h3 id="category-headers">Category Headers<a class="headerlink" href="#category-headers" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>English Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>category.highlights</code></td>
-<td>"Highlights"</td>
-</tr>
-<tr>
-<td><code>category.breaking</code></td>
-<td>"Breaking"</td>
-</tr>
-<tr>
-<td><code>category.upgrade_guide</code></td>
-<td>"Upgrade Guide"</td>
-</tr>
-<tr>
-<td><code>category.security</code></td>
-<td>"Security"</td>
-</tr>
-<tr>
-<td><code>category.added</code></td>
-<td>"Added"</td>
-</tr>
-<tr>
-<td><code>category.changed</code></td>
-<td>"Changed"</td>
-</tr>
-<tr>
-<td><code>category.deprecated</code></td>
-<td>"Deprecated"</td>
-</tr>
-<tr>
-<td><code>category.removed</code></td>
-<td>"Removed"</td>
-</tr>
-<tr>
-<td><code>category.fixed</code></td>
-<td>"Fixed"</td>
-</tr>
-<tr>
-<td><code>category.performance</code></td>
-<td>"Performance"</td>
-</tr>
-<tr>
-<td><code>category.dependencies</code></td>
-<td>"Dependencies"</td>
-</tr>
-<tr>
-<td><code>category.documentation</code></td>
-<td>"Documentation"</td>
-</tr>
-<tr>
-<td><code>category.build</code></td>
-<td>"Build"</td>
-</tr>
-<tr>
-<td><code>category.tests</code></td>
-<td>"Tests"</td>
-</tr>
-<tr>
-<td><code>category.infrastructure</code></td>
-<td>"Infrastructure"</td>
-</tr>
-<tr>
-<td><code>category.observability</code></td>
-<td>"Observability"</td>
-</tr>
-<tr>
-<td><code>category.compliance</code></td>
-<td>"Compliance"</td>
-</tr>
-<tr>
-<td><code>category.internal</code></td>
-<td>"Internal"</td>
-</tr>
-<tr>
-<td><code>category.known_issues</code></td>
-<td>"Known Issues"</td>
-</tr>
-<tr>
-<td><code>category.contributors</code></td>
-<td>"Contributors"</td>
-</tr>
-</tbody>
-</table>
-<h3 id="plural-forms-for-compact-maintenance-summaries">Plural Forms (for compact maintenance summaries)<a class="headerlink" href="#plural-forms-for-compact-maintenance-summaries" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>English Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>plural.dependency_updates</code></td>
-<td><code>{"one": "{{.Count}} dependency update", "other": "{{.Count}} dependency updates"}</code></td>
-</tr>
-<tr>
-<td><code>plural.documentation_changes</code></td>
-<td><code>{"one": "{{.Count}} documentation change", "other": "{{.Count}} documentation changes"}</code></td>
-</tr>
-<tr>
-<td><code>plural.build_changes</code></td>
-<td><code>{"one": "{{.Count}} build change", "other": "{{.Count}} build changes"}</code></td>
-</tr>
-<tr>
-<td><code>plural.test_changes</code></td>
-<td><code>{"one": "{{.Count}} test change", "other": "{{.Count}} test changes"}</code></td>
-</tr>
-<tr>
-<td><code>plural.other_changes</code></td>
-<td><code>{"one": "{{.Count}} other change", "other": "{{.Count}} other changes"}</code></td>
-</tr>
-<tr>
-<td><code>plural.releases</code></td>
-<td><code>{"one": "{{.Count}} release", "other": "{{.Count}} releases"}</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="custom-override-file-format">Custom Override File Format<a class="headerlink" href="#custom-override-file-format" title="Permanent link">&para;</a></h2>
-<p>Create a JSON file with only the messages you want to override:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;messages&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;changelog.title&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release Notes&quot;</span><span class="p">},</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;category.added&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;New Features&quot;</span><span class="p">},</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;category.fixed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bug Fixes&quot;</span><span class="p">},</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;marker.breaking&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;⚠️ BREAKING:&quot;</span><span class="p">}</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+<h3 id="reading-entries">Reading Entries<a class="headerlink" href="#reading-entries" title="Permanent link">&para;</a></h3>
+<p>Access the fields directly from parsed changelogs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nx">cl</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">changelog</span><span class="p">.</span><span class="nx">LoadFile</span><span class="p">(</span><span class="s">&quot;CHANGELOG.json&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">release</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">cl</span><span class="p">.</span><span class="nx">Releases</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">release</span><span class="p">.</span><span class="nx">Added</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">RMI</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Feature %s implements %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">Description</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">RMI</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">Initiative</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;  Part of initiative: %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">Initiative</span><span class="p">)</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">}</span>
 </code></pre></div>
-<p>Messages not included in your override file will use the built-in translations for the selected locale.</p>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p>See <code>examples/l10n/</code> for complete rendered examples in all 6 languages:</p>
+<h3 id="filtering-by-rmi-or-initiative">Filtering by RMI or Initiative<a class="headerlink" href="#filtering-by-rmi-or-initiative" title="Permanent link">&para;</a></h3>
+<p>Find all entries for a specific roadmap item:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">func</span><span class="w"> </span><span class="nx">findEntriesByRMI</span><span class="p">(</span><span class="nx">cl</span><span class="w"> </span><span class="o">*</span><span class="nx">changelog</span><span class="p">.</span><span class="nx">Changelog</span><span class="p">,</span><span class="w"> </span><span class="nx">rmi</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">[]</span><span class="nx">changelog</span><span class="p">.</span><span class="nx">Entry</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">results</span><span class="w"> </span><span class="p">[]</span><span class="nx">changelog</span><span class="p">.</span><span class="nx">Entry</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">release</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">cl</span><span class="p">.</span><span class="nx">Releases</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">release</span><span class="p">.</span><span class="nx">AllEntries</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">RMI</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">rmi</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">                </span><span class="nx">results</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">results</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">results</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="git-commit-integration">Git Commit Integration<a class="headerlink" href="#git-commit-integration" title="Permanent link">&para;</a></h2>
+<p>Following the convention in CLAUDE.md, commits implementing roadmap items carry a git trailer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>feat(api): add streaming support
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Implements server-sent events for real-time updates.
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Refs: RMI-MYREPO-042
+</code></pre></div>
+<p>The <code>parse-commits</code> command can extract these references for changelog generation:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v1.1.0
+</code></pre></div>
+<p>When generating changelog entries from commits with <code>Refs:</code> trailers, include the RMI in the entry's <code>rmi</code> field.</p>
+<h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
+<h3 id="roadmap-progress-tracking">Roadmap Progress Tracking<a class="headerlink" href="#roadmap-progress-tracking" title="Permanent link">&para;</a></h3>
+<p>Query changelogs across a portfolio to track initiative completion:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Load multiple project changelogs</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nx">portfolio</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="o">*</span><span class="nx">changelog</span><span class="p">.</span><span class="nx">Changelog</span><span class="p">{</span><span class="nx">project1</span><span class="p">,</span><span class="w"> </span><span class="nx">project2</span><span class="p">,</span><span class="w"> </span><span class="nx">project3</span><span class="p">}</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1">// Count completed RMIs per initiative</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nx">progress</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">cl</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">portfolio</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">release</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">cl</span><span class="p">.</span><span class="nx">Releases</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">release</span><span class="p">.</span><span class="nx">AllEntries</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">Initiative</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">                </span><span class="nx">progress</span><span class="p">[</span><span class="nx">entry</span><span class="p">.</span><span class="nx">Initiative</span><span class="p">]</span><span class="o">++</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="release-notes-generation">Release Notes Generation<a class="headerlink" href="#release-notes-generation" title="Permanent link">&para;</a></h3>
+<p>Generate initiative-focused release notes:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Group entries by initiative for quarterly reports</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nx">byInitiative</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="nx">changelog</span><span class="p">.</span><span class="nx">Entry</span><span class="p">)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">release</span><span class="p">.</span><span class="nx">AllEntries</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">Initiative</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">        </span><span class="nx">byInitiative</span><span class="p">[</span><span class="nx">entry</span><span class="p">.</span><span class="nx">Initiative</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">            </span><span class="nx">byInitiative</span><span class="p">[</span><span class="nx">entry</span><span class="p">.</span><span class="nx">Initiative</span><span class="p">],</span><span class="w"> </span><span class="nx">entry</span><span class="p">)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="audit-trail">Audit Trail<a class="headerlink" href="#audit-trail" title="Permanent link">&para;</a></h3>
+<p>The combination of <code>rmi</code>, <code>initiative</code>, and <code>commit</code> fields provides a complete audit trail:</p>
 <ul>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.en.md">English</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.de.md">German</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.es.md">Spanish</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.fr.md">French</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.ja.md">Japanese</a></li>
-<li><a href="https://github.com/grokify/structured-changelog/blob/main/examples/l10n/CHANGELOG.zh.md">Chinese</a></li>
+<li><strong>What</strong> was delivered (entry description)</li>
+<li><strong>Why</strong> it was done (initiative context)</li>
+<li><strong>Where</strong> it was planned (RMI reference)</li>
+<li><strong>When</strong> it shipped (release date)</li>
+<li><strong>How</strong> it was implemented (commit hash)</li>
 </ul>
-<h2 id="what-gets-localized">What Gets Localized<a class="headerlink" href="#what-gets-localized" title="Permanent link">&para;</a></h2>
-<p><strong>Localized (system labels):</strong></p>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Use RMI for discrete deliverables</strong> — Each RMI should map to one or a few changelog entries</li>
+<li><strong>Use Initiative for strategic context</strong> — Group related work across multiple releases</li>
+<li><strong>Include both when applicable</strong> — An entry can reference both its specific RMI and the broader initiative</li>
+<li><strong>Omit when not planned</strong> — Bug fixes and dependency updates typically don't need roadmap references</li>
+<li><strong>Keep IDs stable</strong> — Don't change RMI/Initiative IDs after they're referenced in changelogs</li>
+</ol>
+<h2 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Document title and introduction</li>
-<li>Header text (Keep a Changelog, versioning, and generator references)</li>
-<li>Section headers ("Changelog", "Unreleased", "Added", etc.)</li>
-<li>Breaking change markers</li>
-<li>Maintenance release summaries</li>
+<li><a href="../../specification/spec/">JSON IR Specification</a></li>
+<li><a href="../release-notes-guide/">Release Notes Guide</a></li>
+<li><a href="../../changelog/">Full Changelog</a></li>
 </ul>
-<p><strong>Not localized (user content):</strong></p>
-<ul>
-<li>Entry descriptions (your changelog text)</li>
-<li>Version numbers</li>
-<li>Dates (always ISO 8601: YYYY-MM-DD)</li>
-<li>Project names</li>
-<li>Issue/PR references</li>
-</ul>
-<p>This preserves the JSON IR as the canonical, language-agnostic source of truth.</p>
 
 
 
