@@ -14,6 +14,10 @@ type Entry struct {
 	ComponentVersion string `json:"componentVersion,omitempty"`
 	License          string `json:"license,omitempty"`
 
+	// PRISM Control metadata
+	RMI        string `json:"rmi,omitempty"`
+	Initiative string `json:"initiative,omitempty"`
+
 	// Security metadata
 	CVE              string  `json:"cve,omitempty"`
 	GHSA             string  `json:"ghsa,omitempty"`
@@ -97,6 +101,18 @@ func (e Entry) WithComponent(name, version, license string) Entry {
 	e.Component = name
 	e.ComponentVersion = version
 	e.License = license
+	return e
+}
+
+// WithRMI sets the PRISM roadmap item ID.
+func (e Entry) WithRMI(rmi string) Entry {
+	e.RMI = rmi
+	return e
+}
+
+// WithInitiative sets the PRISM initiative ID.
+func (e Entry) WithInitiative(id string) Entry {
+	e.Initiative = id
 	return e
 }
 

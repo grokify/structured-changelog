@@ -1,6 +1,8 @@
 package changelog
 
 import (
+	"encoding/json"
+	"strings"
 	"testing"
 )
 
@@ -119,6 +121,74 @@ func TestEntryIsSecurityEntry(t *testing.T) {
 				t.Errorf("IsSecurityEntry() = %v, want %v", got, tt.expected)
 			}
 		})
+	}
+}
+
+func TestEntryWithRMI(t *testing.T) {
+	e := NewEntry("Add widget support").WithRMI("RMI-MYREPO-042")
+	if e.RMI != "RMI-MYREPO-042" {
+		t.Errorf("expected RMI 'RMI-MYREPO-042', got %q", e.RMI)
+	}
+	if e.Description != "Add widget support" {
+		t.Errorf("expected description preserved, got %q", e.Description)
+	}
+}
+
+func TestEntryWithInitiative(t *testing.T) {
+	e := NewEntry("Phase 2 work").WithInitiative("INIT-PRISMCONTROL-001")
+	if e.Initiative != "INIT-PRISMCONTROL-001" {
+		t.Errorf("expected initiative 'INIT-PRISMCONTROL-001', got %q", e.Initiative)
+	}
+	if e.Description != "Phase 2 work" {
+		t.Errorf("expected description preserved, got %q", e.Description)
+	}
+}
+
+func TestEntryRMIJSONRoundTrip(t *testing.T) {
+	original := NewEntry("Add streaming support").
+		WithRMI("RMI-MYREPO-042").
+		WithInitiative("INIT-X-001").
+		WithCommit("abc123").
+		WithAuthor("@dev")
+
+	data, err := json.Marshal(original)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var decoded Entry
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		t.Fatal(err)
+	}
+
+	if decoded.Description != original.Description {
+		t.Errorf("description: got %q, want %q", decoded.Description, original.Description)
+	}
+	if decoded.RMI != original.RMI {
+		t.Errorf("rmi: got %q, want %q", decoded.RMI, original.RMI)
+	}
+	if decoded.Initiative != original.Initiative {
+		t.Errorf("initiative: got %q, want %q", decoded.Initiative, original.Initiative)
+	}
+	if decoded.Commit != original.Commit {
+		t.Errorf("commit: got %q, want %q", decoded.Commit, original.Commit)
+	}
+	if decoded.Author != original.Author {
+		t.Errorf("author: got %q, want %q", decoded.Author, original.Author)
+	}
+
+	// Verify omitempty: empty RMI/Initiative fields should not appear in JSON
+	minimal := NewEntry("No PRISM fields")
+	minData, err := json.Marshal(minimal)
+	if err != nil {
+		t.Fatal(err)
+	}
+	minJSON := string(minData)
+	if strings.Contains(minJSON, `"rmi"`) {
+		t.Error("empty RMI should be omitted from JSON")
+	}
+	if strings.Contains(minJSON, `"initiative"`) {
+		t.Error("empty Initiative should be omitted from JSON")
 	}
 }
 
