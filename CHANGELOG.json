@@ -7,6 +7,36 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.15.0",
+      "date": "2026-07-26",
+      "commit": "1ba70fc",
+      "highlights": [
+        { "description": "Cross-repo highlight extraction for quarterly reports and portfolio summaries" },
+        { "description": "PRISM Control metadata fields for linking changelog entries to roadmap items" }
+      ],
+      "added": [
+        { "description": "`ExtractHighlights()` for single-repo extraction of notable releases within a date range", "commit": "cc33ce7" },
+        { "description": "`ExtractMultiRepoHighlights()` for multi-repo highlight aggregation across portfolios", "commit": "cc33ce7" },
+        { "description": "`TopProjects()` and `TopReleases()` ranking functions by entry count", "commit": "cc33ce7" },
+        { "description": "Notable category filtering: highlights, added, changed, fixed, security, breaking", "commit": "cc33ce7" },
+        { "description": "Maintenance-only release exclusion in highlight extraction", "commit": "cc33ce7" },
+        { "description": "`RMI` and `Initiative` fields in `Entry` struct for PRISM Control integration", "commit": "1ba70fc" },
+        { "description": "`WithRMI()` and `WithInitiative()` builder methods for entry construction", "commit": "1ba70fc" }
+      ],
+      "dependencies": [
+        { "description": "Bump `github.com/grokify/gogithub` from 0.13.0 to 0.14.0", "commit": "9eb91cf" },
+        { "description": "Bump `actions/setup-go` from 6 to 7", "commit": "bf1e6f8" }
+      ]
+    },
+    {
+      "version": "v0.14.1",
+      "date": "2026-04-29",
+      "commit": "ce9a832",
+      "dependencies": [
+        { "description": "Bump `github.com/grokify/mogo` from 0.69.2 to 0.69.3" }
+      ]
+    },
+    {
       "version": "v0.14.0",
       "date": "2026-04-25",
       "commit": "043b9c2",
