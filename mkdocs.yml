@@ -47,6 +47,7 @@ nav:
   - Guides:
       - LLM-Assisted Generation: guides/llm-guide.md
       - Localization: guides/localization.md
+      - PRISM Integration: guides/prism-integration.md
       - Release Notes Guide: guides/release-notes-guide.md
   - PRDs:
       - Tools Integration: prd/tools.md
