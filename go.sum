@@ -6,8 +6,8 @@ github.com/google/go-github/v89 v89.0.0 h1:35bEK5XoEcF3PZrlVbl9XN63f5BcJRA/UGkxe
 github.com/google/go-github/v89 v89.0.0/go.mod h1:QLcbU0ipeAqQuR5KSg8c2lql4Qk1EwJ2dWz/0rP4Nho=
 github.com/google/go-querystring v1.2.0 h1:yhqkPbu2/OH+V9BfpCVPZkNmUXhb2gBxJArfhIxNtP0=
 github.com/google/go-querystring v1.2.0/go.mod h1:8IFJqpSRITyJ8QhQ13bmbeMBDfmeEJZD5A0egEOmkqU=
-github.com/grokify/gogithub v0.16.0 h1:bjwaiuh0j45ctT4FOhbhsuVl6vg24bFC1n/CpjvKCPU=
-github.com/grokify/gogithub v0.16.0/go.mod h1:r3c5J6UKCTv1vigQkulpeZGXfH3+EQ5540GZxGPVgbU=
+github.com/grokify/gogithub v0.17.0 h1:FJy2QcLaJuypY15xE7vcwfIaISVPBaAScIJKfbcr440=
+github.com/grokify/gogithub v0.17.0/go.mod h1:r3c5J6UKCTv1vigQkulpeZGXfH3+EQ5540GZxGPVgbU=
 github.com/grokify/mogo v0.74.6 h1:isdwQOfayT1E9w4il4btc2on6KY72VZnjRaRAka2iXY=
 github.com/grokify/mogo v0.74.6/go.mod h1:MUheNHoi0hatrQbS60W61CMOkcu/yYRbOQBkNnJCUQY=
 github.com/grokify/structured-locale v0.1.0 h1:olvrW8ZiTlawxA7j2vgWOAH/7fPNim9AxUeTqzBtGN0=
