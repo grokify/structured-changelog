@@ -6,14 +6,14 @@ import (
 	"os"
 	"strings"
 
-	"github.com/google/go-github/v88/github"
-	"github.com/grokify/gogithub/auth"
+	"github.com/grokify/gogithub"
+	"github.com/grokify/gogithub/clientv1"
 	"github.com/grokify/gogithub/repo"
 )
 
 // DiscoveryClient scans GitHub orgs/users for repos with changelogs.
 type DiscoveryClient struct {
-	gh *github.Client
+	gh clientv1.Client
 }
 
 // NewDiscoveryClient creates a discovery client with the given token.
@@ -26,7 +26,7 @@ func NewDiscoveryClient(token string) (*DiscoveryClient, error) {
 		return nil, fmt.Errorf("GITHUB_TOKEN environment variable is required for discovery")
 	}
 
-	client, err := auth.NewGitHubClient(context.Background(), token)
+	client, err := clientv1.NewClient(context.Background(), token)
 	if err != nil {
 		return nil, fmt.Errorf("creating GitHub client: %w", err)
 	}
@@ -53,7 +53,7 @@ func (d *DiscoveryClient) DiscoverProjects(ctx context.Context, sources []Source
 }
 
 func (d *DiscoveryClient) discoverSource(ctx context.Context, source Source) ([]ProjectRef, error) {
-	var repos []*github.Repository
+	var repos []*gogithub.Repository
 	var err error
 
 	switch source.Type {
@@ -71,11 +71,15 @@ func (d *DiscoveryClient) discoverSource(ctx context.Context, source Source) ([]
 
 	var projects []ProjectRef
 	for _, r := range repos {
-		if r.GetArchived() || r.GetFork() {
+		if r.Archived || r.Fork {
 			continue
 		}
 
-		paths, err := d.FindChangelogPaths(ctx, r.GetOwner().GetLogin(), r.GetName())
+		owner := ""
+		if r.Owner != nil {
+			owner = r.Owner.Login
+		}
+		paths, err := d.FindChangelogPaths(ctx, owner, r.Name)
 		if err != nil {
 			// Log but continue - repo might not have a changelog
 			continue
@@ -105,14 +109,14 @@ func (d *DiscoveryClient) FindChangelogPaths(ctx context.Context, owner, repoNam
 
 	// Search for nested changelogs (common in monorepos)
 	query := fmt.Sprintf("filename:CHANGELOG.json repo:%s/%s", owner, repoName)
-	result, _, err := d.gh.Search.Code(ctx, query, nil)
+	result, err := d.gh.SearchCode(ctx, query, nil)
 	if err != nil {
 		// Search may fail for various reasons, return what we have
 		return paths, nil
 	}
 
-	for _, codeResult := range result.CodeResults {
-		filePath := codeResult.GetPath()
+	for _, codeResult := range result.Items {
+		filePath := codeResult.Path
 		if filePath == "CHANGELOG.json" {
 			continue // Already handled root
 		}
