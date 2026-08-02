@@ -7,6 +7,20 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.15.1",
+      "date": "2026-08-02",
+      "commit": "aa6b1b7",
+      "highlights": [
+        { "description": "Compatibility fix for gogithub v0.16.0: `aggregate.DiscoveryClient` now uses `clientv1.Client` instead of a raw `*github.Client`, dropping the direct `github.com/google/go-github` dependency", "commit": "aa6b1b7" }
+      ],
+      "fixed": [
+        { "description": "[aggregate] `DiscoveryClient` migrated to `gogithub/clientv1.Client`; `discoverSource`, `FindChangelogPaths`, and `FetchRemoteChangelog` now use stable `gogithub.*` types instead of go-github types, restoring compatibility with gogithub v0.15+", "commit": "aa6b1b7" }
+      ],
+      "dependencies": [
+        { "description": "Upgraded `github.com/grokify/gogithub` from v0.14.0 to v0.16.0; `github.com/google/go-github` is now only an indirect dependency", "commit": "aa6b1b7" }
+      ]
+    },
+    {
       "version": "v0.15.0",
       "date": "2026-07-26",
       "commit": "1ba70fc",
