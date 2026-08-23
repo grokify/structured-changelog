@@ -2,6 +2,7 @@ package changelog
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 )
 
@@ -33,6 +34,8 @@ const (
 	WarnCodeNoTierCoverage   ErrorCode = "W003"
 	WarnCodeMissingSeverity  ErrorCode = "W004"
 	WarnCodeMissingCommit    ErrorCode = "W005"
+	WarnCodeMalformedRMI     ErrorCode = "W006"
+	WarnCodeRMIDisagreement  ErrorCode = "W007"
 
 	// Error codes for promoted warnings (E01x)
 	ErrCodeMissingCommit ErrorCode = "E010"
@@ -305,8 +308,38 @@ func (c *Changelog) validateEntriesRich(entries []Entry, field string, result *R
 				Suggestion: "Consider providing more detail about the change",
 			})
 		}
+		c.validateEntryRMIs(entry, entryField, result)
 	}
 	return len(entries)
+}
+
+// validateEntryRMIs checks the roadmap-item fields on an entry, warning on
+// malformed RMI IDs in rmis and on a singular rmi that disagrees with rmis.
+func (c *Changelog) validateEntryRMIs(entry Entry, entryField string, result *RichValidationResult) {
+	for _, id := range entry.RMIs {
+		if !rmiIDRegex.MatchString(id) {
+			result.addWarning(RichValidationError{
+				Code:       WarnCodeMalformedRMI,
+				Severity:   SeverityWarning,
+				Path:       entryField + ".rmis",
+				Message:    "Malformed RMI ID",
+				Actual:     id,
+				Expected:   "RMI-<SLUG>-<NNN> (e.g., RMI-SCHANGELOG-101)",
+				Suggestion: "Use an uppercase slug and a numeric suffix",
+			})
+		}
+	}
+
+	if entry.RMI != "" && len(entry.RMIs) > 0 && !slices.Contains(entry.RMIs, entry.RMI) {
+		result.addWarning(RichValidationError{
+			Code:       WarnCodeRMIDisagreement,
+			Severity:   SeverityWarning,
+			Path:       entryField,
+			Message:    "Singular 'rmi' is not present in 'rmis'",
+			Actual:     fmt.Sprintf("rmi=%q, rmis=%v", entry.RMI, entry.RMIs),
+			Suggestion: "Prefer 'rmis'; include the singular value in 'rmis' or remove 'rmi'",
+		})
+	}
 }
 
 func (c *Changelog) validateSecurityEntriesRich(entries []Entry, field string, result *RichValidationResult) int {
@@ -393,6 +426,8 @@ func (c *Changelog) validateSecurityEntriesRich(entries []Entry, field string, r
 				Suggestion: "Add 'severity' field (critical, high, medium, low, or informational)",
 			})
 		}
+
+		c.validateEntryRMIs(entry, entryField, result)
 	}
 	return len(entries)
 }

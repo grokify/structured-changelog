@@ -15,8 +15,9 @@ type Entry struct {
 	License          string `json:"license,omitempty"`
 
 	// PRISM Control metadata
-	RMI        string `json:"rmi,omitempty"`
-	Initiative string `json:"initiative,omitempty"`
+	RMI        string   `json:"rmi,omitempty"`
+	RMIs       []string `json:"rmis,omitempty"`
+	Initiative string   `json:"initiative,omitempty"`
 
 	// Security metadata
 	CVE              string  `json:"cve,omitempty"`
@@ -104,9 +105,20 @@ func (e Entry) WithComponent(name, version, license string) Entry {
 	return e
 }
 
-// WithRMI sets the PRISM roadmap item ID.
+// WithRMI sets the PRISM roadmap item ID (legacy singular field).
+// Prefer WithRMIs for new code; an entry may summarize several commits
+// spanning multiple RMIs.
 func (e Entry) WithRMI(rmi string) Entry {
 	e.RMI = rmi
+	return e
+}
+
+// WithRMIs sets the PRISM roadmap item IDs. This is the preferred field: a
+// curated entry often summarizes several commits spanning multiple RMIs,
+// which the singular RMI field cannot express. Readers should treat a set
+// singular RMI as equivalent to a one-element RMIs.
+func (e Entry) WithRMIs(rmis ...string) Entry {
+	e.RMIs = rmis
 	return e
 }
 

@@ -4,12 +4,17 @@
   "title": "Structured Changelog IR",
   "description": "JSON Intermediate Representation for changelogs following Keep a Changelog format",
   "type": "object",
-  "required": ["irVersion", "project"],
+  "required": [
+    "irVersion",
+    "project"
+  ],
   "properties": {
     "irVersion": {
       "type": "string",
       "description": "Version of the IR schema",
-      "enum": ["1.0"]
+      "enum": [
+        "1.0"
+      ]
     },
     "project": {
       "type": "string",
@@ -44,7 +49,10 @@
   "definitions": {
     "release": {
       "type": "object",
-      "required": ["version", "date"],
+      "required": [
+        "version",
+        "date"
+      ],
       "properties": {
         "version": {
           "type": "string",
@@ -252,7 +260,9 @@
     },
     "entry": {
       "type": "object",
-      "required": ["description"],
+      "required": [
+        "description"
+      ],
       "properties": {
         "description": {
           "type": "string",
@@ -290,12 +300,29 @@
         "license": {
           "type": "string",
           "description": "SBOM: License identifier (SPDX)"
+        },
+        "rmi": {
+          "type": "string",
+          "description": "PRISM Control: roadmap item ID (legacy singular; prefer rmis)"
+        },
+        "rmis": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "PRISM Control: roadmap item IDs (RMI-<SLUG>-<NNN>); preferred over the singular rmi"
+        },
+        "initiative": {
+          "type": "string",
+          "description": "PRISM Control: initiative ID; set only for entries with no RMI (derivable from an RMI downstream)"
         }
       }
     },
     "securityEntry": {
       "allOf": [
-        { "$ref": "#/definitions/entry" },
+        {
+          "$ref": "#/definitions/entry"
+        },
         {
           "type": "object",
           "properties": {
@@ -312,7 +339,13 @@
             "severity": {
               "type": "string",
               "description": "Severity level",
-              "enum": ["critical", "high", "medium", "low", "informational"]
+              "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "informational"
+              ]
             },
             "cvssScore": {
               "type": "number",

@@ -44,6 +44,8 @@ var (
 	dateRegex   = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
 	cveRegex    = regexp.MustCompile(`^CVE-\d{4}-\d{4,}$`)
 	ghsaRegex   = regexp.MustCompile(`^GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}$`)
+	// rmiIDRegex matches a roadmap item ID like RMI-SCHANGELOG-101.
+	rmiIDRegex = regexp.MustCompile(`^RMI-[A-Z0-9]+-\d+$`)
 )
 
 var validSeverities = map[string]bool{
