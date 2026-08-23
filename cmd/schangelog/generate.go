@@ -12,14 +12,17 @@ import (
 )
 
 var (
-	generateOutput            string
-	generateMinimal           bool
-	generateFull              bool
-	generateMaxTier           string
-	generateLocale            string
-	generateLocaleFile        string
-	generateAllReleases       bool
-	generateNotableCategories string
+	generateOutput             string
+	generateMinimal            bool
+	generateFull               bool
+	generateMaxTier            string
+	generateLocale             string
+	generateLocaleFile         string
+	generateAllReleases        bool
+	generateNotableCategories  string
+	generateExcludeCategories  string
+	generateCollapseCategories string
+	generateExpandCategories   string
 )
 
 var generateCmd = &cobra.Command{
@@ -33,14 +36,22 @@ The output is deterministic: the same input always produces identical output.
 By default, only notable releases are included (those with user-facing changes).
 Use --all-releases to include maintenance-only releases.
 
+By default, the Dependencies category is collapsed to a one-line summary
+(e.g. "17 dependency updates") to keep the human-facing Markdown readable;
+the full list remains in the JSON source. Use --full or
+--expand-categories Dependencies to render every entry.
+
 Output options:
-  --minimal             Exclude references and security metadata (implies --max-tier core)
-  --full                Include all metadata and all releases (implies --all-releases)
-  --max-tier            Filter change types by tier (core, standard, extended, optional)
-  --locale              Output locale for localized strings (e.g., en, fr, de, es, ja, zh)
-  --locale-file         Path to JSON file with locale message overrides
-  --all-releases        Include all releases (overrides default notable-only behavior)
-  --notable-categories  Custom notable categories (comma-separated)
+  --minimal              Exclude references and security metadata (implies --max-tier core)
+  --full                 Include all metadata and all releases (implies --all-releases; expands all categories)
+  --max-tier             Filter change types by tier (core, standard, extended, optional)
+  --locale               Output locale for localized strings (e.g., en, fr, de, es, ja, zh)
+  --locale-file          Path to JSON file with locale message overrides
+  --all-releases         Include all releases (overrides default notable-only behavior)
+  --notable-categories   Custom notable categories (comma-separated)
+  --exclude-categories   Categories to omit entirely (comma-separated)
+  --collapse-categories  Categories to render as a one-line summary (comma-separated)
+  --expand-categories    Categories to force-expand, overriding collapse defaults (comma-separated)
 
 Tiers:
   core       KACL standard types (Security, Added, Changed, Deprecated, Removed, Fixed)
@@ -64,7 +75,9 @@ Examples:
   schangelog generate CHANGELOG.json --full -o docs/CHANGELOG.md
   schangelog generate CHANGELOG.json --locale=fr
   schangelog generate CHANGELOG.json --all-releases
-  schangelog generate CHANGELOG.json --notable-categories "Security,Added,Fixed"`,
+  schangelog generate CHANGELOG.json --notable-categories "Security,Added,Fixed"
+  schangelog generate CHANGELOG.json --exclude-categories "Dependencies,Build"
+  schangelog generate CHANGELOG.json --expand-categories "Dependencies"`,
 	Args: cobra.ExactArgs(1),
 	RunE: runGenerate,
 }
@@ -78,6 +91,9 @@ func init() {
 	generateCmd.Flags().StringVar(&generateLocaleFile, "locale-file", "", "Path to locale override JSON file")
 	generateCmd.Flags().BoolVar(&generateAllReleases, "all-releases", false, "Include all releases (overrides default notable-only)")
 	generateCmd.Flags().StringVar(&generateNotableCategories, "notable-categories", "", "Custom notable categories (comma-separated)")
+	generateCmd.Flags().StringVar(&generateExcludeCategories, "exclude-categories", "", "Categories to omit entirely from output (comma-separated)")
+	generateCmd.Flags().StringVar(&generateCollapseCategories, "collapse-categories", "", "Categories to render as a one-line summary instead of a full list (comma-separated)")
+	generateCmd.Flags().StringVar(&generateExpandCategories, "expand-categories", "", "Categories to force-expand, overriding collapse defaults such as Dependencies (comma-separated)")
 	rootCmd.AddCommand(generateCmd)
 }
 
@@ -108,24 +124,16 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 		preset = "full"
 	}
 
-	// Parse notable categories if provided
-	var notableCategories []string
-	if generateNotableCategories != "" {
-		for _, cat := range strings.Split(generateNotableCategories, ",") {
-			cat = strings.TrimSpace(cat)
-			if cat != "" {
-				notableCategories = append(notableCategories, cat)
-			}
-		}
-	}
-
 	opts, err := renderer.OptionsFromConfig(renderer.Config{
-		Preset:            preset,
-		MaxTier:           generateMaxTier,
-		Locale:            generateLocale,
-		LocaleOverrides:   generateLocaleFile,
-		AllReleases:       generateAllReleases,
-		NotableCategories: notableCategories,
+		Preset:             preset,
+		MaxTier:            generateMaxTier,
+		Locale:             generateLocale,
+		LocaleOverrides:    generateLocaleFile,
+		AllReleases:        generateAllReleases,
+		NotableCategories:  splitCSV(generateNotableCategories),
+		ExcludeCategories:  splitCSV(generateExcludeCategories),
+		CollapseCategories: splitCSV(generateCollapseCategories),
+		ExpandCategories:   splitCSV(generateExpandCategories),
 	})
 	if err != nil {
 		return fmt.Errorf("invalid options: %w", err)
@@ -146,4 +154,19 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+// splitCSV splits a comma-separated flag value into a trimmed, non-empty slice.
+// It returns nil for an empty input so callers can treat "unset" distinctly.
+func splitCSV(s string) []string {
+	if s == "" {
+		return nil
+	}
+	var out []string
+	for _, part := range strings.Split(s, ",") {
+		if part = strings.TrimSpace(part); part != "" {
+			out = append(out, part)
+		}
+	}
+	return out
 }

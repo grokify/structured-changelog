@@ -318,7 +318,14 @@ func renderReleaseContent(sb *strings.Builder, r *changelog.Release, ctx renderC
 		maxTier = changelog.TierOptional
 	}
 
+	exclude := stringSet(ctx.opts.ExcludeCategories)
+	collapse := stringSet(ctx.opts.CollapseCategories)
+
 	for _, cat := range r.CategoriesFiltered(maxTier) {
+		// Excluded categories produce no section at all.
+		if exclude[cat.Name] {
+			continue
+		}
 		// Translate category name
 		categoryName := ctx.l.T(categoryToMessageID(cat.Name))
 		// Fall back to original name if translation is the message ID
@@ -326,9 +333,46 @@ func renderReleaseContent(sb *strings.Builder, r *changelog.Release, ctx renderC
 			categoryName = cat.Name
 		}
 		fmt.Fprintf(sb, "\n### %s\n\n", categoryName)
+		// Collapsed categories render a single summary line instead of every
+		// entry. Exclude already handled above, so collapse never double-fires.
+		if collapse[cat.Name] {
+			fmt.Fprintf(sb, "- _%s_\n", collapseSummaryText(cat.Name, len(cat.Entries), ctx.l))
+			continue
+		}
 		for _, entry := range cat.Entries {
 			renderEntry(sb, &entry, ctx, cat.Name)
 		}
+	}
+}
+
+// stringSet builds a lookup set from a slice of strings.
+func stringSet(items []string) map[string]bool {
+	if len(items) == 0 {
+		return nil
+	}
+	set := make(map[string]bool, len(items))
+	for _, item := range items {
+		set[item] = true
+	}
+	return set
+}
+
+// collapseSummaryText returns the one-line summary used when a category is
+// collapsed. Well-known high-volume categories reuse the existing pluralized
+// message keys (shared with the maintenance-release summaries); others fall
+// back to a generic entry count, which reads fine under the category header.
+func collapseSummaryText(categoryName string, count int, l *messages.Localizer) string {
+	switch categoryName {
+	case changelog.CategoryDependencies:
+		return l.Tn("plural.dependency_updates", count)
+	case changelog.CategoryDocumentation:
+		return l.Tn("plural.documentation_changes", count)
+	case changelog.CategoryBuild:
+		return l.Tn("plural.build_changes", count)
+	case changelog.CategoryTests:
+		return l.Tn("plural.test_changes", count)
+	default:
+		return l.Tn("plural.category_entries", count)
 	}
 }
 

@@ -60,6 +60,18 @@ type Options struct {
 	// NotabilityPolicy defines which categories make a release notable.
 	// If nil and NotableOnly is true, uses DefaultNotabilityPolicy().
 	NotabilityPolicy *changelog.NotabilityPolicy
+
+	// ExcludeCategories lists category names to omit entirely from the output
+	// (e.g. "Dependencies"). Excluded categories produce no section at all.
+	// This applies on top of MaxTier filtering.
+	ExcludeCategories []string
+
+	// CollapseCategories lists category names to render as a single summary
+	// line (an entry count) instead of listing every entry. This preserves the
+	// signal that maintenance occurred without the noise of a long list; the
+	// full detail remains in the JSON source. ExcludeCategories takes
+	// precedence: a category in both is omitted, not collapsed.
+	CollapseCategories []string
 }
 
 // DefaultOptions returns the default rendering options.
@@ -80,6 +92,10 @@ func DefaultOptions() Options {
 		Locale:                     "en",
 		NotableOnly:                true,
 		NotabilityPolicy:           changelog.DefaultNotabilityPolicy(),
+		// Dependency churn is the dominant source of changelog noise for human
+		// readers, so collapse it to a one-line count by default. The full list
+		// stays in the JSON and is one --full (or --expand-categories) away.
+		CollapseCategories: []string{changelog.CategoryDependencies},
 	}
 }
 
@@ -157,6 +173,7 @@ func StandardOptions() Options {
 		Locale:                     "en",
 		NotableOnly:                true,
 		NotabilityPolicy:           changelog.DefaultNotabilityPolicy(),
+		CollapseCategories:         []string{changelog.CategoryDependencies},
 	}
 }
 
@@ -191,6 +208,41 @@ func (o Options) WithNotabilityPolicy(policy *changelog.NotabilityPolicy) Option
 	return o
 }
 
+// WithExcludeCategories returns a copy of the options with the given category
+// names appended to ExcludeCategories.
+func (o Options) WithExcludeCategories(categories ...string) Options {
+	o.ExcludeCategories = append(append([]string{}, o.ExcludeCategories...), categories...)
+	return o
+}
+
+// WithCollapseCategories returns a copy of the options with the given category
+// names appended to CollapseCategories.
+func (o Options) WithCollapseCategories(categories ...string) Options {
+	o.CollapseCategories = append(append([]string{}, o.CollapseCategories...), categories...)
+	return o
+}
+
+// WithExpandCategories returns a copy of the options with the given category
+// names removed from CollapseCategories, forcing them to render in full. This
+// is how a caller overrides a preset's default collapse (e.g. Dependencies).
+func (o Options) WithExpandCategories(categories ...string) Options {
+	if len(categories) == 0 || len(o.CollapseCategories) == 0 {
+		return o
+	}
+	expand := make(map[string]bool, len(categories))
+	for _, c := range categories {
+		expand[c] = true
+	}
+	kept := make([]string, 0, len(o.CollapseCategories))
+	for _, c := range o.CollapseCategories {
+		if !expand[c] {
+			kept = append(kept, c)
+		}
+	}
+	o.CollapseCategories = kept
+	return o
+}
+
 // OptionsFromPreset returns options for the given preset name.
 // Valid presets are: default, minimal, full, core, standard.
 func OptionsFromPreset(preset string) (Options, error) {
@@ -215,12 +267,15 @@ var ErrInvalidPreset = errors.New("invalid preset")
 
 // Config holds configuration for rendering options.
 type Config struct {
-	Preset            string   // default, minimal, full, core, standard
-	MaxTier           string   // optional tier override
-	Locale            string   // optional BCP 47 locale tag override
-	LocaleOverrides   string   // optional path to locale override JSON file
-	AllReleases       bool     // include all releases (overrides default notable-only)
-	NotableCategories []string // custom notable categories (uses default if empty)
+	Preset             string   // default, minimal, full, core, standard
+	MaxTier            string   // optional tier override
+	Locale             string   // optional BCP 47 locale tag override
+	LocaleOverrides    string   // optional path to locale override JSON file
+	AllReleases        bool     // include all releases (overrides default notable-only)
+	NotableCategories  []string // custom notable categories (uses default if empty)
+	ExcludeCategories  []string // categories to omit entirely (appended to preset)
+	CollapseCategories []string // categories to render as a summary line (appended to preset)
+	ExpandCategories   []string // categories to force-expand, overriding preset collapse defaults
 }
 
 // OptionsFromConfig creates Options from a Config struct.
@@ -255,6 +310,20 @@ func OptionsFromConfig(cfg Config) (Options, error) {
 	} else if len(cfg.NotableCategories) > 0 {
 		// Custom notable categories (only applies when not AllReleases)
 		opts = opts.WithNotabilityPolicy(changelog.NewNotabilityPolicy(cfg.NotableCategories))
+	}
+
+	// Category-level render filters, applied on top of the preset. Exclude and
+	// collapse are appended to preset defaults; expand removes categories from
+	// the (possibly preset-seeded) collapse set. Expand is applied last so it
+	// can override both the preset default and an explicit --collapse-categories.
+	if len(cfg.ExcludeCategories) > 0 {
+		opts = opts.WithExcludeCategories(cfg.ExcludeCategories...)
+	}
+	if len(cfg.CollapseCategories) > 0 {
+		opts = opts.WithCollapseCategories(cfg.CollapseCategories...)
+	}
+	if len(cfg.ExpandCategories) > 0 {
+		opts = opts.WithExpandCategories(cfg.ExpandCategories...)
 	}
 
 	return opts, nil
