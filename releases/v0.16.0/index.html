@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://grokify.github.io/structured-changelog/releases/v0.16.0/">
       
       
-        <link rel="prev" href="../v0.17.0/">
+        <link rel="prev" href="../../prd/rendering/">
       
       
         <link rel="next" href="../v0.15.0/">
@@ -856,34 +856,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../v0.17.0/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    v0.17.0
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -969,15 +941,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#new-features" class="md-nav__link">
+  <a href="#category-render-controls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        New Features
+        Category Render Controls
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="New Features">
+    <nav class="md-nav" aria-label="Category Render Controls">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1015,6 +987,78 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rmi-trailer-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RMI Trailer Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RMI Trailer Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trailer-parsing-parse-commits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trailer Parsing (parse-commits)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plural-rmis-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plural rmis Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-populated-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-Populated Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1514,15 +1558,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#new-features" class="md-nav__link">
+  <a href="#category-render-controls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        New Features
+        Category Render Controls
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="New Features">
+    <nav class="md-nav" aria-label="Category Render Controls">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1564,6 +1608,78 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rmi-trailer-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RMI Trailer Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RMI Trailer Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trailer-parsing-parse-commits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trailer Parsing (parse-commits)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plural-rmis-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plural rmis Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-populated-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-Populated Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1596,13 +1712,15 @@
 
 <h1 id="release-notes-v0160">Release Notes - v0.16.0<a class="headerlink" href="#release-notes-v0160" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This release adds <strong>per-category render controls</strong> to the Markdown generator and changes a default: the <strong>Dependencies category is now collapsed to a one-line summary</strong> in human-facing output. Dependency churn is the dominant source of changelog noise for readers, so this keeps generated changelogs focused while the full list remains in the JSON source of truth.</p>
+<p>This release ships two features: <strong>per-category render controls</strong> for the Markdown generator (with a new collapse-Dependencies-by-default) and the <strong>RMI trailer flow</strong> (<a href="https://github.com/grokify/structured-changelog/tree/main/docs/specs/initiatives/INIT-SCHANGELOG-001">INIT-SCHANGELOG-001</a>), which flows <code>Refs:</code> git trailers from commits into pre-populated <code>rmis</code> on changelog entries.</p>
 <h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Human-facing Markdown collapses the Dependencies category to a one-line summary by default</li>
 <li>New <code>--exclude-categories</code>, <code>--collapse-categories</code>, and <code>--expand-categories</code> flags for fine-grained control</li>
+<li>RMI trailer flow: <code>Refs:</code> trailers on commits flow into pre-populated <code>rmis</code> on generated entries</li>
+<li>New plural <code>rmis</code> field on entries, preferred over the legacy singular <code>rmi</code></li>
 </ul>
-<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h2>
+<h2 id="category-render-controls">Category Render Controls<a class="headerlink" href="#category-render-controls" title="Permanent link">&para;</a></h2>
 <h3 id="collapse-exclude-categories">Collapse &amp; Exclude Categories<a class="headerlink" href="#collapse-exclude-categories" title="Permanent link">&para;</a></h3>
 <p>The renderer can now omit a category entirely or render it as a one-line entry count instead of listing every entry:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Restore the full dependency list (either works)</span>
@@ -1639,9 +1757,31 @@
 <li><code>--exclude-categories</code> wins over <code>--collapse-categories</code> for the same category (the section is omitted, not summarized).</li>
 <li><code>--expand-categories</code> is applied last, so it overrides both preset collapse defaults and an explicit <code>--collapse-categories</code>.</li>
 </ul>
+<h2 id="rmi-trailer-flow">RMI Trailer Flow<a class="headerlink" href="#rmi-trailer-flow" title="Permanent link">&para;</a></h2>
+<p><code>Refs: RMI-&lt;SLUG&gt;-&lt;NNN&gt;</code> git trailers on commits now flow through <code>parse-commits</code> into pre-populated <code>rmis</code> on generated changelog entries, so roadmap traceability is curated rather than transcribed.</p>
+<h3 id="trailer-parsing-parse-commits">Trailer Parsing (<code>parse-commits</code>)<a class="headerlink" href="#trailer-parsing-parse-commits" title="Permanent link">&para;</a></h3>
+<p><code>parse-commits</code> extracts roadmap item IDs from a commit's <code>Refs:</code> trailers and carries them as <code>rmis</code> on each parsed commit, in both TOON and JSON output. Multiple trailers per commit and multiple IDs per trailer are supported and deduplicated; the existing <code>#123</code> issue-ref extraction is unchanged.</p>
+<h3 id="plural-rmis-field">Plural <code>rmis</code> Field<a class="headerlink" href="#plural-rmis-field" title="Permanent link">&para;</a></h3>
+<p>Entries gain an additive <code>rmis []string</code> field and a <code>WithRMIs</code> builder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">changelog</span><span class="p">.</span><span class="nx">NewEntry</span><span class="p">(</span><span class="s">&quot;Add streaming support&quot;</span><span class="p">).</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nx">WithRMIs</span><span class="p">(</span><span class="s">&quot;RMI-MYREPO-042&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMI-MYREPO-044&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>A curated entry often summarizes several commits spanning multiple RMIs, which the singular <code>rmi</code> cannot express. The legacy <code>rmi</code> is retained for back-compatibility and treated as a one-element <code>rmis</code>.</p>
+<h3 id="pre-populated-generation">Pre-Populated Generation<a class="headerlink" href="#pre-populated-generation" title="Permanent link">&para;</a></h3>
+<p><code>init --from-tags</code> fills each generated entry's <code>rmis</code> from the underlying commits' trailers (deduplicated, sorted). <code>initiative</code> is never auto-populated — with an RMI present it is derivable downstream.</p>
+<h3 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h3>
+<p><code>schangelog validate</code> (rich mode) adds <strong>W006</strong> (a string in <code>rmis</code> is not a well-formed <code>RMI-&lt;SLUG&gt;-&lt;NNN&gt;</code> ID) and <strong>W007</strong> (a singular <code>rmi</code> disagrees with <code>rmis</code>).</p>
+<h3 id="convention">Convention<a class="headerlink" href="#convention" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Populate <code>rmis</code></strong> on entries tied to roadmap items.</li>
+<li>Set <strong><code>initiative</code> only</strong> for entries with no RMI.</li>
+<li>Carry <code>Refs:</code> trailers on commits and let <code>parse-commits</code>/<code>init</code> do the population.</li>
+</ul>
+<p>This release dogfoods the convention: its own changelog entries carry <code>rmis</code>.</p>
 <h2 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../changelog/">Full Changelog</a></li>
+<li><a href="../../guides/prism-integration/">PRISM Integration Guide</a></li>
 <li><a href="https://github.com/grokify/structured-changelog#category-filtering">Generate Usage</a></li>
 </ul>
 
