@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -215,6 +216,15 @@ func buildReleaseFromCommits(version, date string, commits []gitlog.Commit) chan
 		}
 		if commit.Breaking {
 			entry.Breaking = true
+		}
+		// Pre-populate roadmap item IDs from the commit's Refs trailers so the
+		// human curates rather than transcribes. Sorted for deterministic
+		// output; initiative is never auto-populated (derivable from an RMI
+		// downstream).
+		if len(commit.RMIs) > 0 {
+			rmis := append([]string(nil), commit.RMIs...)
+			sort.Strings(rmis)
+			entry.RMIs = rmis
 		}
 
 		// Add to appropriate category based on suggested category
