@@ -7,6 +7,22 @@
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "releases": [
     {
+      "version": "v0.17.0",
+      "date": "2026-08-23",
+      "commit": "ef9a0be",
+      "highlights": [
+        { "description": "RMI trailer flow: `Refs:` git trailers on commits now flow through parse-commits into pre-populated `rmis` on generated changelog entries" }
+      ],
+      "added": [
+        { "description": "`parse-commits` extracts roadmap item IDs from `Refs:` trailers into a per-commit `rmis` list (TOON and JSON output)", "commit": "840489b", "rmis": ["RMI-SCHANGELOG-101"] },
+        { "description": "Additive `rmis []string` field on `Entry` with a `WithRMIs` builder; the legacy singular `rmi` is retained and treated as a one-element `rmis`. New validate warnings: W006 (malformed RMI ID) and W007 (rmi/rmis disagreement)", "commit": "a7a6237", "rmis": ["RMI-SCHANGELOG-102"] },
+        { "description": "`init --from-tags` pre-populates each entry's `rmis` from the underlying commits' trailers (deduplicated, sorted)", "commit": "ef9a0be", "rmis": ["RMI-SCHANGELOG-103"] }
+      ],
+      "documentation": [
+        { "description": "Document the `rmis`-preferred / `initiative`-only-without-RMI convention and the trailer flow in the PRISM integration guide", "rmis": ["RMI-SCHANGELOG-104"] }
+      ]
+    },
+    {
       "version": "v0.16.0",
       "date": "2026-08-23",
       "commit": "3aa08ca",

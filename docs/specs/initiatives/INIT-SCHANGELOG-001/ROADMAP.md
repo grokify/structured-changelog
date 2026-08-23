@@ -11,11 +11,11 @@ This initiative uses the RMI-SCHANGELOG-1xx block (0xx carries cross-repo items 
 
 **Theme:** Refs trailers flow from commits through parse-commits into pre-populated changelog entries; additive rmis field; convention documented
 
-- [ ] `RMI-SCHANGELOG-101` Refs trailer parsing in gitlog
+- [x] `RMI-SCHANGELOG-101` Refs trailer parsing in gitlog
   - git log trailers key=Refs valueonly; pattern ^RMI-[A-Z0-9]+-\d+$; multiple trailers per commit; RMIs []string on parsed commits in TOON + JSON output; existing #123 issue-ref extraction untouched
-- [ ] `RMI-SCHANGELOG-102` Plural rmis field on Entry
-  - Additive rmis []string beside legacy rmi; WithRMIs builder; JSON Schema regenerated (invopop -> schemakit -> go:embed); validate warns on malformed IDs and rmi/rmis disagreement
-- [ ] `RMI-SCHANGELOG-103` Pre-populated entries in generation flow
+- [x] `RMI-SCHANGELOG-102` Plural rmis field on Entry
+  - Additive rmis []string beside legacy rmi; WithRMIs builder; validate warns on malformed IDs (W006) and rmi/rmis disagreement (W007). Schema: the roadmap block (rmis, rmi, initiative) was hand-added to changelog-v1.schema.json and lint-verified — the hand-crafted draft-07 published schema is richer than current invopop output, so wholesale generator adoption (with the new `schemakit generate --check` drift guard) is deferred to a follow-up
+- [x] `RMI-SCHANGELOG-103` Pre-populated entries in generation flow
   - Suggested entries union underlying commits' RMI IDs (deduped, sorted) into rmis; initiative never auto-populated (derivable downstream when RMI present)
-- [ ] `RMI-SCHANGELOG-104` Convention docs, examples, and release
-  - Document rmis-yes / initiative-only-without-RMI convention; real example from own release (dogfood); CHANGELOG + semver release
+- [x] `RMI-SCHANGELOG-104` Convention docs, examples, and release
+  - Document rmis-yes / initiative-only-without-RMI convention; real example from own release (dogfood); CHANGELOG + semver release (v0.17.0)

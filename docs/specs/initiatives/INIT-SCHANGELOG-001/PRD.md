@@ -1,7 +1,7 @@
 # PRD — INIT-SCHANGELOG-001: RMI Trailer Flow — Commit Trailers to Changelog Entries
 
 **Initiative:** INIT-SCHANGELOG-001
-**Status:** proposed
+**Status:** completed
 **Type:** feature
 **Workflow:** pbhq-lite
 

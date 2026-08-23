@@ -9,7 +9,7 @@ PRISM Control is a roadmap management system that organizes work into:
 - **Initiatives** — strategic goals spanning multiple projects (e.g., `INIT-STREAMING-001`)
 - **Roadmap Items (RMIs)** — discrete deliverables tracked per-repository (e.g., `RMI-MYREPO-042`)
 
-Structured Changelog supports optional `rmi` and `initiative` fields on changelog entries, enabling:
+Structured Changelog supports optional `rmis`, `rmi`, and `initiative` fields on changelog entries, enabling:
 
 - Traceability from releases back to roadmap planning
 - Automated initiative progress tracking across repositories
@@ -17,7 +17,10 @@ Structured Changelog supports optional `rmi` and `initiative` fields on changelo
 
 ## JSON Schema
 
-Add `rmi` and/or `initiative` to any changelog entry:
+Add `rmis` (preferred) and/or `initiative` to any changelog entry. Use the
+plural `rmis` array because a curated entry often summarizes several commits
+spanning multiple RMIs; the legacy singular `rmi` is retained for
+back-compatibility and treated as a one-element `rmis`.
 
 ```json
 {
@@ -28,13 +31,16 @@ Add `rmi` and/or `initiative` to any changelog entry:
       "added": [
         {
           "description": "Add streaming support via ConverseStream API",
-          "rmi": "RMI-MYREPO-042",
-          "initiative": "INIT-STREAMING-001",
+          "rmis": ["RMI-MYREPO-042", "RMI-MYREPO-044"],
           "commit": "abc123"
         },
         {
           "description": "Add bearer token authentication",
-          "rmi": "RMI-MYREPO-043"
+          "rmis": ["RMI-MYREPO-043"]
+        },
+        {
+          "description": "Ad-hoc refactor with no roadmap item",
+          "initiative": "INIT-STREAMING-001"
         }
       ]
     }
@@ -42,14 +48,20 @@ Add `rmi` and/or `initiative` to any changelog entry:
 }
 ```
 
-Both fields are optional and independent — use one, both, or neither as needed.
+All three fields are optional. Follow the convention: **populate `rmis`**;
+set `initiative` **only** for entries that have no RMI (with an RMI present the
+initiative is derivable downstream, so storing both invites drift).
 
 ### Field Reference
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `rmi` | string | Roadmap Item ID (format: `RMI-<REPOSLUG>-<NNN>`) |
-| `initiative` | string | Initiative ID (format: `INIT-<SLUG>-<NNN>`) |
+| `rmis` | string[] | Roadmap Item IDs (format: `RMI-<REPOSLUG>-<NNN>`); **preferred** |
+| `rmi` | string | Legacy single Roadmap Item ID; treated as a one-element `rmis` |
+| `initiative` | string | Initiative ID (format: `INIT-<SLUG>-<NNN>`); use only when no RMI applies |
+
+`schangelog validate` warns (W006) on malformed IDs in `rmis` and (W007) when a
+singular `rmi` disagrees with `rmis`.
 
 ## Programmatic Usage
 
@@ -61,10 +73,12 @@ Use the builder methods for fluent entry construction:
 import "github.com/grokify/structured-changelog/changelog"
 
 entry := changelog.NewEntry("Add streaming support").
-    WithRMI("RMI-MYREPO-042").
-    WithInitiative("INIT-STREAMING-001").
+    WithRMIs("RMI-MYREPO-042", "RMI-MYREPO-044").
     WithCommit("abc123").
     WithAuthor("@developer")
+
+// Legacy singular form (still supported); prefer WithRMIs for new code:
+legacy := changelog.NewEntry("Add auth").WithRMI("RMI-MYREPO-043")
 ```
 
 ### Reading Entries
@@ -119,13 +133,17 @@ Implements server-sent events for real-time updates.
 Refs: RMI-MYREPO-042
 ```
 
-The `parse-commits` command can extract these references for changelog generation:
+The `parse-commits` command extracts these references automatically, carrying
+the RMI IDs on each parsed commit's `rmis`:
 
 ```bash
 schangelog parse-commits --since=v1.1.0
 ```
 
-When generating changelog entries from commits with `Refs:` trailers, include the RMI in the entry's `rmi` field.
+When you build a changelog from those commits with `schangelog init --from-tags`,
+each generated entry's `rmis` is **pre-populated** from the underlying commits'
+`Refs:` trailers (deduplicated and sorted) — you curate rather than transcribe.
+`initiative` is never auto-populated.
 
 ## Use Cases
 
@@ -177,9 +195,9 @@ The combination of `rmi`, `initiative`, and `commit` fields provides a complete 
 
 ## Best Practices
 
-1. **Use RMI for discrete deliverables** — Each RMI should map to one or a few changelog entries
-2. **Use Initiative for strategic context** — Group related work across multiple releases
-3. **Include both when applicable** — An entry can reference both its specific RMI and the broader initiative
+1. **Prefer `rmis` over `rmi`** — The plural array expresses entries that summarize several commits across multiple RMIs; the singular remains for back-compat
+2. **Set `initiative` only without an RMI** — With an RMI present the initiative is derivable downstream, so storing both invites drift
+3. **Let trailers do the work** — Carry `Refs: RMI-<SLUG>-<NNN>` on commits; `parse-commits` and `init` populate `rmis` for you
 4. **Omit when not planned** — Bug fixes and dependency updates typically don't need roadmap references
 5. **Keep IDs stable** — Don't change RMI/Initiative IDs after they're referenced in changelogs
 
