@@ -18,4 +18,4 @@ This initiative uses the RMI-SCHANGELOG-1xx block (0xx carries cross-repo items 
 - [x] `RMI-SCHANGELOG-103` Pre-populated entries in generation flow
   - Suggested entries union underlying commits' RMI IDs (deduped, sorted) into rmis; initiative never auto-populated (derivable downstream when RMI present)
 - [x] `RMI-SCHANGELOG-104` Convention docs, examples, and release
-  - Document rmis-yes / initiative-only-without-RMI convention; real example from own release (dogfood); CHANGELOG + semver release (v0.17.0)
+  - Document rmis-yes / initiative-only-without-RMI convention; real example from own release (dogfood); CHANGELOG + semver release (v0.16.0)

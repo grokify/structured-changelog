@@ -4,38 +4,73 @@
   "repository": "https://github.com/grokify/structured-changelog",
   "versioning": "semver",
   "commitConvention": "conventional",
-  "maintainers": ["grokify", "johncwang@gmail.com"],
+  "maintainers": [
+    "grokify",
+    "johncwang@gmail.com"
+  ],
   "releases": [
-    {
-      "version": "v0.17.0",
-      "date": "2026-08-23",
-      "commit": "ef9a0be",
-      "highlights": [
-        { "description": "RMI trailer flow: `Refs:` git trailers on commits now flow through parse-commits into pre-populated `rmis` on generated changelog entries" }
-      ],
-      "added": [
-        { "description": "`parse-commits` extracts roadmap item IDs from `Refs:` trailers into a per-commit `rmis` list (TOON and JSON output)", "commit": "840489b", "rmis": ["RMI-SCHANGELOG-101"] },
-        { "description": "Additive `rmis []string` field on `Entry` with a `WithRMIs` builder; the legacy singular `rmi` is retained and treated as a one-element `rmis`. New validate warnings: W006 (malformed RMI ID) and W007 (rmi/rmis disagreement)", "commit": "a7a6237", "rmis": ["RMI-SCHANGELOG-102"] },
-        { "description": "`init --from-tags` pre-populates each entry's `rmis` from the underlying commits' trailers (deduplicated, sorted)", "commit": "ef9a0be", "rmis": ["RMI-SCHANGELOG-103"] }
-      ],
-      "documentation": [
-        { "description": "Document the `rmis`-preferred / `initiative`-only-without-RMI convention and the trailer flow in the PRISM integration guide", "rmis": ["RMI-SCHANGELOG-104"] }
-      ]
-    },
     {
       "version": "v0.16.0",
       "date": "2026-08-23",
-      "commit": "3aa08ca",
+      "commit": "aa37da4",
       "highlights": [
-        { "description": "Human-facing Markdown now collapses the Dependencies category to a one-line summary by default, keeping generated changelogs readable while the full list stays in the JSON source", "commit": "3aa08ca" }
+        {
+          "description": "Human-facing Markdown now collapses the Dependencies category to a one-line summary by default, keeping generated changelogs readable while the full list stays in the JSON source",
+          "commit": "3aa08ca"
+        },
+        {
+          "description": "RMI trailer flow: `Refs:` git trailers on commits now flow through parse-commits into pre-populated `rmis` on generated changelog entries"
+        }
       ],
       "added": [
-        { "description": "Per-category render controls in the renderer: `ExcludeCategories` (omit a section) and `CollapseCategories` (render a category as a one-line entry count)", "commit": "3aa08ca" },
-        { "description": "`generate` flags `--exclude-categories`, `--collapse-categories`, and `--expand-categories` for per-invocation category control", "commit": "3aa08ca" },
-        { "description": "`Options.WithExcludeCategories`, `WithCollapseCategories`, and `WithExpandCategories` builder methods", "commit": "3aa08ca" }
+        {
+          "description": "Per-category render controls in the renderer: `ExcludeCategories` (omit a section) and `CollapseCategories` (render a category as a one-line entry count)",
+          "commit": "3aa08ca"
+        },
+        {
+          "description": "`generate` flags `--exclude-categories`, `--collapse-categories`, and `--expand-categories` for per-invocation category control",
+          "commit": "3aa08ca"
+        },
+        {
+          "description": "`Options.WithExcludeCategories`, `WithCollapseCategories`, and `WithExpandCategories` builder methods",
+          "commit": "3aa08ca"
+        },
+        {
+          "description": "`parse-commits` extracts roadmap item IDs from `Refs:` trailers into a per-commit `rmis` list (TOON and JSON output)",
+          "commit": "840489b",
+          "rmis": [
+            "RMI-SCHANGELOG-101"
+          ]
+        },
+        {
+          "description": "Additive `rmis []string` field on `Entry` with a `WithRMIs` builder; the legacy singular `rmi` is retained and treated as a one-element `rmis`. New validate warnings: W006 (malformed RMI ID) and W007 (rmi/rmis disagreement)",
+          "commit": "a7a6237",
+          "rmis": [
+            "RMI-SCHANGELOG-102"
+          ]
+        },
+        {
+          "description": "`init --from-tags` pre-populates each entry's `rmis` from the underlying commits' trailers (deduplicated, sorted)",
+          "commit": "ef9a0be",
+          "rmis": [
+            "RMI-SCHANGELOG-103"
+          ]
+        }
       ],
       "changed": [
-        { "description": "The `default` and `standard` presets now collapse the Dependencies category to a one-line summary; use `--full` or `--expand-categories Dependencies` to restore the full list. Existing CHANGELOG.md output will change on the next generate for projects carrying Dependencies entries", "breaking": true, "commit": "3aa08ca" }
+        {
+          "description": "The `default` and `standard` presets now collapse the Dependencies category to a one-line summary; use `--full` or `--expand-categories Dependencies` to restore the full list. Existing CHANGELOG.md output will change on the next generate for projects carrying Dependencies entries",
+          "breaking": true,
+          "commit": "3aa08ca"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "Document the `rmis`-preferred / `initiative`-only-without-RMI convention and the trailer flow in the PRISM integration guide",
+          "rmis": [
+            "RMI-SCHANGELOG-104"
+          ]
+        }
       ]
     },
     {
@@ -43,13 +78,22 @@
       "date": "2026-08-02",
       "commit": "aa6b1b7",
       "highlights": [
-        { "description": "Compatibility fix for gogithub v0.16.0: `aggregate.DiscoveryClient` now uses `clientv1.Client` instead of a raw `*github.Client`, dropping the direct `github.com/google/go-github` dependency", "commit": "aa6b1b7" }
+        {
+          "description": "Compatibility fix for gogithub v0.16.0: `aggregate.DiscoveryClient` now uses `clientv1.Client` instead of a raw `*github.Client`, dropping the direct `github.com/google/go-github` dependency",
+          "commit": "aa6b1b7"
+        }
       ],
       "fixed": [
-        { "description": "[aggregate] `DiscoveryClient` migrated to `gogithub/clientv1.Client`; `discoverSource`, `FindChangelogPaths`, and `FetchRemoteChangelog` now use stable `gogithub.*` types instead of go-github types, restoring compatibility with gogithub v0.15+", "commit": "aa6b1b7" }
+        {
+          "description": "[aggregate] `DiscoveryClient` migrated to `gogithub/clientv1.Client`; `discoverSource`, `FindChangelogPaths`, and `FetchRemoteChangelog` now use stable `gogithub.*` types instead of go-github types, restoring compatibility with gogithub v0.15+",
+          "commit": "aa6b1b7"
+        }
       ],
       "dependencies": [
-        { "description": "Upgraded `github.com/grokify/gogithub` from v0.14.0 to v0.16.0; `github.com/google/go-github` is now only an indirect dependency", "commit": "aa6b1b7" }
+        {
+          "description": "Upgraded `github.com/grokify/gogithub` from v0.14.0 to v0.16.0; `github.com/google/go-github` is now only an indirect dependency",
+          "commit": "aa6b1b7"
+        }
       ]
     },
     {
@@ -57,21 +101,52 @@
       "date": "2026-07-26",
       "commit": "1ba70fc",
       "highlights": [
-        { "description": "Cross-repo highlight extraction for quarterly reports and portfolio summaries" },
-        { "description": "PRISM Control metadata fields for linking changelog entries to roadmap items" }
+        {
+          "description": "Cross-repo highlight extraction for quarterly reports and portfolio summaries"
+        },
+        {
+          "description": "PRISM Control metadata fields for linking changelog entries to roadmap items"
+        }
       ],
       "added": [
-        { "description": "`ExtractHighlights()` for single-repo extraction of notable releases within a date range", "commit": "cc33ce7" },
-        { "description": "`ExtractMultiRepoHighlights()` for multi-repo highlight aggregation across portfolios", "commit": "cc33ce7" },
-        { "description": "`TopProjects()` and `TopReleases()` ranking functions by entry count", "commit": "cc33ce7" },
-        { "description": "Notable category filtering: highlights, added, changed, fixed, security, breaking", "commit": "cc33ce7" },
-        { "description": "Maintenance-only release exclusion in highlight extraction", "commit": "cc33ce7" },
-        { "description": "`RMI` and `Initiative` fields in `Entry` struct for PRISM Control integration", "commit": "1ba70fc" },
-        { "description": "`WithRMI()` and `WithInitiative()` builder methods for entry construction", "commit": "1ba70fc" }
+        {
+          "description": "`ExtractHighlights()` for single-repo extraction of notable releases within a date range",
+          "commit": "cc33ce7"
+        },
+        {
+          "description": "`ExtractMultiRepoHighlights()` for multi-repo highlight aggregation across portfolios",
+          "commit": "cc33ce7"
+        },
+        {
+          "description": "`TopProjects()` and `TopReleases()` ranking functions by entry count",
+          "commit": "cc33ce7"
+        },
+        {
+          "description": "Notable category filtering: highlights, added, changed, fixed, security, breaking",
+          "commit": "cc33ce7"
+        },
+        {
+          "description": "Maintenance-only release exclusion in highlight extraction",
+          "commit": "cc33ce7"
+        },
+        {
+          "description": "`RMI` and `Initiative` fields in `Entry` struct for PRISM Control integration",
+          "commit": "1ba70fc"
+        },
+        {
+          "description": "`WithRMI()` and `WithInitiative()` builder methods for entry construction",
+          "commit": "1ba70fc"
+        }
       ],
       "dependencies": [
-        { "description": "Bump `github.com/grokify/gogithub` from 0.13.0 to 0.14.0", "commit": "9eb91cf" },
-        { "description": "Bump `actions/setup-go` from 6 to 7", "commit": "bf1e6f8" }
+        {
+          "description": "Bump `github.com/grokify/gogithub` from 0.13.0 to 0.14.0",
+          "commit": "9eb91cf"
+        },
+        {
+          "description": "Bump `actions/setup-go` from 6 to 7",
+          "commit": "bf1e6f8"
+        }
       ]
     },
     {
@@ -79,7 +154,9 @@
       "date": "2026-04-29",
       "commit": "ce9a832",
       "dependencies": [
-        { "description": "Bump `github.com/grokify/mogo` from 0.69.2 to 0.69.3" }
+        {
+          "description": "Bump `github.com/grokify/mogo` from 0.69.2 to 0.69.3"
+        }
       ]
     },
     {
@@ -87,12 +164,23 @@
       "date": "2026-04-25",
       "commit": "043b9c2",
       "highlights": [
-        { "description": "Release-level commit field for tracking tagged commit SHA in changelog entries" }
+        {
+          "description": "Release-level commit field for tracking tagged commit SHA in changelog entries"
+        }
       ],
       "added": [
-        { "description": "`commit` field at release level in JSON schema for tracking the commit SHA a release tag points to", "commit": "3db6403" },
-        { "description": "`Commit` field in `Release` struct for programmatic access", "commit": "9df5ce5" },
-        { "description": "Release commit displayed in Markdown heading when `IncludeCommits` option is enabled", "commit": "9df5ce5" }
+        {
+          "description": "`commit` field at release level in JSON schema for tracking the commit SHA a release tag points to",
+          "commit": "3db6403"
+        },
+        {
+          "description": "`Commit` field in `Release` struct for programmatic access",
+          "commit": "9df5ce5"
+        },
+        {
+          "description": "Release commit displayed in Markdown heading when `IncludeCommits` option is enabled",
+          "commit": "9df5ce5"
+        }
       ]
     },
     {
@@ -100,22 +188,56 @@
       "date": "2026-03-15",
       "commit": "8295e4a",
       "highlights": [
-        { "description": "New `merge` command for combining multiple CHANGELOG.json files with deduplication and metadata preservation" },
-        { "description": "`--skip-invalid` flag for `init --from-tags` to gracefully handle non-semver tags" }
+        {
+          "description": "New `merge` command for combining multiple CHANGELOG.json files with deduplication and metadata preservation"
+        },
+        {
+          "description": "`--skip-invalid` flag for `init --from-tags` to gracefully handle non-semver tags"
+        }
       ],
       "added": [
-        { "description": "`merge` command for combining releases from multiple CHANGELOG.json files", "commit": "6bb2a16" },
-        { "description": "`--release` flag for `merge` to prepend a single release file", "commit": "6bb2a16" },
-        { "description": "`--dedup` flag for `merge` to skip versions that already exist in base", "commit": "6bb2a16" },
-        { "description": "`--prepend-only` flag for `merge` to only add releases newer than base's latest", "commit": "6bb2a16" },
-        { "description": "`--skip-invalid` flag for `init --from-tags` to skip non-semver tags", "commit": "ede207f" },
-        { "description": "`IsValidSemVer()` function exported from changelog package for semver validation", "commit": "ede207f" }
+        {
+          "description": "`merge` command for combining releases from multiple CHANGELOG.json files",
+          "commit": "6bb2a16"
+        },
+        {
+          "description": "`--release` flag for `merge` to prepend a single release file",
+          "commit": "6bb2a16"
+        },
+        {
+          "description": "`--dedup` flag for `merge` to skip versions that already exist in base",
+          "commit": "6bb2a16"
+        },
+        {
+          "description": "`--prepend-only` flag for `merge` to only add releases newer than base's latest",
+          "commit": "6bb2a16"
+        },
+        {
+          "description": "`--skip-invalid` flag for `init --from-tags` to skip non-semver tags",
+          "commit": "ede207f"
+        },
+        {
+          "description": "`IsValidSemVer()` function exported from changelog package for semver validation",
+          "commit": "ede207f"
+        }
       ],
       "tests": [
-        { "description": "Comprehensive tests for `compareSemver`, `semverRegex`, and tag list structures", "commit": "af49a84" },
-        { "description": "Tests for `DefaultDiscoveryOptions`, `ParseRollupRules`, `ProjectPaths`, `ParsePortfolio`", "commit": "af49a84" },
-        { "description": "Tests for `DefaultMetricsOptions` and `normalizeDate` edge cases", "commit": "af49a84" },
-        { "description": "Coverage improvement: aggregate 74.4% → 77.4%, gitlog 63.6% → 68.4%, overall 85.1%", "commit": "af49a84" }
+        {
+          "description": "Comprehensive tests for `compareSemver`, `semverRegex`, and tag list structures",
+          "commit": "af49a84"
+        },
+        {
+          "description": "Tests for `DefaultDiscoveryOptions`, `ParseRollupRules`, `ProjectPaths`, `ParsePortfolio`",
+          "commit": "af49a84"
+        },
+        {
+          "description": "Tests for `DefaultMetricsOptions` and `normalizeDate` edge cases",
+          "commit": "af49a84"
+        },
+        {
+          "description": "Coverage improvement: aggregate 74.4% \u2192 77.4%, gitlog 63.6% \u2192 68.4%, overall 85.1%",
+          "commit": "af49a84"
+        }
       ]
     },
     {
@@ -123,31 +245,86 @@
       "date": "2026-02-28",
       "commit": "4817698",
       "highlights": [
-        { "description": "Multi-project changelog aggregation with `schangelog portfolio` commands for tracking releases across 100s of repositories" },
-        { "description": "GitHub-style activity heatmap and velocity dashboard generation for development metrics" }
+        {
+          "description": "Multi-project changelog aggregation with `schangelog portfolio` commands for tracking releases across 100s of repositories"
+        },
+        {
+          "description": "GitHub-style activity heatmap and velocity dashboard generation for development metrics"
+        }
       ],
       "added": [
-        { "description": "`portfolio` command group for multi-project changelog operations", "commit": "a0a36d7" },
-        { "description": "`portfolio discover` command to scan GitHub orgs/users for repositories with CHANGELOG.json", "commit": "a0a36d7" },
-        { "description": "`portfolio aggregate` command to combine changelogs from multiple projects into a unified portfolio", "commit": "a0a36d7" },
-        { "description": "`portfolio metrics` command to generate time-series metrics and dashboard data", "commit": "a0a36d7" },
-        { "description": "`aggregate` package with manifest, resolver, portfolio, metrics, and dashboard types", "commit": "6b9f28d" },
-        { "description": "Manifest schema for defining projects to aggregate (similar to go.mod but for changelogs)", "commit": "6b9f28d" },
-        { "description": "Local-first resolution searching ~/go/src and $GOPATH/src for project changelogs", "commit": "6b9f28d" },
-        { "description": "Remote changelog fetching from GitHub with HITL approval flow (--pending/--approve flags)", "commit": "6b9f28d" },
-        { "description": "Category roll-up rules mapping 20 categories to 6 groups: Features, Fixes, Improvements, Breaking, Maintenance, Community", "commit": "6b9f28d" },
-        { "description": "Time-series metrics with day/week/month granularity for release velocity tracking", "commit": "6b9f28d" },
-        { "description": "Daily activity data for GitHub-style contribution heatmaps", "commit": "6b9f28d" },
-        { "description": "Dashboard export in dashforge-compatible JSON format with widgets for metrics, charts, and tables", "commit": "6b9f28d" },
-        { "description": "`--dashboard` flag for metrics command to generate dashboard-ready data", "commit": "a0a36d7" },
-        { "description": "`--template velocity` option for generating complete dashboard definitions", "commit": "a0a36d7" }
+        {
+          "description": "`portfolio` command group for multi-project changelog operations",
+          "commit": "a0a36d7"
+        },
+        {
+          "description": "`portfolio discover` command to scan GitHub orgs/users for repositories with CHANGELOG.json",
+          "commit": "a0a36d7"
+        },
+        {
+          "description": "`portfolio aggregate` command to combine changelogs from multiple projects into a unified portfolio",
+          "commit": "a0a36d7"
+        },
+        {
+          "description": "`portfolio metrics` command to generate time-series metrics and dashboard data",
+          "commit": "a0a36d7"
+        },
+        {
+          "description": "`aggregate` package with manifest, resolver, portfolio, metrics, and dashboard types",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "Manifest schema for defining projects to aggregate (similar to go.mod but for changelogs)",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "Local-first resolution searching ~/go/src and $GOPATH/src for project changelogs",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "Remote changelog fetching from GitHub with HITL approval flow (--pending/--approve flags)",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "Category roll-up rules mapping 20 categories to 6 groups: Features, Fixes, Improvements, Breaking, Maintenance, Community",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "Time-series metrics with day/week/month granularity for release velocity tracking",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "Daily activity data for GitHub-style contribution heatmaps",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "Dashboard export in dashforge-compatible JSON format with widgets for metrics, charts, and tables",
+          "commit": "6b9f28d"
+        },
+        {
+          "description": "`--dashboard` flag for metrics command to generate dashboard-ready data",
+          "commit": "a0a36d7"
+        },
+        {
+          "description": "`--template velocity` option for generating complete dashboard definitions",
+          "commit": "a0a36d7"
+        }
       ],
       "dependencies": [
-        { "description": "Add `github.com/google/go-github/v84` for GitHub API access in discovery and remote fetch", "commit": "72ae60c" },
-        { "description": "Add `github.com/grokify/gogithub` v0.10.0 for GitHub utilities", "commit": "72ae60c" }
+        {
+          "description": "Add `github.com/google/go-github/v84` for GitHub API access in discovery and remote fetch",
+          "commit": "72ae60c"
+        },
+        {
+          "description": "Add `github.com/grokify/gogithub` v0.10.0 for GitHub utilities",
+          "commit": "72ae60c"
+        }
       ],
       "tests": [
-        { "description": "Comprehensive tests for aggregate package: manifest, rollup, resolver, portfolio, metrics, dashboard", "commit": "6b9f28d" }
+        {
+          "description": "Comprehensive tests for aggregate package: manifest, rollup, resolver, portfolio, metrics, dashboard",
+          "commit": "6b9f28d"
+        }
       ]
     },
     {
@@ -155,33 +332,68 @@
       "date": "2026-02-22",
       "commit": "20e09fc",
       "highlights": [
-        { "description": "Notable-only filtering now the default - maintenance-only releases excluded from generated changelogs" },
-        { "description": "New `--all-releases` flag to include all releases when needed" }
+        {
+          "description": "Notable-only filtering now the default - maintenance-only releases excluded from generated changelogs"
+        },
+        {
+          "description": "New `--all-releases` flag to include all releases when needed"
+        }
       ],
       "breaking": [
-        { "description": "Default output now excludes maintenance-only releases (use `--all-releases` to include them)" }
+        {
+          "description": "Default output now excludes maintenance-only releases (use `--all-releases` to include them)"
+        }
       ],
       "upgradeGuide": [
-        { "description": "If you need all releases in output, add `--all-releases` flag to your `schangelog generate` commands" },
-        { "description": "The `--full` preset now implies `--all-releases` automatically" }
+        {
+          "description": "If you need all releases in output, add `--all-releases` flag to your `schangelog generate` commands"
+        },
+        {
+          "description": "The `--full` preset now implies `--all-releases` automatically"
+        }
       ],
       "added": [
-        { "description": "`--all-releases` flag for `generate` command to include maintenance-only releases" },
-        { "description": "`--notable-categories` flag to customize which categories are considered notable" },
-        { "description": "`NotabilityPolicy` type for programmatic control over release filtering" },
-        { "description": "`DefaultNotabilityPolicy()` function returning default notable categories" },
-        { "description": "`Release.IsNotable()` method to check if a release has user-facing changes" },
-        { "description": "`Release.HasCategory()` helper method to check for entries in a specific category" },
-        { "description": "`Options.NotableOnly` and `Options.NotabilityPolicy` renderer fields" },
-        { "description": "`Config.AllReleases` and `Config.NotableCategories` for CLI configuration" }
+        {
+          "description": "`--all-releases` flag for `generate` command to include maintenance-only releases"
+        },
+        {
+          "description": "`--notable-categories` flag to customize which categories are considered notable"
+        },
+        {
+          "description": "`NotabilityPolicy` type for programmatic control over release filtering"
+        },
+        {
+          "description": "`DefaultNotabilityPolicy()` function returning default notable categories"
+        },
+        {
+          "description": "`Release.IsNotable()` method to check if a release has user-facing changes"
+        },
+        {
+          "description": "`Release.HasCategory()` helper method to check for entries in a specific category"
+        },
+        {
+          "description": "`Options.NotableOnly` and `Options.NotabilityPolicy` renderer fields"
+        },
+        {
+          "description": "`Config.AllReleases` and `Config.NotableCategories` for CLI configuration"
+        }
       ],
       "changed": [
-        { "description": "Default rendering now filters to notable releases only (inverse of previous behavior)", "breaking": true },
-        { "description": "`--full` preset now includes all releases (sets `NotableOnly=false`)" }
+        {
+          "description": "Default rendering now filters to notable releases only (inverse of previous behavior)",
+          "breaking": true
+        },
+        {
+          "description": "`--full` preset now includes all releases (sets `NotableOnly=false`)"
+        }
       ],
       "documentation": [
-        { "description": "Updated CLI help text with notable-only default behavior explanation" },
-        { "description": "Added notable vs non-notable category reference to generate command help" }
+        {
+          "description": "Updated CLI help text with notable-only default behavior explanation"
+        },
+        {
+          "description": "Added notable vs non-notable category reference to generate command help"
+        }
       ]
     },
     {
@@ -189,33 +401,81 @@
       "date": "2026-02-08",
       "commit": "c48c3a6",
       "highlights": [
-        { "description": "Localization support for rendered Markdown output in 6 languages" },
-        { "description": "Header text fully localized including versioning and convention references" },
-        { "description": "JSON schema migrated to camelCase for ecosystem consistency" }
+        {
+          "description": "Localization support for rendered Markdown output in 6 languages"
+        },
+        {
+          "description": "Header text fully localized including versioning and convention references"
+        },
+        {
+          "description": "JSON schema migrated to camelCase for ecosystem consistency"
+        }
       ],
       "breaking": [
-        { "description": "All JSON property names changed from snake_case to camelCase (e.g., `irVersion` instead of `ir_version`)", "commit": "adc355c" }
+        {
+          "description": "All JSON property names changed from snake_case to camelCase (e.g., `irVersion` instead of `ir_version`)",
+          "commit": "adc355c"
+        }
       ],
       "upgradeGuide": [
-        { "description": "Update existing CHANGELOG.json files to use camelCase property names", "commit": "adc355c" },
-        { "description": "Re-run `schangelog validate` to check for any issues", "commit": "adc355c" }
+        {
+          "description": "Update existing CHANGELOG.json files to use camelCase property names",
+          "commit": "adc355c"
+        },
+        {
+          "description": "Re-run `schangelog validate` to check for any issues",
+          "commit": "adc355c"
+        }
       ],
       "added": [
-        { "description": "`--locale` flag for `generate` command to output in different languages", "commit": "64edc2e" },
-        { "description": "`--locale-file` flag for custom translation overrides", "commit": "64edc2e" },
-        { "description": "Built-in translations for 6 locales: English, German, Spanish, French, Japanese, Chinese", "commit": "64edc2e" },
-        { "description": "`Locale` and `LocaleOverrides` renderer options", "commit": "64edc2e" },
-        { "description": "Header text localization for Keep a Changelog, versioning, and generator references", "commit": "19b3f06" },
-        { "description": "`--require-commits` flag for `validate` command to require commit hashes on entries", "commit": "12ac69f" },
-        { "description": "W005 warning code for missing commit hashes (shown by default)", "commit": "12ac69f" },
-        { "description": "E010 error code for missing commits when `--require-commits` is set", "commit": "12ac69f" },
-        { "description": "Exempt categories for commit validation: highlights, upgradeGuide, knownIssues", "commit": "12ac69f" }
+        {
+          "description": "`--locale` flag for `generate` command to output in different languages",
+          "commit": "64edc2e"
+        },
+        {
+          "description": "`--locale-file` flag for custom translation overrides",
+          "commit": "64edc2e"
+        },
+        {
+          "description": "Built-in translations for 6 locales: English, German, Spanish, French, Japanese, Chinese",
+          "commit": "64edc2e"
+        },
+        {
+          "description": "`Locale` and `LocaleOverrides` renderer options",
+          "commit": "64edc2e"
+        },
+        {
+          "description": "Header text localization for Keep a Changelog, versioning, and generator references",
+          "commit": "19b3f06"
+        },
+        {
+          "description": "`--require-commits` flag for `validate` command to require commit hashes on entries",
+          "commit": "12ac69f"
+        },
+        {
+          "description": "W005 warning code for missing commit hashes (shown by default)",
+          "commit": "12ac69f"
+        },
+        {
+          "description": "E010 error code for missing commits when `--require-commits` is set",
+          "commit": "12ac69f"
+        },
+        {
+          "description": "Exempt categories for commit validation: highlights, upgradeGuide, knownIssues",
+          "commit": "12ac69f"
+        }
       ],
       "dependencies": [
-        { "description": "Add `github.com/grokify/structured-locale` v0.1.0 for localization support", "commit": "64edc2e" }
+        {
+          "description": "Add `github.com/grokify/structured-locale` v0.1.0 for localization support",
+          "commit": "64edc2e"
+        }
       ],
       "tests": [
-        { "description": "Add localization unit tests for message loading and translation", "commit": "c56fe84" }
+        {
+          "description": "Add localization unit tests for message loading and translation",
+          "commit": "c56fe84"
+        }
       ]
     },
     {
@@ -223,19 +483,45 @@
       "date": "2026-02-02",
       "commit": "46c0ba9",
       "highlights": [
-        { "description": "New CLI commands for changelog backfilling: `list-tags`, `init --from-tags`, and `parse-commits --all-versions`" }
+        {
+          "description": "New CLI commands for changelog backfilling: `list-tags`, `init --from-tags`, and `parse-commits --all-versions`"
+        }
       ],
       "added": [
-        { "description": "`list-tags` command to list semver tags with dates and commit counts between versions", "commit": "e0ff0e0" },
-        { "description": "`init --from-tags` command to generate skeleton CHANGELOG.json from git tag history", "commit": "e0ff0e0" },
-        { "description": "`--all-versions` flag for `parse-commits` to parse all version ranges at once for backfilling", "commit": "c293a4d" },
-        { "description": "`parse-commits --until` without `--since` to parse from first commit to specified ref", "commit": "c293a4d" },
-        { "description": "`gitlog.GetTags()` function returning semver tags sorted by version with dates and commit counts", "commit": "460bc6f" },
-        { "description": "`gitlog.GetAllVersionRanges()` function for retrieving version ranges for parsing", "commit": "460bc6f" },
-        { "description": "`gitlog.GetFirstCommit()` function to get the initial commit hash", "commit": "460bc6f" }
+        {
+          "description": "`list-tags` command to list semver tags with dates and commit counts between versions",
+          "commit": "e0ff0e0"
+        },
+        {
+          "description": "`init --from-tags` command to generate skeleton CHANGELOG.json from git tag history",
+          "commit": "e0ff0e0"
+        },
+        {
+          "description": "`--all-versions` flag for `parse-commits` to parse all version ranges at once for backfilling",
+          "commit": "c293a4d"
+        },
+        {
+          "description": "`parse-commits --until` without `--since` to parse from first commit to specified ref",
+          "commit": "c293a4d"
+        },
+        {
+          "description": "`gitlog.GetTags()` function returning semver tags sorted by version with dates and commit counts",
+          "commit": "460bc6f"
+        },
+        {
+          "description": "`gitlog.GetAllVersionRanges()` function for retrieving version ranges for parsing",
+          "commit": "460bc6f"
+        },
+        {
+          "description": "`gitlog.GetFirstCommit()` function to get the initial commit hash",
+          "commit": "460bc6f"
+        }
       ],
       "documentation": [
-        { "description": "Moved MkDocs source from `docsrc/` to `docs/`, HTML now published to `gh-pages` branch", "commit": "9df3505" }
+        {
+          "description": "Moved MkDocs source from `docsrc/` to `docs/`, HTML now published to `gh-pages` branch",
+          "commit": "9df3505"
+        }
       ]
     },
     {
@@ -243,15 +529,29 @@
       "date": "2026-01-18",
       "commit": "ccba9a6",
       "highlights": [
-        { "description": "Monorepo tag path support for repositories using path-prefixed version tags (e.g., `sdk/go/v1.0.0`)" }
+        {
+          "description": "Monorepo tag path support for repositories using path-prefixed version tags (e.g., `sdk/go/v1.0.0`)"
+        }
       ],
       "added": [
-        { "description": "`tagPath` field in changelog IR for specifying version tag prefixes in monorepos", "commit": "7761ead" },
-        { "description": "Automatic path prefixing for compare and tag links when `tagPath` is set", "commit": "7761ead" },
-        { "description": "`tagPath` property in JSON schema with documentation", "commit": "7761ead" }
+        {
+          "description": "`tagPath` field in changelog IR for specifying version tag prefixes in monorepos",
+          "commit": "7761ead"
+        },
+        {
+          "description": "Automatic path prefixing for compare and tag links when `tagPath` is set",
+          "commit": "7761ead"
+        },
+        {
+          "description": "`tagPath` property in JSON schema with documentation",
+          "commit": "7761ead"
+        }
       ],
       "tests": [
-        { "description": "Comprehensive tests for tag path functionality including GitHub, GitLab, unreleased links, and edge cases", "commit": "25a3190" }
+        {
+          "description": "Comprehensive tests for tag path functionality including GitHub, GitLab, unreleased links, and edge cases",
+          "commit": "25a3190"
+        }
       ]
     },
     {
@@ -259,14 +559,26 @@
       "date": "2026-01-11",
       "commit": "fc3eb01",
       "highlights": [
-        { "description": "CLI renamed from `sclog` to `schangelog` for naming consistency with sibling tools (sroadmap, sprd, strd)" }
+        {
+          "description": "CLI renamed from `sclog` to `schangelog` for naming consistency with sibling tools (sroadmap, sprd, strd)"
+        }
       ],
       "changed": [
-        { "description": "CLI binary renamed from `sclog` to `schangelog` for consistency with sibling structured document tools", "breaking": true, "commit": "e58d452" }
+        {
+          "description": "CLI binary renamed from `sclog` to `schangelog` for consistency with sibling structured document tools",
+          "breaking": true,
+          "commit": "e58d452"
+        }
       ],
       "documentation": [
-        { "description": "Updated all documentation, examples, and help text to use `schangelog`", "commit": "e58d452" },
-        { "description": "Added git log alternatives section to project CLAUDE.md recommending `schangelog` over raw git commands", "commit": "e58d452" }
+        {
+          "description": "Updated all documentation, examples, and help text to use `schangelog`",
+          "commit": "e58d452"
+        },
+        {
+          "description": "Added git log alternatives section to project CLAUDE.md recommending `schangelog` over raw git commands",
+          "commit": "e58d452"
+        }
       ]
     },
     {
@@ -274,47 +586,152 @@
       "date": "2026-01-10",
       "commit": "67e310a",
       "highlights": [
-        { "description": "TOON output format for LLM commands (~8x token reduction vs raw git log)" },
-        { "description": "GitLab repository support with automatic reference linking for issues, PRs, and commits" },
-        { "description": "Author attribution for external contributors and compact grouping of maintenance releases" }
+        {
+          "description": "TOON output format for LLM commands (~8x token reduction vs raw git log)"
+        },
+        {
+          "description": "GitLab repository support with automatic reference linking for issues, PRs, and commits"
+        },
+        {
+          "description": "Author attribution for external contributors and compact grouping of maintenance releases"
+        }
       ],
       "added": [
-        { "description": "TOON (Token-Oriented Object Notation) as default output format for `parse-commits`, `suggest-category`, and `validate --format`", "commit": "2be0cc0" },
-        { "description": "`--format` flag for LLM commands supporting `toon` (default), `json`, and `json-compact`", "commit": "2be0cc0" },
-        { "description": "GitLab repository support for reference links and version comparisons", "commit": "be9b3b0" },
-        { "description": "Automatic reference linking: issues, PRs, and commits become clickable links when repository URL is provided", "commit": "be9b3b0" },
-        { "description": "`LinkReferences` renderer option (now enabled by default) for hyperlinking references", "commit": "be9b3b0" },
-        { "description": "`IncludeUnreleasedLink` renderer option (enabled by default) for always showing compare link to HEAD", "commit": "d4b3e90" },
-        { "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`", "commit": "93b8da1" },
-        { "description": "`commitConvention` field in changelog IR: `conventional` or `none`", "commit": "93b8da1" },
-        { "description": "Dynamic header generation based on versioning scheme and commit convention", "commit": "be9b3b0" },
-        { "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)", "commit": "93b8da1" },
-        { "description": "`maintainers` and `bots` fields in changelog IR for identifying team members", "commit": "91e788f" },
-        { "description": "Auto-detection of common bots (dependabot, renovate, github-actions, etc.)", "commit": "91e788f" },
-        { "description": "`IsTeamMember()` method for checking if author is maintainer or bot", "commit": "91e788f" },
-        { "description": "`IncludeAuthors` renderer option for external contributor attribution", "commit": "a2c86cb" },
-        { "description": "Automatic author attribution with linked GitHub/GitLab profiles", "commit": "a2c86cb" },
-        { "description": "Inline attribution stripping to avoid duplicate attribution when author field matches", "commit": "b5e8f34" },
-        { "description": "`CompactMaintenanceReleases` renderer option for grouping maintenance-only releases", "commit": "f7cdb02" },
-        { "description": "`IsMaintenanceOnly()` method to detect dependency/documentation-only releases", "commit": "824a075" },
-        { "description": "`--changelog` flag for `parse-commits` to auto-detect external contributors", "commit": "817fa7f" },
-        { "description": "`IsExternal` field in commit output marking external contributors", "commit": "8e1ab0a" },
-        { "description": "`Contributors` summary in `parse-commits` output with deduplicated author list", "commit": "8e1ab0a" },
-        { "description": "`IsTeamMemberByNameAndEmail()` for matching by git author name, email, or GitHub noreply username", "commit": "5169681" }
+        {
+          "description": "TOON (Token-Oriented Object Notation) as default output format for `parse-commits`, `suggest-category`, and `validate --format`",
+          "commit": "2be0cc0"
+        },
+        {
+          "description": "`--format` flag for LLM commands supporting `toon` (default), `json`, and `json-compact`",
+          "commit": "2be0cc0"
+        },
+        {
+          "description": "GitLab repository support for reference links and version comparisons",
+          "commit": "be9b3b0"
+        },
+        {
+          "description": "Automatic reference linking: issues, PRs, and commits become clickable links when repository URL is provided",
+          "commit": "be9b3b0"
+        },
+        {
+          "description": "`LinkReferences` renderer option (now enabled by default) for hyperlinking references",
+          "commit": "be9b3b0"
+        },
+        {
+          "description": "`IncludeUnreleasedLink` renderer option (enabled by default) for always showing compare link to HEAD",
+          "commit": "d4b3e90"
+        },
+        {
+          "description": "`versioning` field in changelog IR: `semver`, `calver`, `custom`, or `none`",
+          "commit": "93b8da1"
+        },
+        {
+          "description": "`commitConvention` field in changelog IR: `conventional` or `none`",
+          "commit": "93b8da1"
+        },
+        {
+          "description": "Dynamic header generation based on versioning scheme and commit convention",
+          "commit": "be9b3b0"
+        },
+        {
+          "description": "Validation error codes E008 (invalid versioning) and E009 (invalid commit convention)",
+          "commit": "93b8da1"
+        },
+        {
+          "description": "`maintainers` and `bots` fields in changelog IR for identifying team members",
+          "commit": "91e788f"
+        },
+        {
+          "description": "Auto-detection of common bots (dependabot, renovate, github-actions, etc.)",
+          "commit": "91e788f"
+        },
+        {
+          "description": "`IsTeamMember()` method for checking if author is maintainer or bot",
+          "commit": "91e788f"
+        },
+        {
+          "description": "`IncludeAuthors` renderer option for external contributor attribution",
+          "commit": "a2c86cb"
+        },
+        {
+          "description": "Automatic author attribution with linked GitHub/GitLab profiles",
+          "commit": "a2c86cb"
+        },
+        {
+          "description": "Inline attribution stripping to avoid duplicate attribution when author field matches",
+          "commit": "b5e8f34"
+        },
+        {
+          "description": "`CompactMaintenanceReleases` renderer option for grouping maintenance-only releases",
+          "commit": "f7cdb02"
+        },
+        {
+          "description": "`IsMaintenanceOnly()` method to detect dependency/documentation-only releases",
+          "commit": "824a075"
+        },
+        {
+          "description": "`--changelog` flag for `parse-commits` to auto-detect external contributors",
+          "commit": "817fa7f"
+        },
+        {
+          "description": "`IsExternal` field in commit output marking external contributors",
+          "commit": "8e1ab0a"
+        },
+        {
+          "description": "`Contributors` summary in `parse-commits` output with deduplicated author list",
+          "commit": "8e1ab0a"
+        },
+        {
+          "description": "`IsTeamMemberByNameAndEmail()` for matching by git author name, email, or GitHub noreply username",
+          "commit": "5169681"
+        }
       ],
       "changed": [
-        { "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON", "breaking": true, "commit": "2be0cc0" },
-        { "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
-        { "description": "`validate`: `--json` flag replaced with `--format` flag", "breaking": true, "commit": "2be0cc0" },
-        { "description": "Commit references displayed as short hash (7 chars) with backticks in linked output", "commit": "be9b3b0" },
-        { "description": "Consecutive maintenance releases grouped into compact sections by default", "commit": "f7cdb02" },
-        { "description": "Version strings now used as-is in headers and links (no automatic `v` prefix)", "commit": "9e17c24" }
+        {
+          "description": "LLM commands now output TOON format by default for ~40% token reduction vs JSON",
+          "breaking": true,
+          "commit": "2be0cc0"
+        },
+        {
+          "description": "`parse-commits` and `suggest-category`: `--compact` flag replaced with `--format` flag",
+          "breaking": true,
+          "commit": "2be0cc0"
+        },
+        {
+          "description": "`validate`: `--json` flag replaced with `--format` flag",
+          "breaking": true,
+          "commit": "2be0cc0"
+        },
+        {
+          "description": "Commit references displayed as short hash (7 chars) with backticks in linked output",
+          "commit": "be9b3b0"
+        },
+        {
+          "description": "Consecutive maintenance releases grouped into compact sections by default",
+          "commit": "f7cdb02"
+        },
+        {
+          "description": "Version strings now used as-is in headers and links (no automatic `v` prefix)",
+          "commit": "9e17c24"
+        }
       ],
       "documentation": [
-        { "description": "TOON integration design document", "commit": "f5850bf" },
-        { "description": "Updated LLM guide with TOON examples and ~8x token efficiency", "commit": "f5850bf" },
-        { "description": "Reference linking documentation in specification", "commit": "f5850bf" },
-        { "description": "Claude Code project configuration with `/changelog` slash command", "commit": "8d4cf61" }
+        {
+          "description": "TOON integration design document",
+          "commit": "f5850bf"
+        },
+        {
+          "description": "Updated LLM guide with TOON examples and ~8x token efficiency",
+          "commit": "f5850bf"
+        },
+        {
+          "description": "Reference linking documentation in specification",
+          "commit": "f5850bf"
+        },
+        {
+          "description": "Claude Code project configuration with `/changelog` slash command",
+          "commit": "8d4cf61"
+        }
       ]
     },
     {
@@ -322,18 +739,41 @@
       "date": "2026-01-04",
       "commit": "d21c28c",
       "highlights": [
-        { "description": "LLM-assisted changelog generation with optimized git parsing (~5x token reduction) and automatic commit classification" }
+        {
+          "description": "LLM-assisted changelog generation with optimized git parsing (~5x token reduction) and automatic commit classification"
+        }
       ],
       "added": [
-        { "description": "`parse-commits` command for LLM-optimized git history output (~5x token reduction vs raw git log)", "commit": "4503119" },
-        { "description": "`suggest-category` command for commit classification with confidence levels", "commit": "1432b6e" },
-        { "description": "`--json` flag for `validate` command with structured error output, line numbers, and fix suggestions", "commit": "1c705e9" },
-        { "description": "MkDocs documentation site with Material theme", "commit": "c8b280d" },
-        { "description": "LLM integration guide with prompts and workflows", "commit": "178f6a0" },
-        { "description": "PRD documents for planned localization and rendering features", "commit": "20c1f7f" }
+        {
+          "description": "`parse-commits` command for LLM-optimized git history output (~5x token reduction vs raw git log)",
+          "commit": "4503119"
+        },
+        {
+          "description": "`suggest-category` command for commit classification with confidence levels",
+          "commit": "1432b6e"
+        },
+        {
+          "description": "`--json` flag for `validate` command with structured error output, line numbers, and fix suggestions",
+          "commit": "1c705e9"
+        },
+        {
+          "description": "MkDocs documentation site with Material theme",
+          "commit": "c8b280d"
+        },
+        {
+          "description": "LLM integration guide with prompts and workflows",
+          "commit": "178f6a0"
+        },
+        {
+          "description": "PRD documents for planned localization and rendering features",
+          "commit": "20c1f7f"
+        }
       ],
       "documentation": [
-        { "description": "Release notes consolidated in `docsrc/releases/` for MkDocs site", "commit": "cac7f70" }
+        {
+          "description": "Release notes consolidated in `docsrc/releases/` for MkDocs site",
+          "commit": "cac7f70"
+        }
       ]
     },
     {
@@ -341,22 +781,51 @@
       "date": "2026-01-04",
       "commit": "ace9de6",
       "highlights": [
-        { "description": "Extend Keep a Changelog with 13 additional change types organized into tiers for flexible filtering and validation" }
+        {
+          "description": "Extend Keep a Changelog with 13 additional change types organized into tiers for flexible filtering and validation"
+        }
       ],
       "added": [
-        { "description": "Tier-based change type system with 4 levels: **core** (KACL standard), **standard** (common extensions), **extended** (docs/build/acknowledgments), **optional** (operations/internal)", "commit": "b185758" },
-        { "description": "19 change types in canonical order (see `CHANGE_TYPES.json`)", "commit": "b185758" },
-        { "description": "New change types beyond Keep a Changelog: Highlights, Breaking, Upgrade Guide, Performance, Dependencies, Documentation, Build, Infrastructure, Observability, Compliance, Internal, Known Issues, Contributors", "commit": "b185758" },
-        { "description": "CLI flags: `--max-tier` for generate, `--min-tier` for validate", "commit": "b185758" },
-        { "description": "Library functions: `Summary()`, `ValidateMinTier()`, `ParseTier()`, `OptionsFromConfig()`", "commit": "b185758" },
-        { "description": "Canonical ordering documentation in README.md", "commit": "fd7312c" }
+        {
+          "description": "Tier-based change type system with 4 levels: **core** (KACL standard), **standard** (common extensions), **extended** (docs/build/acknowledgments), **optional** (operations/internal)",
+          "commit": "b185758"
+        },
+        {
+          "description": "19 change types in canonical order (see `CHANGE_TYPES.json`)",
+          "commit": "b185758"
+        },
+        {
+          "description": "New change types beyond Keep a Changelog: Highlights, Breaking, Upgrade Guide, Performance, Dependencies, Documentation, Build, Infrastructure, Observability, Compliance, Internal, Known Issues, Contributors",
+          "commit": "b185758"
+        },
+        {
+          "description": "CLI flags: `--max-tier` for generate, `--min-tier` for validate",
+          "commit": "b185758"
+        },
+        {
+          "description": "Library functions: `Summary()`, `ValidateMinTier()`, `ParseTier()`, `OptionsFromConfig()`",
+          "commit": "b185758"
+        },
+        {
+          "description": "Canonical ordering documentation in README.md",
+          "commit": "fd7312c"
+        }
       ],
       "changed": [
-        { "description": "Change types now support tier-based filtering for validation and generation", "commit": "b185758" },
-        { "description": "CLI refactored to use library functions for better testability", "commit": "b185758" }
+        {
+          "description": "Change types now support tier-based filtering for validation and generation",
+          "commit": "b185758"
+        },
+        {
+          "description": "CLI refactored to use library functions for better testability",
+          "commit": "b185758"
+        }
       ],
       "tests": [
-        { "description": "Comprehensive unit tests achieving 98%+ library coverage (changelog: 98.2%, renderer: 98.9%)", "commit": "da9559e" }
+        {
+          "description": "Comprehensive unit tests achieving 98%+ library coverage (changelog: 98.2%, renderer: 98.9%)",
+          "commit": "da9559e"
+        }
       ]
     },
     {
@@ -364,13 +833,27 @@
       "date": "2026-01-04",
       "commit": "5f2adeb",
       "highlights": [
-        { "description": "Install via Homebrew or download pre-built binaries for Linux, macOS, and Windows - no Go toolchain required" }
+        {
+          "description": "Install via Homebrew or download pre-built binaries for Linux, macOS, and Windows - no Go toolchain required"
+        }
       ],
       "added": [
-        { "description": "GoReleaser configuration for multi-platform binary releases (Linux, macOS, Windows × amd64, arm64)", "commit": "5f2adeb" },
-        { "description": "GitHub Actions release workflow triggered by version tags", "commit": "5f2adeb" },
-        { "description": "Homebrew tap distribution via `brew install structured-changelog`", "commit": "5f2adeb" },
-        { "description": "Binary symlink: both `sclog` and `structured-changelog` commands available", "commit": "5f2adeb" }
+        {
+          "description": "GoReleaser configuration for multi-platform binary releases (Linux, macOS, Windows \u00d7 amd64, arm64)",
+          "commit": "5f2adeb"
+        },
+        {
+          "description": "GitHub Actions release workflow triggered by version tags",
+          "commit": "5f2adeb"
+        },
+        {
+          "description": "Homebrew tap distribution via `brew install structured-changelog`",
+          "commit": "5f2adeb"
+        },
+        {
+          "description": "Binary symlink: both `sclog` and `structured-changelog` commands available",
+          "commit": "5f2adeb"
+        }
       ]
     },
     {
@@ -378,18 +861,41 @@
       "date": "2026-01-03",
       "commit": "518e956",
       "highlights": [
-        { "description": "Generated changelogs now include clickable version comparison links for easy navigation on GitHub" }
+        {
+          "description": "Generated changelogs now include clickable version comparison links for easy navigation on GitHub"
+        }
       ],
       "added": [
-        { "description": "GitHub version reference links at bottom of rendered Markdown", "commit": "b810bf0" },
-        { "description": "Auto-detect GitHub repository from `repository` field", "commit": "b810bf0" },
-        { "description": "First release links to `/releases/tag/vX.Y.Z`", "commit": "b810bf0" },
-        { "description": "Subsequent releases link to `/compare/vA...vB`", "commit": "b810bf0" },
-        { "description": "Unreleased section links to `/compare/vLatest...HEAD`", "commit": "b810bf0" },
-        { "description": "Dependabot configuration for Go modules and GitHub Actions", "commit": "36ee0c5" }
+        {
+          "description": "GitHub version reference links at bottom of rendered Markdown",
+          "commit": "b810bf0"
+        },
+        {
+          "description": "Auto-detect GitHub repository from `repository` field",
+          "commit": "b810bf0"
+        },
+        {
+          "description": "First release links to `/releases/tag/vX.Y.Z`",
+          "commit": "b810bf0"
+        },
+        {
+          "description": "Subsequent releases link to `/compare/vA...vB`",
+          "commit": "b810bf0"
+        },
+        {
+          "description": "Unreleased section links to `/compare/vLatest...HEAD`",
+          "commit": "b810bf0"
+        },
+        {
+          "description": "Dependabot configuration for Go modules and GitHub Actions",
+          "commit": "36ee0c5"
+        }
       ],
       "changed": [
-        { "description": "Add Structured Changelog attribution to rendered Markdown header", "commit": "7c18e7b" }
+        {
+          "description": "Add Structured Changelog attribution to rendered Markdown header",
+          "commit": "7c18e7b"
+        }
       ]
     },
     {
@@ -397,19 +903,51 @@
       "date": "2026-01-03",
       "commit": "e6993da",
       "highlights": [
-        { "description": "Machine-readable JSON changelog with deterministic Markdown generation following Keep a Changelog format" }
+        {
+          "description": "Machine-readable JSON changelog with deterministic Markdown generation following Keep a Changelog format"
+        }
       ],
       "added": [
-        { "description": "JSON IR schema for structured changelogs (v1.0)", "commit": "0ba99fc" },
-        { "description": "`changelog` package with IR types, parsing, and validation", "commit": "0ba99fc" },
-        { "description": "`renderer` package with deterministic Markdown generation", "commit": "0ba99fc" },
-        { "description": "`sclog` CLI with `validate` and `generate` subcommands", "commit": "0ba99fc" },
-        { "description": "Support for Keep a Changelog categories: added, changed, deprecated, removed, fixed, security", "commit": "0ba99fc" },
-        { "description": "Optional security metadata: CVE, GHSA, severity, CVSS, CWE", "commit": "0ba99fc" },
-        { "description": "Optional SBOM metadata: component, version, license", "commit": "0ba99fc" },
-        { "description": "JSON Schema for IR validation", "commit": "0ba99fc" },
-        { "description": "Example changelogs: basic, security, full", "commit": "0ba99fc" },
-        { "description": "Documentation: spec, security guide, SBOM guide", "commit": "0ba99fc" }
+        {
+          "description": "JSON IR schema for structured changelogs (v1.0)",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "`changelog` package with IR types, parsing, and validation",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "`renderer` package with deterministic Markdown generation",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "`sclog` CLI with `validate` and `generate` subcommands",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "Support for Keep a Changelog categories: added, changed, deprecated, removed, fixed, security",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "Optional security metadata: CVE, GHSA, severity, CVSS, CWE",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "Optional SBOM metadata: component, version, license",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "JSON Schema for IR validation",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "Example changelogs: basic, security, full",
+          "commit": "0ba99fc"
+        },
+        {
+          "description": "Documentation: spec, security guide, SBOM guide",
+          "commit": "0ba99fc"
+        }
       ]
     }
   ]
