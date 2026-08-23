@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://grokify.github.io/structured-changelog/prd/rendering/">
+        <link rel="canonical" href="https://grokify.github.io/structured-changelog/guides/cli-versioning/">
       
       
-        <link rel="prev" href="../localization/">
+        <link rel="prev" href="../generating/">
       
       
-        <link rel="next" href="../../releases/v0.16.0/">
+        <link rel="next" href="../llm-guide/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Rendering - Structured Changelog</title>
+        <title>CLI Versioning - Structured Changelog</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#prd-rendering" class="md-skip">
+        <a href="#cli-versioning-build-provenance" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Rendering
+              CLI Versioning
             
           </span>
         </div>
@@ -456,8 +456,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -468,13 +470,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -495,7 +495,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -513,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/generating/" class="md-nav__link">
+      <a href="../generating/" class="md-nav__link">
         
   
   
@@ -538,10 +538,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../guides/cli-versioning/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Versioning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -557,6 +584,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Two Signals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-any-binary-no-code-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting Any Binary (no code required)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-version-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The version Command
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-time-stamping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-Time Stamping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-lives-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Lives Here
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -569,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/llm-guide/" class="md-nav__link">
+      <a href="../llm-guide/" class="md-nav__link">
         
   
   
@@ -577,207 +690,6 @@
     
   
     LLM-Assisted Generation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/localization/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Localization
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/prism-integration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PRISM Integration
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/release-notes-guide/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Release Notes Guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PRDs
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    PRDs
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tools/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Tools Integration
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../toon-integration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TOON Integration
   
 
     
@@ -823,26 +735,17 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
+    <li class="md-nav__item">
+      <a href="../prism-integration/" class="md-nav__link">
         
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
   
   
   <span class="md-ellipsis">
     
   
-    Rendering
+    PRISM Integration
   
 
     
@@ -850,10 +753,193 @@
   
   
 
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
-      <a href="./" class="md-nav__link md-nav__link--active">
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PRDs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PRDs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prd/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prd/toon-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TOON Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prd/localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prd/rendering/" class="md-nav__link">
         
   
   
@@ -869,198 +955,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Overview
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#markdown-output-targets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Markdown Output Targets
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Markdown Output Targets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#target-use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Target Use Cases
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Approach
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#feature-compatibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Feature Compatibility
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flavor-support-future" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Flavor Support (Future)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deterministic-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Deterministic Output
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Deterministic Output">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#guarantees" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Guarantees
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-this-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why This Matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#output-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Structure
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Structure">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standard-markdown-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard Markdown Layout
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#section-ordering" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Section Ordering
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-with-localization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration with Localization
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1609,10 +1503,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#the-two-signals" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        The Two Signals
       
     </span>
   </a>
@@ -1620,149 +1514,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#markdown-output-targets" class="md-nav__link">
+  <a href="#inspecting-any-binary-no-code-required" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Markdown Output Targets
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Markdown Output Targets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#target-use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Target Use Cases
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#approach" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Approach
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#feature-compatibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Feature Compatibility
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flavor-support-future" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Flavor Support (Future)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deterministic-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Deterministic Output
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Deterministic Output">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#guarantees" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Guarantees
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-this-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why This Matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#output-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Structure
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Structure">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standard-markdown-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standard Markdown Layout
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#section-ordering" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Section Ordering
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-with-localization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration with Localization
+        Inspecting Any Binary (no code required)
       
     </span>
   </a>
@@ -1770,10 +1525,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
+  <a href="#the-version-command" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References
+        The version Command
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-time-stamping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-Time Stamping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-lives-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Lives Here
       
     </span>
   </a>
@@ -1800,161 +1588,113 @@
   
 
 
-<h1 id="prd-rendering">PRD: Rendering<a class="headerlink" href="#prd-rendering" title="Permanent link">&para;</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>Define the rendering behavior for converting <code>CHANGELOG.json</code> to human-readable output formats, with a focus on Markdown compatibility across different rendering engines.</p>
-<h2 id="markdown-output-targets">Markdown Output Targets<a class="headerlink" href="#markdown-output-targets" title="Permanent link">&para;</a></h2>
-<p>Support both <strong>GitHub</strong> and <strong>Pandoc</strong> rendering engines.</p>
-<h3 id="target-use-cases">Target Use Cases<a class="headerlink" href="#target-use-cases" title="Permanent link">&para;</a></h3>
+<h1 id="cli-versioning-build-provenance">CLI Versioning &amp; Build Provenance<a class="headerlink" href="#cli-versioning-build-provenance" title="Permanent link">&para;</a></h1>
+<p>A convention for making Go CLI binaries self-identify — including when they were built <strong>between releases</strong> or from an <strong>uncommitted</strong> working tree. This is the reference implementation used by <code>schangelog</code>, <code>schemakit</code>, and <code>stasks</code>.</p>
+<h2 id="the-two-signals">The Two Signals<a class="headerlink" href="#the-two-signals" title="Permanent link">&para;</a></h2>
+<p>A binary's provenance has two independent parts, from two sources:</p>
 <table>
 <thead>
 <tr>
-<th>Engine</th>
-<th>Output Formats</th>
-<th>Use Case</th>
+<th>Signal</th>
+<th>Source</th>
+<th>Available when</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>GitHub</td>
-<td>Web display</td>
-<td>Repository CHANGELOG.md</td>
+<td><strong>Release tag</strong> (<code>v0.16.0</code>)</td>
+<td>ldflags (<code>-X main.version=…</code>) or <code>debug.ReadBuildInfo().Main.Version</code></td>
+<td>ldflags: release builds. Build info: <code>go install …@vX.Y.Z</code>, or (Go 1.24+) derived from the git tag of a local checkout.</td>
 </tr>
 <tr>
-<td>Pandoc</td>
-<td>DOCX, PDF, HTML, etc.</td>
-<td>Documentation, releases</td>
+<td><strong>Commit + dirty flag</strong></td>
+<td>build info <code>vcs.revision</code> / <code>vcs.time</code> / <code>vcs.modified</code></td>
+<td>Always — the Go toolchain stamps these automatically from git.</td>
+</tr>
+<tr>
+<td><strong>Commits past last tag</strong> (<code>v0.16.0-3-gabc1234</code>)</td>
+<td><code>git describe --tags</code> via ldflags</td>
+<td>Only when stamped at build time. Build info alone does not embed the base tag.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="approach">Approach<a class="headerlink" href="#approach" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Generate <strong>generic Markdown</strong> compatible with both engines</li>
-<li>Use only basic constructs: headings, lists, links, emphasis</li>
-<li>Avoid engine-specific features</li>
-</ul>
-<h3 id="feature-compatibility">Feature Compatibility<a class="headerlink" href="#feature-compatibility" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>GitHub</th>
-<th>Pandoc</th>
-<th>Used</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ATX headings (<code>#</code>, <code>##</code>)</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Unordered lists (<code>-</code>)</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Inline links <code>[text](url)</code></td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Bold (<code>**text**</code>)</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Task lists (<code>- [ ]</code>)</td>
-<td>Yes</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>Alerts (<code>&gt; [!NOTE]</code>)</td>
-<td>Yes</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>Fenced divs (<code>:::</code>)</td>
-<td>No</td>
-<td>Yes</td>
-<td>No</td>
-</tr>
-</tbody>
-</table>
-<p>Current formatting uses only universally supported constructs.</p>
-<h3 id="flavor-support-future">Flavor Support (Future)<a class="headerlink" href="#flavor-support-future" title="Permanent link">&para;</a></h3>
-<p>If divergence becomes necessary, add a <code>--markdown-flavor</code> flag:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>--markdown-flavor<span class="w"> </span>github<span class="w"> </span>changelog.json
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>--markdown-flavor<span class="w"> </span>pandoc<span class="w"> </span>changelog.json
+<p><strong>Key point:</strong> "is this uncommitted?" is answerable at runtime for free (build info <code>vcs.modified</code>). "How far past the last release is it?" needs a <code>git describe</code> stamp at build time.</p>
+<h2 id="inspecting-any-binary-no-code-required">Inspecting Any Binary (no code required)<a class="headerlink" href="#inspecting-any-binary-no-code-required" title="Permanent link">&para;</a></h2>
+<p>The Go toolchain embeds build info in every binary. Read it with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>version<span class="w"> </span>-m<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>schangelog<span class="k">)</span>
 </code></pre></div>
-<p><strong>Current assessment:</strong> Not needed — simple formatting works universally.</p>
-<h2 id="deterministic-output">Deterministic Output<a class="headerlink" href="#deterministic-output" title="Permanent link">&para;</a></h2>
-<p>Rendering must be <strong>deterministic</strong>: same input always produces identical output.</p>
-<h3 id="guarantees">Guarantees<a class="headerlink" href="#guarantees" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Stable ordering</strong> — Sections appear in defined category order</li>
-<li><strong>Consistent whitespace</strong> — No trailing spaces, consistent blank lines</li>
-<li><strong>No timestamps</strong> — Output contains no generation timestamps</li>
-<li><strong>Locale isolation</strong> — Same locale + same input = same output</li>
-</ol>
-<h3 id="why-this-matters">Why This Matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Git diffs remain meaningful</li>
-<li>CI/CD pipelines produce reproducible artifacts</li>
-<li>Round-trip testing is reliable</li>
-</ul>
-<h2 id="output-structure">Output Structure<a class="headerlink" href="#output-structure" title="Permanent link">&para;</a></h2>
-<h3 id="standard-markdown-layout">Standard Markdown Layout<a class="headerlink" href="#standard-markdown-layout" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gh"># Changelog</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>All notable changes to this project will be documented in this file.
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="gu">## [Unreleased]</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="gu">### Added</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">-</span><span class="w"> </span>New feature description
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="gu">## [1.0.0] - 2024-01-15</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="gu">### Added</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">-</span><span class="w"> </span>Initial release feature
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="gu">### Fixed</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="k">-</span><span class="w"> </span>Bug fix description
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>[<span class="nl">Unreleased</span>]: <span class="na">https://github.com/user/repo/compare/v1.0.0...HEAD</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>[<span class="nl">1.0.0</span>]: <span class="na">https://github.com/user/repo/releases/tag/v1.0.0</span>
+<p>Look for <code>mod</code> (module version — <code>(devel)</code> or a pseudo-version means a local/between-releases build), and the <code>build vcs.revision</code> / <code>vcs.time</code> / <code>vcs.modified</code> lines (<code>vcs.modified=true</code> means the tree had uncommitted changes).</p>
+<h2 id="the-version-command">The <code>version</code> Command<a class="headerlink" href="#the-version-command" title="Permanent link">&para;</a></h2>
+<p>Every CLI exposes both a <code>version</code> subcommand and a <code>--version</code> flag, reporting the same multi-line output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>schangelog v0.16.0-3-gabc1234-dirty  [development build]
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  commit: abc1234def56 (modified)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  built:  2026-08-23T17:02:32Z
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  go:     go1.26.5 darwin/arm64
 </code></pre></div>
-<h3 id="section-ordering">Section Ordering<a class="headerlink" href="#section-ordering" title="Permanent link">&para;</a></h3>
-<p>Categories appear in tier order, then alphabetically within tier:</p>
-<ol>
-<li><strong>Core</strong>: Added, Changed, Deprecated, Fixed, Removed, Security</li>
-<li><strong>Standard</strong>: Breaking, Dependencies, Highlights, Performance, Upgrade Guide</li>
-<li><strong>Extended</strong>: Build, Contributors, Documentation, Tests</li>
-<li><strong>Optional</strong>: Compliance, Infrastructure, Internal, Known Issues, Observability</li>
-</ol>
-<p>Empty sections are omitted.</p>
-<h2 id="integration-with-localization">Integration with Localization<a class="headerlink" href="#integration-with-localization" title="Permanent link">&para;</a></h2>
-<p>Rendering respects the <code>--locale</code> flag (see <code>PRD_LOCALIZATION.md</code>):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>schangelog<span class="w"> </span>generate<span class="w"> </span>--locale<span class="w"> </span>fr<span class="w"> </span>changelog.json
-</code></pre></div>
-<p>Localization affects only <strong>labels</strong> (section headers), not structure or user content.</p>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://spec.commonmark.org/">CommonMark Spec</a></li>
-<li><a href="https://github.github.com/gfm/">GitHub Flavored Markdown</a></li>
-<li><a href="https://pandoc.org/MANUAL.html#pandocs-markdown">Pandoc Markdown</a></li>
+<li><strong>Release build:</strong> <code>schangelog v0.16.0</code> — clean, no dev marker.</li>
+<li><strong>Local <code>go install</code>/<code>go build</code>:</strong> module version or <code>(devel)</code> + commit + <code>[development build]</code> if the tree was modified.</li>
+<li><strong><code>make build</code>:</strong> the <code>git describe</code> string <code>vX.Y.Z-N-gSHA-dirty</code> — the precise "N commits past last tag, uncommitted" signal.</li>
 </ul>
+<p>The version token already carries its own dirty marker (Go's <code>+dirty</code> pseudo-version suffix, or git-describe's <code>-dirty</code>); the report does not double it.</p>
+<h2 id="reference-implementation">Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permanent link">&para;</a></h2>
+<p>The pattern: keep ldflags variables with sentinel defaults, and fall back to <code>debug.ReadBuildInfo()</code> when they aren't stamped.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">var</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nx">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;dev&quot;</span><span class="w">     </span><span class="c1">// -X main.version</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nx">commit</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="w">    </span><span class="c1">// -X main.commit</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nx">date</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;unknown&quot;</span><span class="w"> </span><span class="c1">// -X main.date</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kd">func</span><span class="w"> </span><span class="nx">resolveVersion</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="nx">ver</span><span class="p">,</span><span class="w"> </span><span class="nx">rev</span><span class="p">,</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">modified</span><span class="p">,</span><span class="w"> </span><span class="nx">devel</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nx">ver</span><span class="p">,</span><span class="w"> </span><span class="nx">rev</span><span class="p">,</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">version</span><span class="p">,</span><span class="w"> </span><span class="nx">commit</span><span class="p">,</span><span class="w"> </span><span class="nx">date</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nx">bi</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">debug</span><span class="p">.</span><span class="nx">ReadBuildInfo</span><span class="p">()</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">ver</span><span class="p">,</span><span class="w"> </span><span class="nx">rev</span><span class="p">,</span><span class="w"> </span><span class="nx">when</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nx">ver</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;dev&quot;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">ver</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;dev&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// not stamped by ldflags</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">bi</span><span class="p">.</span><span class="nx">Main</span><span class="p">.</span><span class="nx">Version</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">bi</span><span class="p">.</span><span class="nx">Main</span><span class="p">.</span><span class="nx">Version</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;(devel)&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">            </span><span class="nx">ver</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">bi</span><span class="p">.</span><span class="nx">Main</span><span class="p">.</span><span class="nx">Version</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">            </span><span class="nx">ver</span><span class="p">,</span><span class="w"> </span><span class="nx">devel</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;(devel)&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">bi</span><span class="p">.</span><span class="nx">Settings</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Key</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;vcs.revision&quot;</span><span class="p">:</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">rev</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">rev</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;vcs.time&quot;</span><span class="p">:</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;unknown&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;vcs.modified&quot;</span><span class="p">:</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">            </span><span class="nx">modified</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ver</span><span class="p">,</span><span class="w"> </span><span class="nx">rev</span><span class="p">,</span><span class="w"> </span><span class="nx">when</span><span class="p">,</span><span class="w"> </span><span class="nx">modified</span><span class="p">,</span><span class="w"> </span><span class="nx">devel</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="p">}</span>
+</code></pre></div>
+<p>Wire both entry points in <code>init()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">rootCmd</span><span class="p">.</span><span class="nx">Version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">versionString</span><span class="p">()</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nx">rootCmd</span><span class="p">.</span><span class="nx">SetVersionTemplate</span><span class="p">(</span><span class="s">&quot;{{.Version}}\n&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nx">rootCmd</span><span class="p">.</span><span class="nx">AddCommand</span><span class="p">(</span><span class="nx">versionCmd</span><span class="p">)</span><span class="w"> </span><span class="c1">// versionCmd.Run prints versionString()</span>
+</code></pre></div>
+<h2 id="build-time-stamping">Build-Time Stamping<a class="headerlink" href="#build-time-stamping" title="Permanent link">&para;</a></h2>
+<p><strong>Release builds (goreleaser)</strong> already stamp the ldflags:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">ldflags</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-X main.version={{.Version}}</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-X main.commit={{.Commit}}</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-X main.date={{.Date}}</span>
+</code></pre></div>
+<p><strong>Local <code>make build</code></strong> should stamp <code>git describe</code> for the readable "commits-past-tag" string:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">VERSION</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span>git<span class="w"> </span>describe<span class="w"> </span>--tags<span class="w"> </span>--always<span class="w"> </span>--dirty<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">COMMIT</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span>git<span class="w"> </span>rev-parse<span class="w"> </span>HEAD<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nv">DATE</span><span class="w">    </span><span class="o">:=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span>date<span class="w"> </span>-u<span class="w"> </span>+%Y-%m-%dT%H:%M:%SZ<span class="k">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nv">LDFLAGS</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>-X<span class="w"> </span>main.version<span class="o">=</span><span class="k">$(</span>VERSION<span class="k">)</span><span class="w"> </span>-X<span class="w"> </span>main.commit<span class="o">=</span><span class="k">$(</span>COMMIT<span class="k">)</span><span class="w"> </span>-X<span class="w"> </span>main.date<span class="o">=</span><span class="k">$(</span>DATE<span class="k">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nf">build</span><span class="o">:</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span>go<span class="w"> </span>build<span class="w"> </span>-ldflags<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>LDFLAGS<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-o<span class="w"> </span>bin/mytool<span class="w"> </span>./cmd/mytool
+</code></pre></div>
+<p>A plain <code>go install</code>/<code>go build</code> without these still self-identifies via build info — the stamp only upgrades the version string to the friendlier git-describe form.</p>
+<h2 id="why-this-lives-here">Why This Lives Here<a class="headerlink" href="#why-this-lives-here" title="Permanent link">&para;</a></h2>
+<p>Provenance is a versioning concern, and structured-changelog is the versioning tool in the toolkit — so the convention is documented here and adopted by the sibling CLIs.</p>
 
 
 

@@ -541,6 +541,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/cli-versioning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Versioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/llm-guide/" class="md-nav__link">
         
   
@@ -1087,6 +1115,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-versioning-build-provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Versioning &amp; Build Provenance
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1708,6 +1747,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#cli-versioning-build-provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Versioning &amp; Build Provenance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1740,13 +1790,14 @@
 
 <h1 id="release-notes-v0160">Release Notes - v0.16.0<a class="headerlink" href="#release-notes-v0160" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This release ships two features: <strong>per-category render controls</strong> for the Markdown generator (with a new collapse-Dependencies-by-default) and the <strong>RMI trailer flow</strong> (<a href="https://github.com/grokify/structured-changelog/tree/main/docs/specs/initiatives/INIT-SCHANGELOG-001">INIT-SCHANGELOG-001</a>), which flows <code>Refs:</code> git trailers from commits into pre-populated <code>rmis</code> on changelog entries.</p>
+<p>This release ships three features: <strong>per-category render controls</strong> for the Markdown generator (with a new collapse-Dependencies-by-default), the <strong>RMI trailer flow</strong> (<a href="https://github.com/grokify/structured-changelog/tree/main/docs/specs/initiatives/INIT-SCHANGELOG-001">INIT-SCHANGELOG-001</a>), which flows <code>Refs:</code> git trailers from commits into pre-populated <code>rmis</code> on changelog entries, and <strong>build-provenance version reporting</strong> so the CLI self-identifies between releases.</p>
 <h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Human-facing Markdown collapses the Dependencies category to a one-line summary by default</li>
 <li>New <code>--exclude-categories</code>, <code>--collapse-categories</code>, and <code>--expand-categories</code> flags for fine-grained control</li>
 <li>RMI trailer flow: <code>Refs:</code> trailers on commits flow into pre-populated <code>rmis</code> on generated entries</li>
 <li>New plural <code>rmis</code> field on entries, preferred over the legacy singular <code>rmi</code></li>
+<li><code>version</code>/<code>--version</code> report build provenance (version, commit, build time, dirty flag) from build info</li>
 </ul>
 <h2 id="category-render-controls">Category Render Controls<a class="headerlink" href="#category-render-controls" title="Permanent link">&para;</a></h2>
 <h3 id="collapse-exclude-categories">Collapse &amp; Exclude Categories<a class="headerlink" href="#collapse-exclude-categories" title="Permanent link">&para;</a></h3>
@@ -1806,6 +1857,19 @@
 <li>Carry <code>Refs:</code> trailers on commits and let <code>parse-commits</code>/<code>init</code> do the population.</li>
 </ul>
 <p>This release dogfoods the convention: its own changelog entries carry <code>rmis</code>.</p>
+<h2 id="cli-versioning-build-provenance">CLI Versioning &amp; Build Provenance<a class="headerlink" href="#cli-versioning-build-provenance" title="Permanent link">&para;</a></h2>
+<p><code>schangelog version</code> and <code>--version</code> now report the real build even for binaries built between releases or from an uncommitted tree. When goreleaser's ldflags aren't stamped, the values fall back to the Go toolchain's embedded build info:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>schangelog v0.16.0-3-gabc1234-dirty  [development build]
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  commit: abc1234def56 (modified)
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  built:  2026-08-23T17:02:32Z
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  go:     go1.26.5 darwin/arm64
+</code></pre></div>
+<ul>
+<li>A plain <code>go install</code>/<code>go build</code> binary reports its module version (or <code>(devel)</code>), commit, build time, and dirty flag — never <code>dev/none/unknown</code>.</li>
+<li><code>make build</code> stamps <code>git describe --tags --always --dirty</code> for the readable <code>vX.Y.Z-N-gSHA-dirty</code> "commits-past-tag" string.</li>
+<li>Inspect any binary without running it via <code>go version -m &lt;binary&gt;</code>.</li>
+</ul>
+<p>See the <a href="../../guides/cli-versioning/">CLI Versioning guide</a> for the full convention.</p>
 <h2 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../changelog/">Full Changelog</a></li>
