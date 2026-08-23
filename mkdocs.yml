@@ -45,6 +45,7 @@ nav:
       - Security Metadata: specification/security.md
       - SBOM Metadata: specification/sbom.md
   - Guides:
+      - Generating Changelogs: guides/generating.md
       - LLM-Assisted Generation: guides/llm-guide.md
       - Localization: guides/localization.md
       - PRISM Integration: guides/prism-integration.md

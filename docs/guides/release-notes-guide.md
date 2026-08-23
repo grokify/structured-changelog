@@ -232,7 +232,7 @@ While CHANGELOG.md is generated from CHANGELOG.json, release notes are typically
 schangelog generate CHANGELOG.json --format=release-notes --version=1.0.0 > RELEASE_NOTES_v1.0.0.md
 ```
 
-Then expand with migration guides, code examples, and context.
+Then expand with migration guides, code examples, and context. For the full set of `generate` output controls — presets, tiers, notable filtering, and per-category collapse/exclude — see [Generating Changelogs](generating.md).
 
 ## Examples
 

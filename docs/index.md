@@ -106,8 +106,11 @@ schangelog merge base.json additions.json -o CHANGELOG.json
 schangelog parse-commits --since=v1.0.0
 ```
 
+For the full set of `generate` output controls — presets, tiers, notable-release filtering, and per-category collapse/exclude — see [Generating Changelogs](guides/generating.md).
+
 ## Documentation
 
+- [Generating Changelogs](guides/generating.md) — `generate` output controls: presets, tiers, category collapse/exclude
 - [JSON IR Specification](specification/spec.md) — Full schema documentation
 - [Security Metadata](specification/security.md) — CVE, GHSA, SARIF fields
 - [SBOM Metadata](specification/sbom.md) — Component tracking
