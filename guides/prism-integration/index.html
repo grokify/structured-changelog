@@ -1078,6 +1078,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../releases/v0.17.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v0.17.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/v0.16.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v0.16.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../releases/v0.15.0/" class="md-nav__link">
         
   
@@ -1724,14 +1780,17 @@
 <li><strong>Initiatives</strong> — strategic goals spanning multiple projects (e.g., <code>INIT-STREAMING-001</code>)</li>
 <li><strong>Roadmap Items (RMIs)</strong> — discrete deliverables tracked per-repository (e.g., <code>RMI-MYREPO-042</code>)</li>
 </ul>
-<p>Structured Changelog supports optional <code>rmi</code> and <code>initiative</code> fields on changelog entries, enabling:</p>
+<p>Structured Changelog supports optional <code>rmis</code>, <code>rmi</code>, and <code>initiative</code> fields on changelog entries, enabling:</p>
 <ul>
 <li>Traceability from releases back to roadmap planning</li>
 <li>Automated initiative progress tracking across repositories</li>
 <li>Changelog-driven roadmap status updates</li>
 </ul>
 <h2 id="json-schema">JSON Schema<a class="headerlink" href="#json-schema" title="Permanent link">&para;</a></h2>
-<p>Add <code>rmi</code> and/or <code>initiative</code> to any changelog entry:</p>
+<p>Add <code>rmis</code> (preferred) and/or <code>initiative</code> to any changelog entry. Use the
+plural <code>rmis</code> array because a curated entry often summarizes several commits
+spanning multiple RMIs; the legacy singular <code>rmi</code> is retained for
+back-compatibility and treated as a one-element <code>rmis</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;releases&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="p">{</span>
@@ -1740,20 +1799,25 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">&quot;added&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="p">{</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add streaming support via ConverseStream API&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">          </span><span class="nt">&quot;rmi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RMI-MYREPO-042&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">          </span><span class="nt">&quot;initiative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INIT-STREAMING-001&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">          </span><span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123&quot;</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="p">},</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add bearer token authentication&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">          </span><span class="nt">&quot;rmi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RMI-MYREPO-043&quot;</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span><span class="p">]</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">          </span><span class="nt">&quot;rmis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;RMI-MYREPO-042&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;RMI-MYREPO-044&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">          </span><span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123&quot;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add bearer token authentication&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">          </span><span class="nt">&quot;rmis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;RMI-MYREPO-043&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ad-hoc refactor with no roadmap item&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">          </span><span class="nt">&quot;initiative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INIT-STREAMING-001&quot;</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p">}</span>
 </code></pre></div>
-<p>Both fields are optional and independent — use one, both, or neither as needed.</p>
+<p>All three fields are optional. Follow the convention: <strong>populate <code>rmis</code></strong>;
+set <code>initiative</code> <strong>only</strong> for entries that have no RMI (with an RMI present the
+initiative is derivable downstream, so storing both invites drift).</p>
 <h3 id="field-reference">Field Reference<a class="headerlink" href="#field-reference" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1765,27 +1829,36 @@
 </thead>
 <tbody>
 <tr>
+<td><code>rmis</code></td>
+<td>string[]</td>
+<td>Roadmap Item IDs (format: <code>RMI-&lt;REPOSLUG&gt;-&lt;NNN&gt;</code>); <strong>preferred</strong></td>
+</tr>
+<tr>
 <td><code>rmi</code></td>
 <td>string</td>
-<td>Roadmap Item ID (format: <code>RMI-&lt;REPOSLUG&gt;-&lt;NNN&gt;</code>)</td>
+<td>Legacy single Roadmap Item ID; treated as a one-element <code>rmis</code></td>
 </tr>
 <tr>
 <td><code>initiative</code></td>
 <td>string</td>
-<td>Initiative ID (format: <code>INIT-&lt;SLUG&gt;-&lt;NNN&gt;</code>)</td>
+<td>Initiative ID (format: <code>INIT-&lt;SLUG&gt;-&lt;NNN&gt;</code>); use only when no RMI applies</td>
 </tr>
 </tbody>
 </table>
+<p><code>schangelog validate</code> warns (W006) on malformed IDs in <code>rmis</code> and (W007) when a
+singular <code>rmi</code> disagrees with <code>rmis</code>.</p>
 <h2 id="programmatic-usage">Programmatic Usage<a class="headerlink" href="#programmatic-usage" title="Permanent link">&para;</a></h2>
 <h3 id="building-entries">Building Entries<a class="headerlink" href="#building-entries" title="Permanent link">&para;</a></h3>
 <p>Use the builder methods for fluent entry construction:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/grokify/structured-changelog/changelog&quot;</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">changelog</span><span class="p">.</span><span class="nx">NewEntry</span><span class="p">(</span><span class="s">&quot;Add streaming support&quot;</span><span class="p">).</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nx">WithRMI</span><span class="p">(</span><span class="s">&quot;RMI-MYREPO-042&quot;</span><span class="p">).</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nx">WithInitiative</span><span class="p">(</span><span class="s">&quot;INIT-STREAMING-001&quot;</span><span class="p">).</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nx">WithCommit</span><span class="p">(</span><span class="s">&quot;abc123&quot;</span><span class="p">).</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nx">WithAuthor</span><span class="p">(</span><span class="s">&quot;@developer&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nx">WithRMIs</span><span class="p">(</span><span class="s">&quot;RMI-MYREPO-042&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMI-MYREPO-044&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nx">WithCommit</span><span class="p">(</span><span class="s">&quot;abc123&quot;</span><span class="p">).</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nx">WithAuthor</span><span class="p">(</span><span class="s">&quot;@developer&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">// Legacy singular form (still supported); prefer WithRMIs for new code:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nx">legacy</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">changelog</span><span class="p">.</span><span class="nx">NewEntry</span><span class="p">(</span><span class="s">&quot;Add auth&quot;</span><span class="p">).</span><span class="nx">WithRMI</span><span class="p">(</span><span class="s">&quot;RMI-MYREPO-043&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="reading-entries">Reading Entries<a class="headerlink" href="#reading-entries" title="Permanent link">&para;</a></h3>
 <p>Access the fields directly from parsed changelogs:</p>
@@ -1827,10 +1900,14 @@
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Refs: RMI-MYREPO-042
 </code></pre></div>
-<p>The <code>parse-commits</code> command can extract these references for changelog generation:</p>
+<p>The <code>parse-commits</code> command extracts these references automatically, carrying
+the RMI IDs on each parsed commit's <code>rmis</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>schangelog<span class="w"> </span>parse-commits<span class="w"> </span>--since<span class="o">=</span>v1.1.0
 </code></pre></div>
-<p>When generating changelog entries from commits with <code>Refs:</code> trailers, include the RMI in the entry's <code>rmi</code> field.</p>
+<p>When you build a changelog from those commits with <code>schangelog init --from-tags</code>,
+each generated entry's <code>rmis</code> is <strong>pre-populated</strong> from the underlying commits'
+<code>Refs:</code> trailers (deduplicated and sorted) — you curate rather than transcribe.
+<code>initiative</code> is never auto-populated.</p>
 <h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
 <h3 id="roadmap-progress-tracking">Roadmap Progress Tracking<a class="headerlink" href="#roadmap-progress-tracking" title="Permanent link">&para;</a></h3>
 <p>Query changelogs across a portfolio to track initiative completion:</p>
@@ -1871,9 +1948,9 @@
 </ul>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Use RMI for discrete deliverables</strong> — Each RMI should map to one or a few changelog entries</li>
-<li><strong>Use Initiative for strategic context</strong> — Group related work across multiple releases</li>
-<li><strong>Include both when applicable</strong> — An entry can reference both its specific RMI and the broader initiative</li>
+<li><strong>Prefer <code>rmis</code> over <code>rmi</code></strong> — The plural array expresses entries that summarize several commits across multiple RMIs; the singular remains for back-compat</li>
+<li><strong>Set <code>initiative</code> only without an RMI</strong> — With an RMI present the initiative is derivable downstream, so storing both invites drift</li>
+<li><strong>Let trailers do the work</strong> — Carry <code>Refs: RMI-&lt;SLUG&gt;-&lt;NNN&gt;</code> on commits; <code>parse-commits</code> and <code>init</code> populate <code>rmis</code> for you</li>
 <li><strong>Omit when not planned</strong> — Bug fixes and dependency updates typically don't need roadmap references</li>
 <li><strong>Keep IDs stable</strong> — Don't change RMI/Initiative IDs after they're referenced in changelogs</li>
 </ol>
