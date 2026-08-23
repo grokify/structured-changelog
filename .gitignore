@@ -32,3 +32,6 @@ Thumbs.db
 # Local testing
 *.local.json
 site/
+
+# Build artifacts
+/bin/

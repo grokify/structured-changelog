@@ -46,6 +46,7 @@ nav:
       - SBOM Metadata: specification/sbom.md
   - Guides:
       - Generating Changelogs: guides/generating.md
+      - CLI Versioning: guides/cli-versioning.md
       - LLM-Assisted Generation: guides/llm-guide.md
       - Localization: guides/localization.md
       - PRISM Integration: guides/prism-integration.md
