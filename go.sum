@@ -8,8 +8,8 @@ github.com/google/go-querystring v1.2.0 h1:yhqkPbu2/OH+V9BfpCVPZkNmUXhb2gBxJArfh
 github.com/google/go-querystring v1.2.0/go.mod h1:8IFJqpSRITyJ8QhQ13bmbeMBDfmeEJZD5A0egEOmkqU=
 github.com/grokify/gogithub v0.17.0 h1:FJy2QcLaJuypY15xE7vcwfIaISVPBaAScIJKfbcr440=
 github.com/grokify/gogithub v0.17.0/go.mod h1:r3c5J6UKCTv1vigQkulpeZGXfH3+EQ5540GZxGPVgbU=
-github.com/grokify/mogo v0.74.6 h1:isdwQOfayT1E9w4il4btc2on6KY72VZnjRaRAka2iXY=
-github.com/grokify/mogo v0.74.6/go.mod h1:MUheNHoi0hatrQbS60W61CMOkcu/yYRbOQBkNnJCUQY=
+github.com/grokify/mogo v0.74.7 h1:wfN4Ahk65FJ9gWKtwhOgJtW48sh/4vT0nfoFo6QP+TA=
+github.com/grokify/mogo v0.74.7/go.mod h1:fK2N1Fqj4CVOxIUVr4W7Oo6FGfCFJErNl57J2TYjQq0=
 github.com/grokify/structured-locale v0.1.0 h1:olvrW8ZiTlawxA7j2vgWOAH/7fPNim9AxUeTqzBtGN0=
 github.com/grokify/structured-locale v0.1.0/go.mod h1:2wD17yeOkjMZD4/WyEeleAM1NYbDdnT64OCJFwjV9IU=
 github.com/huandu/xstrings v1.5.0 h1:2ag3IFq9ZDANvthTwTiqSSZLjDc+BedvHPAp5tJy2TI=
@@ -25,10 +25,10 @@ github.com/spf13/pflag v1.0.10/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3A
 github.com/toon-format/toon-go v0.0.0-20251202084852-7ca0e27c4e8c h1:D8lDFovBMZywze1eh9iwMLcYor5f11mHBocLhO7cBe8=
 github.com/toon-format/toon-go v0.0.0-20251202084852-7ca0e27c4e8c/go.mod h1:j/BOnpF2ihnz4lELs99h9mwGJBx/zdleOUCnLLRPCsc=
 go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=
-golang.org/x/exp v0.0.0-20260727155853-b88d891fe743 h1:ex206bKw+v3K0dm3andkrIF+ijyQKJG1pLgwQ2PYdQM=
-golang.org/x/exp v0.0.0-20260727155853-b88d891fe743/go.mod h1:EdfpwwqSu+0Li0mzskwHU6FWDV3t9Q+RZDo3QMUtL3Q=
+golang.org/x/exp v0.0.0-20260820142414-ca536658362e h1:01Ju2A/fZKkci4zqx0eZxw//DnRYOnBiGJG14hFBhO8=
+golang.org/x/exp v0.0.0-20260820142414-ca536658362e/go.mod h1:zeBbvyFKDaLwa7CH/zI8KXt7gTl14SF7sO08Pl5jBCM=
 golang.org/x/oauth2 v0.36.0 h1:peZ/1z27fi9hUOFCAZaHyrpWG5lwe0RJEEEeH0ThlIs=
 golang.org/x/oauth2 v0.36.0/go.mod h1:YDBUJMTkDnJS+A4BP4eZBjCqtokkg1hODuPjwiGPO7Q=
-golang.org/x/text v0.40.0 h1:Ub2Z6/xjgF1WrYQz2nuITOEegKFtiIy+rieRJ5lHZKs=
-golang.org/x/text v0.40.0/go.mod h1:hpnzDAfGV753zIKo+wk3u1bVKCGPbrnF7+7LBF/UHVY=
+golang.org/x/text v0.41.0 h1:vz/seA0lnX87Othu2f/0L24RcgrXD9/YFTSuGjj3rH8=
+golang.org/x/text v0.41.0/go.mod h1:jvf1O8ajNzZqhSrQBPbutR/EB83Cc0CFrezNQIwbb5M=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
