@@ -3,9 +3,17 @@
 # Default target
 all: sync-check lint test build
 
-# Build the CLI
+# Version stamp: last tag + commits-ahead + short sha + dirty flag
+# (e.g. v0.16.0-3-gabc1234-dirty). Falls back to the toolchain's build info
+# when git is unavailable.
+VERSION := $(shell git describe --tags --always --dirty 2>/dev/null)
+COMMIT  := $(shell git rev-parse HEAD 2>/dev/null)
+DATE    := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+LDFLAGS := -X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.date=$(DATE)
+
+# Build the CLI (stamped with git-describe version metadata)
 build:
-	go build -o bin/schangelog ./cmd/schangelog
+	go build -ldflags "$(LDFLAGS)" -o bin/schangelog ./cmd/schangelog
 
 # Run tests
 test:
