@@ -348,6 +348,40 @@ When using `--all-releases`, consecutive maintenance-only releases are automatic
 
 Use `--full` to include all releases expanded (disables both notable-only filtering and grouping).
 
+### Category Filtering
+
+Within a release, individual categories can be omitted or collapsed. This keeps the human-facing Markdown readable while the full detail remains in the JSON source of truth.
+
+**Dependencies are collapsed by default.** Dependency churn is the dominant source of changelog noise for human readers, so the `default` and `standard` presets render the Dependencies category as a one-line summary:
+
+```markdown
+### Dependencies
+
+- _17 dependency updates_
+```
+
+Controls:
+
+```bash
+# Restore the full dependency list (either flag works)
+schangelog generate CHANGELOG.json --expand-categories Dependencies
+schangelog generate CHANGELOG.json --full
+
+# Collapse additional categories to a one-line count
+schangelog generate CHANGELOG.json --collapse-categories "Build,Tests"
+
+# Omit categories entirely (no section at all)
+schangelog generate CHANGELOG.json --exclude-categories "Dependencies,Build"
+```
+
+| Flag | Effect |
+|------|--------|
+| `--collapse-categories` | Render the named categories as a one-line entry count |
+| `--exclude-categories` | Omit the named categories entirely (takes precedence over collapse) |
+| `--expand-categories` | Force-expand the named categories, overriding collapse defaults |
+
+> The `--full` preset expands every category, including Dependencies. The `core` and `minimal` presets already drop Dependencies via tier filtering (it is a `standard`-tier type).
+
 ## JSON IR Schema
 
 ### Change Types
