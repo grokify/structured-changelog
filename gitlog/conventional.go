@@ -32,6 +32,33 @@ var prRefRegex = regexp.MustCompile(`\(#(\d+)\)\s*$`)
 // breakingChangeRegex matches BREAKING CHANGE: in body
 var breakingChangeRegex = regexp.MustCompile(`(?i)^BREAKING[ -]CHANGE\s*:`)
 
+// refsTrailerRegex matches `Refs:` git trailer lines (case-insensitive key).
+// The value may list multiple IDs; RMI IDs are extracted from it separately.
+var refsTrailerRegex = regexp.MustCompile(`(?im)^\s*Refs\s*:\s*(.+?)\s*$`)
+
+// rmiIDRegex matches a roadmap item ID like RMI-SCHANGELOG-101.
+var rmiIDRegex = regexp.MustCompile(`\bRMI-[A-Z0-9]+-\d+\b`)
+
+// ExtractRMIs extracts roadmap item IDs (RMI-<SLUG>-<NNN>) from a commit
+// message's `Refs:` git trailers. A commit may carry multiple `Refs:` trailers,
+// and a trailer value may list multiple IDs. Results are deduplicated in
+// first-seen order. Only IDs on `Refs:` trailer lines are returned, so
+// incidental mentions of an RMI in prose are ignored. Returns nil when none
+// are present.
+func ExtractRMIs(message string) []string {
+	var rmis []string
+	seen := make(map[string]bool)
+	for _, trailer := range refsTrailerRegex.FindAllStringSubmatch(message, -1) {
+		for _, id := range rmiIDRegex.FindAllString(trailer[1], -1) {
+			if !seen[id] {
+				seen[id] = true
+				rmis = append(rmis, id)
+			}
+		}
+	}
+	return rmis
+}
+
 // ParseConventionalCommit parses a commit message into conventional commit components.
 // Returns nil if the message doesn't follow conventional commit format.
 func ParseConventionalCommit(message string) *ConventionalCommit {

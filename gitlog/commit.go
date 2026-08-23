@@ -21,6 +21,7 @@ type Commit struct {
 	Breaking          bool     `json:"breaking,omitempty"`
 	Issue             int      `json:"issue,omitempty"`
 	PR                int      `json:"pr,omitempty"`
+	RMIs              []string `json:"rmis,omitempty"`
 	FilesChanged      int      `json:"filesChanged,omitempty"`
 	Insertions        int      `json:"insertions,omitempty"`
 	Deletions         int      `json:"deletions,omitempty"`

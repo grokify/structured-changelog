@@ -109,6 +109,9 @@ func (p *Parser) parseCommitBlock(block string) *Commit {
 	commit.Issue = ExtractIssueNumber(fullMessage)
 	commit.PR = ExtractPRNumber(commit.Message)
 
+	// Extract RMI roadmap item IDs from Refs: trailers
+	commit.RMIs = ExtractRMIs(fullMessage)
+
 	// Parse numstat if present (always parse for stats, optionally include file names)
 	if len(parts) > 1 {
 		p.parseNumstat(commit, strings.TrimSpace(parts[1]))
