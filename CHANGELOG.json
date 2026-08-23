@@ -12,7 +12,7 @@
     {
       "version": "v0.16.0",
       "date": "2026-08-23",
-      "commit": "aa37da4",
+      "commit": "02d2aee",
       "highlights": [
         {
           "description": "Human-facing Markdown now collapses the Dependencies category to a one-line summary by default, keeping generated changelogs readable while the full list stays in the JSON source",
@@ -20,6 +20,9 @@
         },
         {
           "description": "RMI trailer flow: `Refs:` git trailers on commits now flow through parse-commits into pre-populated `rmis` on generated changelog entries"
+        },
+        {
+          "description": "CLI binaries now self-identify between releases: `version`/`--version` report the module version, commit, build time, and dirty flag from build info"
         }
       ],
       "added": [
@@ -55,6 +58,10 @@
           "rmis": [
             "RMI-SCHANGELOG-103"
           ]
+        },
+        {
+          "description": "`schangelog version`/`--version` report the real build via `runtime/debug.ReadBuildInfo()` (module version or `(devel)`, commit SHA, build time, dirty flag, Go version, OS/arch) when goreleaser ldflags aren't stamped; `make build` stamps a `git describe` version",
+          "commit": "57082dc"
         }
       ],
       "changed": [
@@ -70,6 +77,24 @@
           "rmis": [
             "RMI-SCHANGELOG-104"
           ]
+        },
+        {
+          "description": "Add the Generating Changelogs site guide covering generate presets, tiers, notable filtering, and category collapse/exclude",
+          "commit": "44e4dea"
+        },
+        {
+          "description": "Add the CLI Versioning & Build Provenance guide documenting the build-info + git-describe convention",
+          "commit": "02d2aee"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "`go mod` dependency refresh",
+          "commit": "aa2aaff"
+        },
+        {
+          "description": "`go mod` dependency refresh",
+          "commit": "dea7fa4"
         }
       ]
     },
