@@ -6,7 +6,7 @@ require (
 	github.com/grokify/gogithub v0.18.0
 	github.com/grokify/structured-locale v0.1.0
 	github.com/spf13/cobra v1.10.2
-	github.com/toon-format/toon-go v0.1.0
+	github.com/toon-format/toon-go v1.0.1
 )
 
 require (
