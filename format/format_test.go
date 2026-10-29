@@ -68,14 +68,10 @@ func TestMarshal(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Marshal() error = %v", err)
 		}
-		// TOON output should contain the field names and values
-		// Note: TOON uses struct field names (capitalized), not json tags
-		s := string(got)
-		if !strings.Contains(s, "Name") || !strings.Contains(s, "test") {
-			t.Errorf("Marshal() TOON output missing expected content: %q", s)
-		}
-		if !strings.Contains(s, "Count") || !strings.Contains(s, "42") {
-			t.Errorf("Marshal() TOON output missing expected content: %q", s)
+		// TOON uses json tag names as of toon-go v1.0
+		want := "name: test\ncount: 42"
+		if string(got) != want {
+			t.Errorf("Marshal() = %q, want %q", string(got), want)
 		}
 	})
 }
